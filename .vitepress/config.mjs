@@ -3,8 +3,8 @@ import { set_sidebar } from "./utils/auto_sidebar.mjs";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: "/Note/"
-  head: [["link", { rel: "icon", href: "/Note/1.png" }]],
+  base: "/Note/",
+  head: [["link", { rel: "icon", href: "/Note/2.svg" }]],
   title: "额滴笔记",
   description: "A VitePress Site",
   themeConfig: {
