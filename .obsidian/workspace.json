@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "C++/index.md",
+                "file": "AI/机器学习/07.支持向量机（SVM）/index.md",
                 "mode": "source",
                 "source": false
               },
@@ -187,6 +187,7 @@
   },
   "active": "52b9d84333c757b0",
   "lastOpenFiles": [
+    "C++/index.md",
     "AI/index.md",
     "resources.md",
     "public/images/Obsidian.png",
@@ -215,7 +216,6 @@
     "index.md",
     "C++/3.C++进阶课程/第5节 网络编程/index.md",
     "C++/3.C++进阶课程/第5节 网络编程/1.网络编程预备知识.md",
-    "C++/3.C++进阶课程/第2节 数据结构与基本算法/index.md",
     "node_modules/birpc/package.json",
     "node_modules/hookable/package.json",
     "node_modules/tabbable/package.json",
