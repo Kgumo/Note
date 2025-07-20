@@ -1,49 +1,117 @@
+### **人工智能（AI）及其核心技术体系**  
+
+#### **1. 人工智能（AI）概述**  
+人工智能（Artificial Intelligence, AI）是计算机科学的一个分支，旨在让机器模拟人类智能，包括 **学习、推理、规划、感知、语言理解** 等能力。  
+
+**AI 主要分类：**  
+- **弱人工智能（Narrow AI）**：专注于特定任务（如语音识别、图像分类）。  
+- **强人工智能（General AI）**：具备人类水平的通用智能（尚未实现）。  
+- **超级人工智能（Super AI）**：超越人类智能的理论形态。  
+
+**核心目标：**  
+- **自动化决策**（如推荐系统、自动驾驶）  
+- **模式识别**（如医疗影像分析、欺诈检测）  
+- **自然交互**（如聊天机器人、语音助手）  
+
 ---
-outline: deep
+
+### **2. 核心技术领域**  
+
+#### **(1) 机器学习（Machine Learning, ML）**  
+**定义**：让计算机从数据中自动学习规律，无需显式编程。  
+
+**主要方法：**  
+| 类型 | 描述 | 典型算法 |  
+|------|------|----------|  
+| **监督学习** | 用标注数据训练模型 | 线性回归、决策树、SVM、神经网络 |  
+| **无监督学习** | 发现数据隐藏模式 | K-Means、PCA、GAN |  
+| **强化学习** | 通过奖惩机制优化行为 | Q-Learning、Deep Q-Network (DQN) |  
+
+**应用场景：**  
+- 预测分析（股票、天气）  
+- 推荐系统（电商、短视频）  
+- 异常检测（网络安全、工业质检）  
+
 ---
 
-# Runtime API Examples
+#### **(2) 深度学习（Deep Learning, DL）**  
+**定义**：基于神经网络的机器学习方法，擅长处理高维数据（如图像、语音）。  
 
-This page demonstrates usage of some of the runtime APIs provided by VitePress.
+**核心模型：**  
+- **卷积神经网络（CNN）**：图像识别（ResNet、YOLO）  
+- **循环神经网络（RNN）**：时序数据（LSTM、GRU）  
+- **Transformer**：自然语言处理（BERT、GPT）  
 
-The main `useData()` API can be used to access site, theme, and page data for the current page. It works in both `.md` and `.vue` files:
+**优势：**  
+- 自动特征提取（无需人工设计）  
+- 处理非结构化数据（文本、视频）  
 
-```md
-<script setup>
-import { useData } from 'vitepress'
+**应用场景：**  
+- 计算机视觉（人脸识别、医学影像）  
+- 自然语言处理（机器翻译、情感分析）  
+- 自动驾驶（环境感知、路径规划）  
 
-const { theme, page, frontmatter } = useData()
-</script>
+---
 
-## Results
+#### **(3) 自然语言处理（NLP）**  
+**定义**：让计算机理解、生成人类语言的技术。  
 
-### Theme Data
-<pre>{{ theme }}</pre>
+**关键技术：**  
+- **词嵌入**：Word2Vec、GloVe  
+- **预训练模型**：BERT、GPT、T5  
+- **文本生成**：Seq2Seq、Transformer  
 
-### Page Data
-<pre>{{ page }}</pre>
+**应用场景：**  
+- 智能客服（ChatGPT、Dialogflow）  
+- 搜索引擎（语义检索）  
+- 语音助手（Siri、Alexa）  
 
-### Page Frontmatter
-<pre>{{ frontmatter }}</pre>
-```
+---
 
-<script setup>
-import { useData } from 'vitepress'
+#### **(4) 算法基础**  
+**核心算法：**  
+- **优化算法**：梯度下降、遗传算法  
+- **搜索算法**：A*、Dijkstra  
+- **统计方法**：贝叶斯网络、马尔可夫模型  
 
-const { site, theme, page, frontmatter } = useData()
-</script>
+**学习重点：**  
+- 数学基础（线性代数、概率论）  
+- 编程实现（Python + PyTorch/TensorFlow）  
 
-## Results
+---
 
-### Theme Data
-<pre>{{ theme }}</pre>
+### **3. 实际应用方向**  
 
-### Page Data
-<pre>{{ page }}</pre>
+#### **(1) 行业应用**  
+| 领域 | 典型应用 |  
+|------|----------|  
+| **医疗** | 疾病诊断、药物研发 |  
+| **金融** | 量化交易、信用评估 |  
+| **制造业** | 缺陷检测、预测性维护 |  
+| **零售** | 动态定价、库存优化 |  
 
-### Page Frontmatter
-<pre>{{ frontmatter }}</pre>
+#### **(2) 热门岗位**  
+- **AI 算法工程师**：模型研发与优化  
+- **数据科学家**：数据分析与挖掘  
+- **NLP 工程师**：语言模型开发  
+- **计算机视觉工程师**：图像/视频处理  
 
-## More
+---
 
-Check out the documentation for the [full list of runtime APIs](https://vitepress.dev/reference/runtime-api#usedata).
+### **4. 学习与职业路径**  
+
+#### **(1) 学习路线**  
+1. **基础**：Python + 数学（线性代数/概率论）  
+2. **机器学习**：Scikit-learn + 经典算法  
+3. **深度学习**：PyTorch/TensorFlow + CNN/RNN  
+4. **专项领域**：NLP/CV/强化学习  
+
+#### **(2) 资源推荐**  
+- **书籍**：《机器学习》（周志华）、《深度学习》（花书）  
+- **框架**：PyTorch、TensorFlow、Hugging Face  
+- **竞赛**：Kaggle、天池、ACM-ICPC  
+
+---
+
+### **总结**  
+AI 技术正重塑各行各业，核心在于 **数据驱动 + 算法创新**。从机器学习到深度学习，再到 NLP 和行业应用，需结合 **数学基础、编程能力、领域知识**。职业方向涵盖算法研发、工程落地、数据分析等，前景广阔但竞争激烈，持续学习是关键！

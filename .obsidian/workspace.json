@@ -1,0 +1,237 @@
+{
+  "main": {
+    "id": "0700d508ef1273fb",
+    "type": "split",
+    "children": [
+      {
+        "id": "687ce1ec7a478604",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "263f59dc95f873e5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "C++/1.C语言基础/index.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "index"
+            }
+          },
+          {
+            "id": "52b9d84333c757b0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "C++/index.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "index"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d2ccb58067f01f6b",
+    "type": "split",
+    "children": [
+      {
+        "id": "a9a85733c3e306f4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f44862b7d9d2e1c0",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "036f76b5f97e74cf",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "9ee3a83d1919af97",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 338.5
+  },
+  "right": {
+    "id": "64d7040b05e45dda",
+    "type": "split",
+    "children": [
+      {
+        "id": "64b27899c1258ffa",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "da4d733e01a7995a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "AI/机器学习/回归分析/index.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "index 的反向链接列表"
+            }
+          },
+          {
+            "id": "f7448b5cc1927763",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "AI/机器学习/回归分析/index.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "index 的出链列表"
+            }
+          },
+          {
+            "id": "4a43e89550e1234e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "84ea6c3f45f08029",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "AI/机器学习/回归分析/index.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "index 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "markdown-importer:打开 Markdown 格式转换器": false,
+      "vitepress-publisher:start vitepress": false
+    }
+  },
+  "active": "52b9d84333c757b0",
+  "lastOpenFiles": [
+    "AI/index.md",
+    "resources.md",
+    "public/images/Obsidian.png",
+    "api-examples.md",
+    "public/Zlibrary.png.md",
+    "public/whead.png",
+    "C++/2.C++基础课程/1.基础语法和程序结构/09.指针和函数、字符串.md",
+    "public/images/Zlibrary.png",
+    "AI/机器学习/06.基于实例的学习方法/在无限样本下，1-NN的错误率不超过贝叶斯最优错误率的2倍的解析.md",
+    "AI/机器学习/06.基于实例的学习方法/最近邻.md",
+    "AI/机器学习/06.基于实例的学习方法/index.md",
+    "AI/机器学习/05.贝叶斯学习/极大后验假设与极大似然.md",
+    "AI/机器学习/05.贝叶斯学习/叶贝斯定理  朴素叶贝斯假设 朴素叶贝斯分类器.md",
+    "AI/机器学习/05.贝叶斯学习/index.md",
+    "AI/机器学习/05.贝叶斯学习/MDL和 MAP.md",
+    "AI/机器学习/03.决策树/随机森林与决策树的关系.md",
+    "AI/机器学习/03.决策树/单棵树——一个独立的决策树模型.md",
+    "AI/机器学习/03.决策树/决策树里随机数的作用.md",
+    "AI/机器学习/03.决策树/叶子节点概率预测.md",
+    "AI/机器学习/04.回归分析/离群点的检测.md",
+    "AI/机器学习/04.回归分析/线性回归里面的相关系数和决定系数.md",
+    "AI/机器学习/03.决策树/决策树构建思路与修正.md",
+    "AI/机器学习/03.决策树/基于决策树的LOL胜负预测.md",
+    "AI/机器学习/02,机器学习实验方法与原则/index.md",
+    "AI/机器学习/01.机器学习基础/index.md",
+    "index.md",
+    "C++/3.C++进阶课程/第5节 网络编程/index.md",
+    "C++/3.C++进阶课程/第5节 网络编程/1.网络编程预备知识.md",
+    "C++/3.C++进阶课程/第2节 数据结构与基本算法/index.md",
+    "node_modules/birpc/package.json",
+    "node_modules/hookable/package.json",
+    "node_modules/tabbable/package.json",
+    "node_modules/perfect-debounce/package.json",
+    "node_modules/@vue/devtools-shared/package.json",
+    "node_modules/focus-trap/package.json",
+    "node_modules/@vueuse/shared/index.mjs",
+    "node_modules/@vueuse/shared/package.json",
+    "node_modules/@vue/devtools-kit/package.json",
+    "node_modules/@vueuse/integrations/useFocusTrap.mjs",
+    "node_modules/npm/node_modules/unique-filename/coverage/sort-arrow-sprite.png",
+    "node_modules/npm/node_modules/retry/equation.gif",
+    "node_modules/npm/node_modules/qrcode-terminal/example/basic.png",
+    "node_modules/npm/node_modules/psl/browserstack-logo.svg",
+    "public/images/CS.png",
+    "public/images/Hello.png",
+    "node_modules/cytoscape-fcose/demo/demo.gif"
+  ]
+}

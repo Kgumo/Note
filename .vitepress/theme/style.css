@@ -137,3 +137,63 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+/* ========== Mermaid 图表样式 ========== */
+.mermaid {
+  margin: 1.5em 0;
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow: auto;
+  text-align: center;
+}
+
+/* 暗黑模式适配 */
+.dark .mermaid {
+  background: var(--vp-c-bg-soft-up);
+}
+
+/* 节点基础样式 */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node polygon {
+  fill: var(--vp-c-brand-1);
+  stroke: var(--vp-c-brand-2);
+  stroke-width: 2px;
+}
+
+/* 文字样式 */
+.mermaid text {
+  font-family: var(--vp-font-family-base);
+  fill: var(--vp-c-text-1);
+  font-size: 14px;
+}
+
+/* 流程图箭头样式 */
+.mermaid .arrowheadPath {
+  fill: var(--vp-c-text-2);
+}
+
+/* 流程图连线样式 */
+.mermaid .edgePath .path {
+  stroke: var(--vp-c-text-2);
+  stroke-width: 2px;
+}
+
+/* 序列图样式 */
+.mermaid .actor-line {
+  stroke: var(--vp-c-brand-3);
+}
+
+/* 饼图标签样式 */
+.mermaid .pieLabel text {
+  font-size: 16px !important;
+  fill: var(--vp-c-text-1) !important;
+}
+
+/* 适应移动端 */
+@media (max-width: 768px) {
+  .mermaid {
+    font-size: 12px;
+    padding: 0.5rem;
+  }
+}

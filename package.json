@@ -6,5 +6,11 @@
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
+  },
+  "dependencies": {
+    "@liradb2000/markdown-it-mermaid": "^0.4.4",
+    "katex": "^0.16.22",
+    "markdown-it-katex": "^2.0.3",
+    "mermaid": "^11.9.0"
   }
 }
