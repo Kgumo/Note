@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import markdownItKatex from 'markdown-it-katex';
-import markdownItMermaid from '@liradb2000/markdown-it-mermaid';
+import { withMermaid } from "vitepress-plugin-mermaid"; // 引入新插件
 
 // 获取当前文件路径
 const __filename = fileURLToPath(import.meta.url);
@@ -33,7 +33,8 @@ const aiSidebar = set_sidebar("AI");
 console.log('C++ 侧边栏:', cppSidebar);
 console.log('AI 侧边栏:', aiSidebar);
 
-export default defineConfig({
+// 使用 withMermaid 包裹整个配置
+export default withMermaid(defineConfig({
   base: "/Note/",
   head: [
     ["link", { rel: "icon", href: "/Note/head.svg" }],
@@ -46,27 +47,7 @@ export default defineConfig({
       href: "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css",
       crossorigin: "anonymous"
     }],
-    ["script", { 
-      src: "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js" 
-    }],
-    ["script", {}, `
-      document.addEventListener('DOMContentLoaded', function() {
-        if (window.mermaid) {
-          mermaid.initialize({
-            startOnLoad: true,
-            theme: document.documentElement.classList.contains('dark') ? 'dark' : 'default',
-            fontFamily: '"Noto Serif SC", serif',
-            flowchart: { 
-              useMaxWidth: true,
-              htmlLabels: true,
-              curve: 'basis'
-            },
-            securityLevel: 'loose'
-          });
-          mermaid.run();
-        }
-      });
-    `]
+    // 注意：移除了手动添加的mermaid脚本，因为插件会自动处理
   ],
 
   title: "额滴笔记",
@@ -171,21 +152,10 @@ export default defineConfig({
   markdown: {
     lineNumbers: true,
     config: (md) => {
-      // 修复插件使用方式
+      // 只保留katex插件
       md.use(markdownItKatex.default || markdownItKatex);
       
-      // 确保使用正确的导出方式
-      const mermaidPlugin = markdownItMermaid.default || markdownItMermaid;
-      md.use(mermaidPlugin, {
-        startOnLoad: false,
-        theme: 'default',
-        securityLevel: 'loose',
-        flowchart: {
-          useMaxWidth: true,
-          htmlLabels: true,
-          curve: 'basis'
-        }
-      });
+      // 移除了mermaid插件相关代码
       
       // 自定义锚点渲染
       md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
@@ -211,29 +181,9 @@ export default defineConfig({
         allow: ['..']
       }
     },
-    // ========== 新增的修复配置 ==========
-    optimizeDeps: {
-      include: [
-        'mermaid',
-        'd3'
-      ],
-      esbuildOptions: {
-        // 添加d3到排除列表，避免转换
-        exclude: ['d3'],
-        target: 'esnext' // 支持动态import
-      }
-    },
+    // 确保SSR正确处理
     ssr: {
-      // 强制SSR处理这些模块
-      noExternal: ['d3', 'mermaid']
-    },
-    build: {
-      commonjsOptions: {
-        // 将d3添加到转换列表中
-        include: [/d3/, /node_modules/],
-        transformMixedEsModules: true
-      }
+      noExternal: ['vitepress-plugin-mermaid', 'mermaid']
     }
-    // ========== 新增配置结束 ==========
   }
-});
+}));
