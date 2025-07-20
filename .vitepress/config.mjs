@@ -169,36 +169,36 @@ export default defineConfig({
   },
   
   markdown: {
-  lineNumbers: true,
-  config: (md) => {
-    // 修复插件使用方式
-    md.use(markdownItKatex.default || markdownItKatex);
-    
-    // 确保使用正确的导出方式
-    const mermaidPlugin = markdownItMermaid.default || markdownItMermaid;
-    md.use(mermaidPlugin, {
-      startOnLoad: false,
-      theme: 'default',
-      securityLevel: 'loose',
-      flowchart: {
-        useMaxWidth: true,
-        htmlLabels: true,
-        curve: 'basis'
-      }
-    });
-    
-    // 自定义锚点渲染
-    md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
-      const token = tokens[idx];
-      const level = token.tag.slice(1);
-      const nextToken = tokens[idx + 1];
-      const children = nextToken.content;
-      const id = encodeURIComponent(children.toLowerCase().replace(/\s+/g, '-'));
+    lineNumbers: true,
+    config: (md) => {
+      // 修复插件使用方式
+      md.use(markdownItKatex.default || markdownItKatex);
       
-      return `<${token.tag} id="${id}" class="heading-anchor">`;
-    };
-  }
-},
+      // 确保使用正确的导出方式
+      const mermaidPlugin = markdownItMermaid.default || markdownItMermaid;
+      md.use(mermaidPlugin, {
+        startOnLoad: false,
+        theme: 'default',
+        securityLevel: 'loose',
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true,
+          curve: 'basis'
+        }
+      });
+      
+      // 自定义锚点渲染
+      md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
+        const token = tokens[idx];
+        const level = token.tag.slice(1);
+        const nextToken = tokens[idx + 1];
+        const children = nextToken.content;
+        const id = encodeURIComponent(children.toLowerCase().replace(/\s+/g, '-'));
+        
+        return `<${token.tag} id="${id}" class="heading-anchor">`;
+      };
+    }
+  },
   
   vite: {
     resolve: {
@@ -210,6 +210,30 @@ export default defineConfig({
       fs: {
         allow: ['..']
       }
+    },
+    // ========== 新增的修复配置 ==========
+    optimizeDeps: {
+      include: [
+        'mermaid',
+        'd3'
+      ],
+      esbuildOptions: {
+        // 添加d3到排除列表，避免转换
+        exclude: ['d3'],
+        target: 'esnext' // 支持动态import
+      }
+    },
+    ssr: {
+      // 强制SSR处理这些模块
+      noExternal: ['d3', 'mermaid']
+    },
+    build: {
+      commonjsOptions: {
+        // 将d3添加到转换列表中
+        include: [/d3/, /node_modules/],
+        transformMixedEsModules: true
+      }
     }
+    // ========== 新增配置结束 ==========
   }
 });
