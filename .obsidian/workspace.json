@@ -172,8 +172,14 @@
   },
   "active": "25ddd1ce847df241",
   "lastOpenFiles": [
-    "C++/4.C++研修阶段/第3节 工具使用/2.Git远程仓库.md",
+    "C++/4.C++研修阶段/第3节工具使用/2.Git远程仓库.md",
     "resources.md",
+    "C++/4.C++研修阶段/第3节.md",
+    "AI/机器学习/09.集成学习/index.md",
+    "AI/index.md",
+    "AI/机器学习/index.md",
+    "C++/4.C++研修阶段/第3节工具使用",
+    "C++/4.C++研修阶段/2.Git远程仓库.md",
     "AI/机器学习/09.集成学习/AdaBoost算法核心流程.md",
     "C++/1.C语言基础/index.md",
     "C++/2.C++基础课程/index.md",
@@ -186,7 +192,6 @@
     "node_modules/mermaid/dist/errors.d.ts",
     "node_modules/mermaid/dist/types.d.ts",
     "node_modules/mermaid/dist/utils.d.ts",
-    "node_modules/mermaid/dist/Diagram.d.ts",
     "我们只是通过无数的思维模型在给世界建模.md",
     "public/images/siwei10.png",
     "public/images/siwei9.png",
@@ -211,12 +216,6 @@
     "node_modules/cytoscape/README.md",
     "node_modules/cytoscape/CODE_OF_CONDUCT.md",
     "node_modules/@liradb2000/markdown-it-mermaid/node_modules/@braintree/sanitize-url/README.md",
-    "node_modules/mlly/README.md",
-    "node_modules/vscode-languageserver-textdocument/README.md",
-    "node_modules/@types/d3-dispatch/README.md",
-    "node_modules/mlly/node_modules/pkg-types/README.md",
-    "node_modules/vitepress-plugin-mermaid/README.md",
-    "node_modules/non-layered-tidy-tree-layout/README.md",
-    "node_modules/@liradb2000/markdown-it-mermaid/node_modules/mermaid/README.zh-CN.md"
+    "node_modules/mlly/README.md"
   ]
 }

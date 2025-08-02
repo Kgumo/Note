@@ -6,15 +6,15 @@
 
 ### Zlibrary — 全球最大的电子图书馆，九百万本电子书免费下载
 
-[Zlibrary](https://www.tboxn.com/tag/zlibrary)被称为全球最大的数字图书馆，里面包含 9,826,996 本电子书，84,837,646 篇期刊文章。 从各种知名文学著作，理工学科，人文艺术、到学术论文等应有尽有！支持PDF、epub、mobi等多种格式图书资源下载绝对是你找书的不二选择。
+Zlibrary被称为全球最大的数字图书馆，里面包含 9,826,996 本电子书，84,837,646 篇期刊文章。 从各种知名文学著作，理工学科，人文艺术、到学术论文等应有尽有！支持PDF、epub、mobi等多种格式图书资源下载绝对是你找书的不二选择。
 ![](/public/images/Zlibrary.png)
 **更新日期：2025年6月22日01:34:41**
 
 最新解决方案：
 
-长期更新地址：https://www.tboxn.com/sites/320.html
+长期更新地址： https://www.tboxn.com/sites/320.html
 
-第三方：https://z-lib.su
+第三方： https://z-lib.su
 
 ## 数据与结构
 ### Hello算法
@@ -75,17 +75,17 @@ Clash是用Go语言开发的开源多平台代理工具，支持Shadowsocks、VM
 优势：支持多种编程语言，如Python、Java、C++等。社区活跃，用户可以在上面分享解题思路和代码，还提供竞赛功能，模拟面试环境。
 适用人群：适合准备面试、提升算法能力的人群。
 
-网站链接：https://leetcode.cn/
+网站链接： https://leetcode.cn/
 ### 洛谷
 洛谷是面向国内信息学竞赛与编程学习的在线平台。它有丰富多样的题库，题目覆盖算法竞赛基础到进阶的各个难度层次，像搜索算法、动态规划等经典算法的题目都能找到，适合不同水平的学习者。
 
-网站链接：https://www.luogu.com.cn/
+网站链接： https://www.luogu.com.cn/
 ### HackerRank
 简介：提供丰富的编程挑战，涉及算法、人工智能、数据库等多个领域。除了题目练习，还提供技术教程和认证考试。
 优势：企业会在上面发布招聘信息和编程挑战，对于求职者来说是一个展示自己能力的平台。
 适用人群：适合想要全面提升编程技能、寻求工作机会的开发者。
 
-网站链接：https://www.hackerrank.com/
+网站链接： https://www.hackerrank.com/
 ### GitHub （下面有链接）
 在GitHub上面也有很多，甚至还有很多关于一年一月的黑客节，以及众多开发者上传的题，以及开源项目和first issue
 
@@ -96,7 +96,7 @@ Clash是用Go语言开发的开源多平台代理工具，支持Shadowsocks、VM
 DeepSeek-R1 32b、AI-40、AI-4.0、DeepSeek-R1 0528、DeepSeek-V3 0324、Doubao 1.5 Pro Thinking、WeTab Al-Code、WeTab Cd3.5s等等
 还能根据需要创建相关的智能体
 
-网站链接：https://wetab.link/
+网站链接： https://wetab.link/
 ![WeTab截图](/public/images/wetab.png)
 
 ## 托管平台和开源项目
@@ -105,7 +105,7 @@ GitHub是全球知名的基于Web的代码托管和协作开发平台，由Chris
 它以Git分布式版本控制系统为基础，支持开发者对代码进行版本管理，提供公共和私有仓库服务。借助拉取请求、问题跟踪等功能，极大便利了团队协作开发。
 GitHub社区氛围活跃，汇聚海量开源项目，覆盖各类编程语言与应用场景，如Linux内核、TensorFlow等。其社交属性强，开发者能关注他人、为项目点赞评论等。同时也是学习交流的优质平台，利于开发者提升技术。
 在商业领域，企业常用它进行内部开发管理，还能作为招聘时评估开发者能力的依据。
-具体的介绍可以参考[Git远程仓库](2.Git远程仓库)
+具体的介绍可以参考[点击即可](./C++/4.C++研修阶段/第3节工具使用/2.Git远程仓库.md)  
 网站链接： https://github.com/
 
 ## markdown（.md）/记笔记文件
