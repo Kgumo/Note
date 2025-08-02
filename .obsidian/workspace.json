@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "resources.md",
+                "file": "C++/4.C++研修阶段/第3节 工具使用/2.Git远程仓库.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "resources"
+              "title": "2.Git远程仓库"
             }
           }
         ]
@@ -172,8 +172,9 @@
   },
   "active": "25ddd1ce847df241",
   "lastOpenFiles": [
-    "AI/机器学习/09.集成学习/AdaBoost算法核心流程.md",
     "resources.md",
+    "C++/4.C++研修阶段/第3节 工具使用/2.Git远程仓库.md",
+    "AI/机器学习/09.集成学习/AdaBoost算法核心流程.md",
     "C++/1.C语言基础/index.md",
     "C++/2.C++基础课程/index.md",
     "node_modules/@liradb2000/markdown-it-mermaid/node_modules/mermaid/package.json",
@@ -216,7 +217,6 @@
     "node_modules/mlly/node_modules/pkg-types/README.md",
     "node_modules/vitepress-plugin-mermaid/README.md",
     "node_modules/non-layered-tidy-tree-layout/README.md",
-    "node_modules/@liradb2000/markdown-it-mermaid/node_modules/mermaid/README.zh-CN.md",
-    "node_modules/cytoscape-cose-bilkent/README.md"
+    "node_modules/@liradb2000/markdown-it-mermaid/node_modules/mermaid/README.zh-CN.md"
   ]
 }
