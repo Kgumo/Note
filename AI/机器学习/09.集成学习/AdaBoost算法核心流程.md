@@ -152,7 +152,7 @@ $(\max \alpha_t \iff \min \epsilon_t(1-\epsilon_t))$（优化目标）
 - **核心公式**：  
   $\alpha_t = \frac{1}{2} \ln \left( \frac{1 - \epsilon_t}{\epsilon_t} \right)$
 - **行为分析**：  
-  ![](public/images/AdaBoost核心公式图解.jpg)
+  ![](public/images/AdaBoost核心公式图解.png)
   - $\epsilon_t \to 0$时：$\alpha_t \to +\infty$（完美分类器）  
   - $\epsilon_t = 0.5$时：$\alpha_t = 0$（随机猜测）
 ##### **5. 更新样本权重**

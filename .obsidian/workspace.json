@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "resources.md",
+                "file": "AI/机器学习/09.集成学习/AdaBoost算法核心流程.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "resources"
+              "title": "AdaBoost算法核心流程"
             }
           }
         ]
@@ -172,6 +172,9 @@
   },
   "active": "25ddd1ce847df241",
   "lastOpenFiles": [
+    "resources.md",
+    "C++/1.C语言基础/index.md",
+    "C++/2.C++基础课程/index.md",
     "node_modules/@liradb2000/markdown-it-mermaid/node_modules/mermaid/package.json",
     "node_modules/mermaid/dist/mermaidAPI.d.ts",
     "node_modules/dagre-d3-es/src/dagre-js/render.d.ts",
@@ -182,9 +185,7 @@
     "node_modules/mermaid/dist/types.d.ts",
     "node_modules/mermaid/dist/utils.d.ts",
     "node_modules/mermaid/dist/Diagram.d.ts",
-    "node_modules/mermaid/dist/config.type.d.ts",
     "我们只是通过无数的思维模型在给世界建模.md",
-    "resources.md",
     "public/images/siwei10.png",
     "public/images/siwei9.png",
     "public/images/siwei8.png",
@@ -216,7 +217,6 @@
     "node_modules/non-layered-tidy-tree-layout/README.md",
     "node_modules/@liradb2000/markdown-it-mermaid/node_modules/mermaid/README.zh-CN.md",
     "node_modules/cytoscape-cose-bilkent/README.md",
-    "node_modules/@types/d3-delaunay/README.md",
-    "node_modules/@types/d3-scale/README.md"
+    "node_modules/@types/d3-delaunay/README.md"
   ]
 }
