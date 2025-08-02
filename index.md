@@ -4,7 +4,8 @@ layout: home
 hero:
   name: "额滴笔记"
   text: "从学习计算机至今的相关内容"
-  tagline: 吾魂兮无求乎永生 竭尽兮人事之所能
+  tagline: "吾魂兮无求乎永生 \n\t\t\t竭尽兮人事之所能\n
+   "
   image:
     src: /2.png
     alt: 知识图谱
@@ -16,6 +17,8 @@ hero:
       text: ⚙️ 人工智能（AI）及其核心技术体系
       link: /api-examples
     
+
+
 
 features:
   - icon: 🧠

@@ -4,39 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "687ce1ec7a478604",
+        "id": "494fb964de47556a",
         "type": "tabs",
         "children": [
           {
-            "id": "263f59dc95f873e5",
+            "id": "25ddd1ce847df241",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "C++/1.C语言基础/index.md",
+                "file": "resources.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "index"
-            }
-          },
-          {
-            "id": "52b9d84333c757b0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "AI/机器学习/07.支持向量机（SVM）/index.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "index"
+              "title": "resources"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -93,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 338.5
+    "width": 273.5
   },
   "right": {
     "id": "64d7040b05e45dda",
@@ -185,53 +170,53 @@
       "vitepress-publisher:start vitepress": false
     }
   },
-  "active": "52b9d84333c757b0",
+  "active": "25ddd1ce847df241",
   "lastOpenFiles": [
-    "C++/index.md",
-    "AI/index.md",
+    "node_modules/@liradb2000/markdown-it-mermaid/node_modules/mermaid/package.json",
+    "node_modules/mermaid/dist/mermaidAPI.d.ts",
+    "node_modules/dagre-d3-es/src/dagre-js/render.d.ts",
+    "node_modules/dagre-d3-es/src/index.d.ts",
+    "node_modules/dagre-d3-es/package.json",
+    "node_modules/mermaid/dist/internals.d.ts",
+    "node_modules/mermaid/dist/errors.d.ts",
+    "node_modules/mermaid/dist/types.d.ts",
+    "node_modules/mermaid/dist/utils.d.ts",
+    "node_modules/mermaid/dist/Diagram.d.ts",
+    "node_modules/mermaid/dist/config.type.d.ts",
+    "我们只是通过无数的思维模型在给世界建模.md",
     "resources.md",
-    "public/images/Obsidian.png",
-    "api-examples.md",
-    "public/Zlibrary.png.md",
-    "public/whead.png",
-    "C++/2.C++基础课程/1.基础语法和程序结构/09.指针和函数、字符串.md",
-    "public/images/Zlibrary.png",
-    "AI/机器学习/06.基于实例的学习方法/在无限样本下，1-NN的错误率不超过贝叶斯最优错误率的2倍的解析.md",
-    "AI/机器学习/06.基于实例的学习方法/最近邻.md",
-    "AI/机器学习/06.基于实例的学习方法/index.md",
-    "AI/机器学习/05.贝叶斯学习/极大后验假设与极大似然.md",
-    "AI/机器学习/05.贝叶斯学习/叶贝斯定理  朴素叶贝斯假设 朴素叶贝斯分类器.md",
-    "AI/机器学习/05.贝叶斯学习/index.md",
-    "AI/机器学习/05.贝叶斯学习/MDL和 MAP.md",
-    "AI/机器学习/03.决策树/随机森林与决策树的关系.md",
-    "AI/机器学习/03.决策树/单棵树——一个独立的决策树模型.md",
-    "AI/机器学习/03.决策树/决策树里随机数的作用.md",
-    "AI/机器学习/03.决策树/叶子节点概率预测.md",
-    "AI/机器学习/04.回归分析/离群点的检测.md",
-    "AI/机器学习/04.回归分析/线性回归里面的相关系数和决定系数.md",
-    "AI/机器学习/03.决策树/决策树构建思路与修正.md",
-    "AI/机器学习/03.决策树/基于决策树的LOL胜负预测.md",
-    "AI/机器学习/02,机器学习实验方法与原则/index.md",
-    "AI/机器学习/01.机器学习基础/index.md",
-    "index.md",
-    "C++/3.C++进阶课程/第5节 网络编程/index.md",
-    "C++/3.C++进阶课程/第5节 网络编程/1.网络编程预备知识.md",
-    "node_modules/birpc/package.json",
-    "node_modules/hookable/package.json",
-    "node_modules/tabbable/package.json",
-    "node_modules/perfect-debounce/package.json",
-    "node_modules/@vue/devtools-shared/package.json",
-    "node_modules/focus-trap/package.json",
-    "node_modules/@vueuse/shared/index.mjs",
-    "node_modules/@vueuse/shared/package.json",
-    "node_modules/@vue/devtools-kit/package.json",
-    "node_modules/@vueuse/integrations/useFocusTrap.mjs",
-    "node_modules/npm/node_modules/unique-filename/coverage/sort-arrow-sprite.png",
-    "node_modules/npm/node_modules/retry/equation.gif",
-    "node_modules/npm/node_modules/qrcode-terminal/example/basic.png",
-    "node_modules/npm/node_modules/psl/browserstack-logo.svg",
-    "public/images/CS.png",
-    "public/images/Hello.png",
-    "node_modules/cytoscape-fcose/demo/demo.gif"
+    "public/images/siwei10.png",
+    "public/images/siwei9.png",
+    "public/images/siwei8.png",
+    "public/images/siwei7.png",
+    "public/images/siwei6.png",
+    "public/images/siwei5.png",
+    "public/images/siwei4.png",
+    "public/images/siwei3.png",
+    "public/images/siwei2.png",
+    "public/images/siwei1.png",
+    "node_modules/khroma/readme.md",
+    "node_modules/cytoscape-fcose/node_modules/layout-base/README.md",
+    "node_modules/vscode-jsonrpc/README.md",
+    "node_modules/@liradb2000/markdown-it-mermaid/node_modules/dompurify/README.md",
+    "node_modules/mlly/node_modules/confbox/README.md",
+    "node_modules/marked/README.md",
+    "node_modules/marked/LICENSE.md",
+    "node_modules/@mermaid-js/mermaid-mindmap/node_modules/@braintree/sanitize-url/README.md",
+    "node_modules/acorn/CHANGELOG.md",
+    "node_modules/quansync/LICENSE.md",
+    "node_modules/cytoscape/README.md",
+    "node_modules/cytoscape/CODE_OF_CONDUCT.md",
+    "node_modules/@liradb2000/markdown-it-mermaid/node_modules/@braintree/sanitize-url/README.md",
+    "node_modules/mlly/README.md",
+    "node_modules/vscode-languageserver-textdocument/README.md",
+    "node_modules/@types/d3-dispatch/README.md",
+    "node_modules/mlly/node_modules/pkg-types/README.md",
+    "node_modules/vitepress-plugin-mermaid/README.md",
+    "node_modules/non-layered-tidy-tree-layout/README.md",
+    "node_modules/@liradb2000/markdown-it-mermaid/node_modules/mermaid/README.zh-CN.md",
+    "node_modules/cytoscape-cose-bilkent/README.md",
+    "node_modules/@types/d3-delaunay/README.md",
+    "node_modules/@types/d3-scale/README.md"
   ]
 }

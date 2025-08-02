@@ -1,0 +1,281 @@
+/* ================= 顶部导航栏全面美化 ================= */
+:root {
+  /* 定义统一的背景色 */
+  --vp-navbar-bg-color: var(--vp-c-bg-soft);
+  --vp-navbar-border-color: var(--vp-c-divider);
+}
+
+.dark {
+  --vp-navbar-bg-color: var(--vp-c-bg-alt);
+  --vp-navbar-border-color: var(--vp-c-divider-dark);
+}
+
+.VPNavBar {
+  backdrop-filter: blur(12px) saturate(180%) !important;
+  background: var(--vp-navbar-bg-color) !important; /* 使用统一背景色 */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border-bottom: 1px solid var(--vp-navbar-border-color) !important; /* 使用统一边框色 */
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 64px;
+}
+
+/* 确保侧边栏颜色匹配 */
+.VPSidebar {
+  background: var(--vp-navbar-bg-color) !important;
+  border-right: 1px solid var(--vp-navbar-border-color) !important;
+}
+
+/* 导航栏内容容器 */
+.VPNavBar .container {
+  max-width: 1440px;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-wrap: nowrap;
+}
+
+/* ================= 修复 Logo 和标题显示 ================= */
+.VPNavBarTitle {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  margin-right: 24px;
+  height: 100%;
+}
+
+.VPNavBarTitle .logo {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  width: auto !important;
+  height: 36px !important;
+  margin-right: 12px;
+}
+
+/* 修复标题文字显示 - 使用与侧边栏一致的文本颜色 */
+.VPNavBarTitle .title {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--vp-c-text-1) !important; /* 使用主文本颜色 */
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: all 0.3s ease;
+}
+
+.VPNavBarTitle .title:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* ================= 修复凸出菜单项 ================= */
+.VPNavBarMenu {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: 0 20px;
+  flex-wrap: nowrap;
+}
+
+.VPNavBarMenuLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease;
+  color: var(--vp-c-text-1); /* 使用主文本颜色 */
+  white-space: nowrap;
+}
+
+.VPNavBarMenuLink:hover {
+  color: var(--vp-c-brand);
+  background: rgba(100, 108, 255, 0.08);
+}
+
+.VPNavBarMenuLink.active {
+  color: var(--vp-c-brand);
+  font-weight: 600 !important;
+}
+
+.VPNavBarMenuLink.active::after {
+  content: "";
+  position: absolute;
+  bottom: 8px !important;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 2px;
+  background: var(--vp-c-brand);
+  border-radius: 2px;
+}
+
+/* 搜索框美化 */
+.VPNavBar .VPNavBarSearch .DocSearch-Button {
+  background: rgba(125, 125, 125, 0.08);
+  border-radius: 8px;
+  padding: 0.35rem 0.8rem;
+  margin: 0 0.5rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.VPNavBar .VPNavBarSearch .DocSearch-Button:hover {
+  background: rgba(100, 108, 255, 0.12);
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
+}
+
+.VPNavBar .VPNavBarSearch .DocSearch-Button-Placeholder {
+  font-size: 0.9rem;
+}
+
+/* 社交图标 */
+.VPNavBar .VPNavBarSocialLinks .social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(125, 125, 125, 0.08);
+  transition: all 0.3s ease;
+  margin: 0 0.25rem;
+  flex-shrink: 0;
+}
+
+.VPNavBar .VPNavBarSocialLinks .social-link:hover {
+  background: var(--vp-c-brand-light);
+  transform: translateY(-3px);
+}
+
+.VPNavBar .VPNavBarSocialLinks .social-link .icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* 行动按钮 */
+.VPNavBar .VPNavBarActions .action {
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-left: 0.75rem;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.VPNavBar .VPNavBarActions .action.primary {
+  background: linear-gradient(135deg, var(--vp-c-brand), var(--vp-c-brand-light));
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(100, 108, 255, 0.25);
+}
+
+.VPNavBar .VPNavBarActions .action.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(100, 108, 255, 0.35);
+}
+
+.VPNavBar .VPNavBarActions .action.secondary {
+  border: 1px solid var(--vp-c-brand-light);
+  color: var(--vp-c-brand);
+}
+
+.VPNavBar .VPNavBarActions .action.secondary:hover {
+  background: rgba(100, 108, 255, 0.08);
+}
+
+/* 移动端菜单按钮 */
+.VPNavBar .VPNavBarHamburger {
+  display: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: rgba(125, 125, 125, 0.08);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.VPNavBar .VPNavBarHamburger:hover {
+  background: rgba(100, 108, 255, 0.12);
+}
+
+/* 响应式调整 */
+@media (max-width: 960px) {
+  .VPNavBarTitle .logo {
+    height: 32px !important;
+  }
+  
+  .VPNavBarTitle .title {
+    font-size: 1.3rem;
+  }
+  
+  .VPNavBarMenu {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 1rem;
+    margin: 0;
+  }
+  
+  .VPNavBarMenuLink {
+    height: auto;
+    padding: 10px 0 !important;
+    width: 100%;
+    white-space: normal;
+  }
+  
+  .VPNavBar .VPNavBarMenu,
+  .VPNavBar .VPNavBarSearch,
+  .VPNavBar .VPNavBarSocialLinks,
+  .VPNavBar .VPNavBarActions {
+    display: none;
+  }
+  
+  .VPNavBar .VPNavBarHamburger {
+    display: flex;
+  }
+  
+  .VPNavBar .container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* 侧边栏菜单美化 - 与导航栏统一 */
+.VPSidebar {
+  background: var(--vp-navbar-bg-color) !important;
+  border-right: 1px solid var(--vp-navbar-border-color) !important;
+}
+
+.VPSidebarNav .group .items {
+  padding-left: 0;
+}
+
+.VPSidebarNav .group .VPLink {
+  border-radius: 8px;
+  margin: 0.25rem 0;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  color: var(--vp-c-text-1); /* 统一文本颜色 */
+}
+
+.VPSidebarNav .group .VPLink:hover {
+  background: rgba(100, 108, 255, 0.08);
+}
+
+.VPSidebarNav .group .VPLink.active {
+  background: rgba(100, 108, 255, 0.12) !important;
+  color: var(--vp-c-brand);
+  font-weight: 500;
+}

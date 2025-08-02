@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import markdownItKatex from 'markdown-it-katex';
-import { withMermaid } from "vitepress-plugin-mermaid"; // 引入新插件
+import { withMermaid } from 'vitepress-plugin-mermaid';
 
 // 获取当前文件路径
 const __filename = fileURLToPath(import.meta.url);
@@ -33,7 +33,7 @@ const aiSidebar = set_sidebar("AI");
 console.log('C++ 侧边栏:', cppSidebar);
 console.log('AI 侧边栏:', aiSidebar);
 
-// 使用 withMermaid 包裹整个配置
+// 使用 withMermaid 包裹 defineConfig
 export default withMermaid(defineConfig({
   base: "/Note/",
   head: [
@@ -47,7 +47,11 @@ export default withMermaid(defineConfig({
       href: "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css",
       crossorigin: "anonymous"
     }],
-    // 注意：移除了手动添加的mermaid脚本，因为插件会自动处理
+    // 引入自定义CSS
+    ["link", { 
+      rel: "stylesheet", 
+      href: "/Note/.vitepress/theme/custom.css" 
+    }],
   ],
 
   title: "额滴笔记",
@@ -59,6 +63,8 @@ export default withMermaid(defineConfig({
   themeConfig: {
     outlineTitle: "📚 本文目录",
     outline: [2, 6],
+    // 启用平滑滚动
+    smoothScroll: true,
     
     logo: '/whead.png',
     nav: [
@@ -126,10 +132,7 @@ export default withMermaid(defineConfig({
         }, 
         link: 'https://github.com/Kgumo' 
       },
-      {
-        icon: 'discord',
-        link: 'https://discord.gg/your-invite'
-      }
+      
     ],
 
     lastUpdated: {
@@ -152,21 +155,31 @@ export default withMermaid(defineConfig({
   markdown: {
     lineNumbers: true,
     config: (md) => {
-      // 只保留katex插件
+      // 使用 Katex 插件
       md.use(markdownItKatex.default || markdownItKatex);
       
-      // 移除了mermaid插件相关代码
-      
-      // 自定义锚点渲染
-      md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
-        const token = tokens[idx];
-        const level = token.tag.slice(1);
-        const nextToken = tokens[idx + 1];
-        const children = nextToken.content;
-        const id = encodeURIComponent(children.toLowerCase().replace(/\s+/g, '-'));
-        
-        return `<${token.tag} id="${id}" class="heading-anchor">`;
-      };
+      // 注意：已移除自定义锚点渲染规则
+      // 使用 Vitepress 默认的锚点生成机制
+    }
+  },
+  
+  // Mermaid 特定配置
+  mermaid: {
+    theme: 'dark',
+    securityLevel: 'loose',
+    flowchart: { 
+      useMaxWidth: true,
+      htmlLabels: true,
+      curve: 'basis'
+    },
+    // 确保在深色/浅色模式切换时更新主题
+    beforeInit: (mermaidAPI) => {
+      document.addEventListener('vitepress:theme-change', (event) => {
+        mermaidAPI.initialize({
+          ...mermaidAPI.mermaidAPI.getConfig(),
+          theme: event.detail.isDark ? 'dark' : 'default'
+        });
+      });
     }
   },
   
@@ -181,9 +194,20 @@ export default withMermaid(defineConfig({
         allow: ['..']
       }
     },
-    // 确保SSR正确处理
+    // 添加Vite配置以解决ESM问题
+    optimizeDeps: {
+      include: ['mermaid'],
+      esbuildOptions: {
+        target: 'esnext'
+      }
+    },
     ssr: {
-      noExternal: ['vitepress-plugin-mermaid', 'mermaid']
+      noExternal: ['mermaid']
+    },
+    build: {
+      rollupOptions: {
+        external: ['vitepress-plugin-mermaid']
+      }
     }
   }
 }));

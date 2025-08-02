@@ -1,17 +1,17 @@
-// https://vitepress.dev/guide/custom-theme
-import { h } from 'vue'
 import DefaultTheme from 'vitepress/theme'
-import './style.css'
+import 'vitepress/dist/client/theme-default/styles/vars.css'
+import 'vitepress/dist/client/theme-default/styles/base.css'
+import { h } from 'vue'
 
-/** @type {import('vitepress').Theme} */
 export default {
-  extends: DefaultTheme,
+  ...DefaultTheme,
+  
   Layout: () => {
-    return h(DefaultTheme.Layout, null, {
-      // https://vitepress.dev/guide/extending-default-theme#layout-slots
-    })
+    // 简化布局处理
+    return h(DefaultTheme.Layout)
   },
-  enhanceApp({ app, router, siteData }) {
-    // ...
+  
+  enhanceApp({ app }) {
+    // 可以注册全局组件
   }
 }

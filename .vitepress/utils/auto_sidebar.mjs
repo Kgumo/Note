@@ -1,15 +1,15 @@
 import path from "node:path";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
-
+// import config from './utils/sidebar-config.json' assert { type: 'json' };
+// const NO_OVERVIEW_DIRS = config.noOverviewDirs || [];
 // 获取当前模块的绝对路径
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // 项目根目录
 const ROOT_PATH = path.join(__dirname, "../..");
-// 修复点：文档目录直接使用项目根目录
-const DOCS_PATH = ROOT_PATH; 
+const DOCS_PATH = ROOT_PATH;
 
 // 白名单和忽略规则
 const IGNORE_LIST = [
@@ -27,15 +27,11 @@ const IGNORE_LIST = [
 // 排序规则
 const SORT_ORDER = {
   "index.md": 0,
-  "README.md": 0,
   "getting-started.md": 1,
   "installation.md": 2,
   "configuration.md": 3,
   "advanced.md": 4
 };
-
-// 调试日志：显示文档路径
-console.log(`文档根目录: ${DOCS_PATH}`);
 
 // 判断是否是文件夹
 const isDirectory = (path) => {
@@ -62,6 +58,9 @@ const getSortWeight = (name) => {
   return SORT_ORDER[lowerName] ?? 100;
 };
 
+ const NO_OVERVIEW_DIRS = [
+  "/C++/1.C语言基础"          
+]; 
 // 递归生成侧边栏
 function generateSidebarItems(basePath, relativePath) {
   const sidebarItems = [];
@@ -84,7 +83,24 @@ function generateSidebarItems(basePath, relativePath) {
       return aWeight - bWeight || a.localeCompare(b);
     });
   
-  console.log(`处理目录: ${basePath}, 有效项目:`, validFiles);
+  // 检查当前目录是否需要跳过"概述"项
+  const skipOverview = NO_OVERVIEW_DIRS.some(dir => 
+    relativePath.endsWith(dir)
+  );
+  
+  // 检查目录是否有 index.md
+  const hasIndex = validFiles.some(file => 
+    file.toLowerCase() === "index.md" && 
+    !isDirectory(path.join(basePath, file))
+  );
+  
+  // 如果有 index.md 且不需要跳过概述，添加概述项
+  if (hasIndex && !skipOverview) {
+    sidebarItems.push({
+      text: "概述",
+      link: `${relativePath}/`
+    });
+  }
   
   for (const file of validFiles) {
     const fullPath = path.join(basePath, file);
@@ -108,24 +124,16 @@ function generateSidebarItems(basePath, relativePath) {
       const suffix = path.extname(file);
       if (suffix !== ".md") continue;
       
-      const isIndex = file.toLowerCase() === "index.md";
+      // 在需要跳过概述的目录中不跳过 index.md
+      if (file.toLowerCase() === "index.md" && !skipOverview) continue;
+      
       const name = file.replace(/\.md$/i, "");
       
       sidebarItems.push({
-        text: isIndex ? "概述" : formatTitle(name),
-        link: isIndex 
-          ? `${relativePath}/` 
-          : `${relativePath}/${name}`,
+        text: formatTitle(name),
+        link: `${relativePath}/${name}`,
       });
     }
-  }
-  
-  // 添加目录首页
-  if (fs.existsSync(path.join(basePath, "index.md"))) {
-    sidebarItems.unshift({
-      text: "概述",
-      link: `${relativePath}/`
-    });
   }
   
   return sidebarItems;
@@ -142,15 +150,10 @@ export const set_sidebar = (pathname = "") => {
   const targetPath = pathname ? pathname : "";
   const dirPath = path.join(DOCS_PATH, targetPath);
 
-  console.log(`开始扫描目录: ${dirPath}`);
-  console.log(`目录存在: ${fs.existsSync(dirPath)}`);
-
   if (!fs.existsSync(dirPath)) {
     console.warn(`目录不存在: ${dirPath}`);
     return [];
   }
 
-  const sidebar = generateSidebarItems(dirPath, `/${targetPath}`);
-  console.log(`生成侧边栏: ${JSON.stringify(sidebar, null, 2)}`);
-  return sidebar;
+  return generateSidebarItems(dirPath, `/${targetPath}`);
 };
