@@ -16,14 +16,6 @@
 
 第三方：https://z-lib.su
 
-官方地址：https://zh.zlib.fi/✅目前正常💻
-
-官方地址：https://z-library.sk/✅目前正常💻
-
-官方地址：https://z-lib.fm/✅需要特殊网络💻
-
-官方地址：https://z-library.sk✅需要特殊网络💻
-
 ## 数据与结构
 ### Hello算法
 这是目前我找到最好的关于数据结构的书，包含了各种基础语言形式的代码去讲解相关的算法或者结构。

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "C++/4.C++研修阶段/第3节 工具使用/2.Git远程仓库.md",
+                "file": "resources.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2.Git远程仓库"
+              "title": "resources"
             }
           }
         ]
@@ -172,8 +172,8 @@
   },
   "active": "25ddd1ce847df241",
   "lastOpenFiles": [
-    "resources.md",
     "C++/4.C++研修阶段/第3节 工具使用/2.Git远程仓库.md",
+    "resources.md",
     "AI/机器学习/09.集成学习/AdaBoost算法核心流程.md",
     "C++/1.C语言基础/index.md",
     "C++/2.C++基础课程/index.md",
