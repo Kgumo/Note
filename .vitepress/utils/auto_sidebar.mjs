@@ -10,7 +10,6 @@ const __dirname = path.dirname(__filename);
 // 项目根目录
 const ROOT_PATH = path.join(__dirname, "../..");
 const DOCS_PATH = ROOT_PATH;
-
 // 白名单和忽略规则
 const IGNORE_LIST = [
   ".vitepress",
@@ -58,17 +57,15 @@ const getSortWeight = (name) => {
   return SORT_ORDER[lowerName] ?? 100;
 };
 
- const NO_OVERVIEW_DIRS = [
-  "/C++/1.C语言基础"          
-]; 
 // 递归生成侧边栏
-function generateSidebarItems(basePath, relativePath) {
+function generateSidebarItems(basePath, relativePath, config) {
   const sidebarItems = [];
   
   // 读取目录内容
   let files;
   try {
     files = fs.readdirSync(basePath);
+    console.log(`在 ${basePath} 中找到文件:`, files);
   } catch (error) {
     console.error(`读取目录失败: ${basePath}`, error);
     return [];
@@ -83,8 +80,10 @@ function generateSidebarItems(basePath, relativePath) {
       return aWeight - bWeight || a.localeCompare(b);
     });
   
+  console.log(`过滤后的文件: ${validFiles}`);
+  
   // 检查当前目录是否需要跳过"概述"项
-  const skipOverview = NO_OVERVIEW_DIRS.some(dir => 
+  const skipOverview = (config?.noOverviewDirs || []).some(dir => 
     relativePath.endsWith(dir)
   );
   
@@ -107,9 +106,11 @@ function generateSidebarItems(basePath, relativePath) {
     const isDir = isDirectory(fullPath);
     
     if (isDir) {
+      console.log(`处理目录: ${file}`);
       const childItems = generateSidebarItems(
         fullPath, 
-        `${relativePath}/${file}`
+        `${relativePath}/${file}`,
+        config
       );
       
       if (childItems.length > 0) {
@@ -122,13 +123,17 @@ function generateSidebarItems(basePath, relativePath) {
       }
     } else {
       const suffix = path.extname(file);
-      if (suffix !== ".md") continue;
+      if (suffix !== ".md") {
+        console.log(`跳过非 Markdown 文件: ${file}`);
+        continue;
+      }
       
       // 在需要跳过概述的目录中不跳过 index.md
       if (file.toLowerCase() === "index.md" && !skipOverview) continue;
       
       const name = file.replace(/\.md$/i, "");
       
+      console.log(`添加文件: ${name}`);
       sidebarItems.push({
         text: formatTitle(name),
         link: `${relativePath}/${name}`,
@@ -146,14 +151,33 @@ function formatTitle(name) {
     .replace(/^\w/, c => c.toUpperCase());
 }
 
-export const set_sidebar = (pathname = "") => {
+export const set_sidebar = (pathname = "", configPath) => {
+  console.log(`生成 ${pathname} 的侧边栏`);
+  
   const targetPath = pathname ? pathname : "";
   const dirPath = path.join(DOCS_PATH, targetPath);
+  console.log(`目录路径: ${dirPath}`);
 
   if (!fs.existsSync(dirPath)) {
-    console.warn(`目录不存在: ${dirPath}`);
+    console.error(`目录不存在: ${dirPath}`);
+    console.log('请创建目录或检查路径');
     return [];
   }
 
-  return generateSidebarItems(dirPath, `/${targetPath}`);
+  // 读取配置文件
+  let config = { noOverviewDirs: [] };
+  try {
+    if (fs.existsSync(configPath)) {
+      console.log(`加载配置文件: ${configPath}`);
+      const configData = fs.readFileSync(configPath, 'utf-8');
+      config = JSON.parse(configData);
+      console.log(`已加载 ${pathname} 侧边栏配置:`, config);
+    } else {
+      console.warn(`未找到配置文件: ${configPath}`);
+    }
+  } catch (error) {
+    console.error(`加载配置文件失败: ${configPath}`, error);
+  }
+
+  return generateSidebarItems(dirPath, `/${targetPath}`, config);
 };

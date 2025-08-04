@@ -1,17 +1,53 @@
-import DefaultTheme from 'vitepress/theme'
-import 'vitepress/dist/client/theme-default/styles/vars.css'
-import 'vitepress/dist/client/theme-default/styles/base.css'
-import { h } from 'vue'
+import DefaultTheme from 'vitepress/theme';
+import RecentPosts from './components/RecentPosts.vue'
+import CustomLayout from './Layout.vue'
+import CustomNav from './components/CustomNav.vue' 
+import './custom.css';
+import { h } from 'vue';
+
+// 自定义组件
+const HeroStats = {
+  props: ['stats'],
+  render() {
+    return h('div', { class: 'hero-stats' }, 
+      this.stats.map(stat => 
+        h('div', { class: 'stat-item' }, [
+          h('div', { class: 'stat-value' }, stat.value),
+          h('div', { class: 'stat-label' }, stat.label)
+        ])
+      )
+    );
+  }
+};
+
+const FeatureProgress = {
+  props: ['value', 'label'],
+  render() {
+    return h('div', { class: 'progress-container' }, [
+      h('div', { 
+        class: 'progress-bar',
+        style: { width: `${this.value}%` }
+      }),
+      h('small', `${this.label}: ${this.value}%`)
+    ]);
+  }
+};
+
+const FeatureTags = {
+  props: ['tags'],
+  render() {
+    return h('div', { class: 'feature-tags' }, 
+      this.tags.map(tag => 
+        h('span', { class: 'feature-tag' }, tag)
+      )
+    );
+  }
+};
 
 export default {
-  ...DefaultTheme,
-  
-  Layout: () => {
-    // 简化布局处理
-    return h(DefaultTheme.Layout)
-  },
-  
+  extends: DefaultTheme,
+  Layout: CustomLayout,
   enhanceApp({ app }) {
-    // 可以注册全局组件
+    app.component('RecentPosts', RecentPosts)
   }
 }

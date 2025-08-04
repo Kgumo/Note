@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
+import fs from 'fs';
 import markdownItKatex from 'markdown-it-katex';
 import { withMermaid } from 'vitepress-plugin-mermaid';
 
@@ -11,10 +12,15 @@ const __dirname = path.dirname(__filename);
 // 动态导入侧边栏模块
 let set_sidebar;
 try {
-  const utilsPath = path.resolve(__dirname, './utils/auto_sidebar.mjs').replace(/\\/g, '/');
-  console.log(`导入侧边栏模块: ${utilsPath}`);
+  const utilsPath = path.resolve(__dirname, './utils/auto_sidebar.mjs');
+  const utilsUrl = pathToFileURL(utilsPath).href;
+  console.log(`导入侧边栏模块: ${utilsUrl}`);
   
-  const utilsUrl = new URL(`file:///${utilsPath}`).href;
+  if (!fs.existsSync(utilsPath)) {
+    console.error(`文件不存在: ${utilsPath}`);
+    throw new Error(`文件不存在: ${utilsPath}`);
+  }
+  
   const sidebarModule = await import(utilsUrl);
   set_sidebar = sidebarModule.set_sidebar;
 } catch (error) {
@@ -26,12 +32,16 @@ try {
 }
 
 // 动态生成侧边栏
-const cppSidebar = set_sidebar("C++");
-const aiSidebar = set_sidebar("AI");
+const configPath = path.resolve(__dirname, './utils/sidebar-config.json');
+const cppSidebar = set_sidebar("C++", configPath);
+const aiSidebar = set_sidebar("AI", configPath);
+const PostgraduateSidebar = set_sidebar("Postgraduate", configPath);
+const InternshipSidebar = set_sidebar("Internship", configPath);
 
-// 打印调试信息
-console.log('C++ 侧边栏:', cppSidebar);
-console.log('AI 侧边栏:', aiSidebar);
+console.log('C++ 侧边栏项目数:', cppSidebar?.length || 0);
+console.log('AI 侧边栏项目数:', aiSidebar?.length || 0);
+console.log('Postgraduate 侧边栏项目数:', PostgraduateSidebar?.length || 0);
+console.log('Internship 侧边栏项目数:', InternshipSidebar?.length || 0);
 
 // 使用 withMermaid 包裹 defineConfig
 export default withMermaid(defineConfig({
@@ -47,7 +57,6 @@ export default withMermaid(defineConfig({
       href: "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css",
       crossorigin: "anonymous"
     }],
-    // 引入自定义CSS
     ["link", { 
       rel: "stylesheet", 
       href: "/Note/.vitepress/theme/custom.css" 
@@ -63,7 +72,6 @@ export default withMermaid(defineConfig({
   themeConfig: {
     outlineTitle: "📚 本文目录",
     outline: [2, 6],
-    // 启用平滑滚动
     smoothScroll: true,
     
     logo: '/whead.png',
@@ -74,23 +82,38 @@ export default withMermaid(defineConfig({
         activeMatch: '^/$'
       },
       { 
+        text: '🌍 认知边界', 
+        link: '/我们只是通过无数的思维模型在给世界建模',
+        activeMatch: '/我们只是通过无数的思维模型在给世界建模'
+      },
+      { 
         text: '🧪 实验室', 
         items: [
           { text: "C++/Qt", link: '/C++/' },
           { text: "AI研究", link: '/AI/' }
         ]
       },
+      {
+        text: '🚤 跨越两岸',
+        items: [
+          { text: "考研", link: '/Postgraduate/' },
+          { text: "实习", link: '/Internship/' }
+        ],
+        className: 'nav-right'
+      },
       { 
         text: '🔗 资源', 
         link: '/resources',
-        activeMatch: '/resources'
+        activeMatch: '/resources',
+        className: 'nav-right'
       }
     ],
-
     sidebar: {
       "/C++/": cppSidebar,
-      "/AI/": aiSidebar
-    },
+      "/AI/": aiSidebar,
+      "/Postgraduate/": PostgraduateSidebar,
+      "/Internship/": InternshipSidebar  // 修复：使用变量而不是字符串
+    },  // 修复：添加逗号
 
     footer: {
       message: "知识如风，常伴吾身",
@@ -132,7 +155,6 @@ export default withMermaid(defineConfig({
         }, 
         link: 'https://github.com/Kgumo' 
       },
-      
     ],
 
     lastUpdated: {
@@ -149,21 +171,21 @@ export default withMermaid(defineConfig({
     docFooter: {
       prev: '上一篇',
       next: '下一篇'
+    },
+    
+    vars: {
+      '--vp-home-hero-name-color': 'transparent',
+      '--vp-home-hero-name-background': 'linear-gradient(120deg, var(--vp-c-brand) 0%, var(--vp-c-brand-light) 30%, var(--vp-c-brand) 70%, var(--vp-c-brand-darker) 100%)',
     }
-  },
+  },  // 修复：添加逗号
   
   markdown: {
     lineNumbers: true,
     config: (md) => {
-      // 使用 Katex 插件
       md.use(markdownItKatex.default || markdownItKatex);
-      
-      // 注意：已移除自定义锚点渲染规则
-      // 使用 Vitepress 默认的锚点生成机制
     }
   },
   
-  // Mermaid 特定配置
   mermaid: {
     theme: 'dark',
     securityLevel: 'loose',
@@ -172,7 +194,6 @@ export default withMermaid(defineConfig({
       htmlLabels: true,
       curve: 'basis'
     },
-    // 确保在深色/浅色模式切换时更新主题
     beforeInit: (mermaidAPI) => {
       document.addEventListener('vitepress:theme-change', (event) => {
         mermaidAPI.initialize({
@@ -191,10 +212,9 @@ export default withMermaid(defineConfig({
     },
     server: {
       fs: {
-        allow: ['..']
+        allow: ['..', __dirname]
       }
     },
-    // 添加Vite配置以解决ESM问题
     optimizeDeps: {
       include: ['mermaid'],
       esbuildOptions: {

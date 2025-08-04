@@ -1,5 +1,14 @@
 {
   "noOverviewDirs": [
     "/C++/1.C语言基础"
-  ]
+  ],
+  "ignore": [
+    "temp",
+    "drafts"
+  ],
+  "sortOrder": {
+    "introduction.md": 0,
+    "basics.md": 1,
+    "advanced.md": 2
+  }
 }
