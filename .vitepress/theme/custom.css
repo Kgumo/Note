@@ -635,3 +635,25 @@ body.sidebar-closed .VPDoc table {
     padding-left: 2rem; /* 桌面端文本左侧间距 */
   }
 }
+
+/* ================== 移动端默认关闭侧边栏 ================== */
+@media (max-width: 959px) {
+  body:not(.sidebar-open) .VPSidebar {
+    display: none;
+    transform: translateX(-100%);
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  body.sidebar-open .VPSidebar {
+    display: block;
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* 移动端初始状态为关闭 */
+  body:not(.sidebar-open) .VPContent {
+    padding: 0 1.5rem !important;
+  }
+}

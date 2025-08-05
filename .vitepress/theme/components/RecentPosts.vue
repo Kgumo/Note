@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { withBase } from 'vitepress'
 
 const props = defineProps({
   posts: {
@@ -24,25 +25,45 @@ onMounted(() => {
   }, props.loadingDelay)
 })
 
-// 修改后的链接处理函数
+// 简化的路径规范化函数
+function normalizePath(path) {
+  // 移除本地路径前缀
+  let cleanPath = path.replace('D:/0.Project/Note', '');
+  
+  // 确保路径以斜杠开头
+  if (!cleanPath.startsWith('/')) {
+    cleanPath = '/' + cleanPath;
+  }
+  
+  // 移除文件扩展名
+  cleanPath = cleanPath.replace(/\.md$/, '');
+  
+  // 处理包含index的路径
+  if (cleanPath.endsWith('/index')) {
+    cleanPath = cleanPath.substring(0, cleanPath.length - 6);
+  }
+  
+  // 确保路径以斜杠结尾
+  if (!cleanPath.endsWith('/')) {
+    cleanPath += '/';
+  }
+  
+  // 使用 Vitepress 的 withBase 函数
+  return withBase(cleanPath);
+}
+
+// 使用完整的页面加载
 function handleLinkClick(event, path) {
   event.preventDefault();
   
-  // 移除本地路径前缀
-  const cleanPath = path.replace('D:/0.Project/Note', '');
+  const targetPath = normalizePath(path);
+  console.log('导航到:', targetPath);
   
-  // 确保路径格式正确
-  let targetPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
-  targetPath = targetPath.replace(/\.md$/, '');
-  
-  // 添加 base 路径
-  const base = '/Note/'
-  if (!targetPath.startsWith(base)) {
-    targetPath = `${base}${targetPath.replace(/^\//, '')}`
-  }
-  
-  // 使用原生导航
-  window.location.href = targetPath;
+  // 创建临时链接进行完整页面加载
+  const link = document.createElement('a');
+  link.href = targetPath;
+  link.target = '_self';
+  link.click();
 }
 </script>
 
@@ -81,9 +102,8 @@ function handleLinkClick(event, path) {
             <div class="post-badge">New</div>
           </div>
           <div class="card-back">
-            <!-- 修改为绝对定位的链接 -->
             <a 
-              :href="post.link" 
+              :href="normalizePath(post.link)" 
               class="card-link"
               @click="handleLinkClick($event, post.link)"
             >
@@ -102,6 +122,7 @@ function handleLinkClick(event, path) {
     </div>
   </section>
 </template>
+
 
 <style scoped>
 .recent-updates-3d {
@@ -258,7 +279,7 @@ function handleLinkClick(event, path) {
 
 /* 修复：卡片背面改为绝对定位 */
 .card-back {
-   background: linear-gradient(
+  background: linear-gradient(
     135deg,
     var(--vp-c-brand),
     var(--vp-c-brand-dark)

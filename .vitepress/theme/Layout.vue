@@ -25,11 +25,25 @@ const updateBodyClass = () => {
   }
 }
 
+// 检查是否是移动端
+const isMobile = () => {
+  return window.innerWidth <= 959
+}
+
 onMounted(() => {
-  // 从 localStorage 读取状态
-  const savedState = localStorage.getItem('sidebar-state')
-  if (savedState === 'closed') {
+  // 检查是否是移动端
+  const mobile = isMobile()
+  
+  // 移动端默认关闭侧边栏
+  if (mobile) {
     isSidebarOpen.value = false
+    localStorage.setItem('sidebar-state', 'closed')
+  } else {
+    // 从 localStorage 读取状态
+    const savedState = localStorage.getItem('sidebar-state')
+    if (savedState === 'closed') {
+      isSidebarOpen.value = false
+    }
   }
   
   // 确保body元素存在

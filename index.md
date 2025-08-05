@@ -6,7 +6,7 @@ hero:
   text: "从“Hello World”到此刻与未来"
   tagline: "吾魂兮无求乎永生 竭尽兮人事之所能"
   image:
-    src: /10.png
+    src: /logo.svg
     alt: 知识图谱
   actions:
     - theme: brand
@@ -28,7 +28,7 @@ features:
     link: /AI/
     linkText: "探索技术 →"
   - icon: 🧩
-    title: "知识图谱"
+    title: "知识图谱（未开发）"
     details: "构建结构化知识体系网络"
     link: /knowledge-graph/
     linkText: "查看图谱 →"
@@ -59,6 +59,130 @@ features:
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+/* ========== 优化后的光晕效果 ========== */
+.VPHero .image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.VPHero .image {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.5s ease;
+}
+
+.VPHero .image:hover {
+  transform: scale(1.03);
+}
+
+/* SVG 线条颜色修改 */
+.VPHero .image img {
+  /* 将黑色线条改为品牌色 */
+  filter: 
+    brightness(0) 
+    invert(0.15) 
+    sepia(1) 
+    saturate(3000%) 
+    hue-rotate(240deg) 
+    brightness(0.9) 
+    contrast(1.1);
+  transition: filter 0.5s ease;
+}
+
+.VPHero .image:hover img {
+  /* 悬停时增加饱和度 */
+  filter: 
+    brightness(0) 
+    invert(0.1) 
+    sepia(1) 
+    saturate(4000%) 
+    hue-rotate(240deg) 
+    brightness(1) 
+    contrast(1.2);
+}
+
+/* 更小更精致的光晕效果 */
+.VPHero .image-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110%; /* 进一步缩小光晕尺寸 */
+  height: 110%; /* 进一步缩小光晕尺寸 */
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.5) 0%, /* 降低不透明度 */
+    rgba(255, 255, 255, 0.3) 30%, /* 更快过渡到透明 */
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70% /* 更早过渡到完全透明 */
+  );
+  border-radius: 50%;
+  z-index: 1;
+  animation: subtle-glow 4s ease-in-out infinite;
+  opacity: 0.5; /* 降低基础不透明度 */
+}
+
+/* 更微妙的动画 */
+@keyframes subtle-glow {
+  0% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.6; /* 更小的不透明度变化 */
+    transform: translate(-50%, -50%) scale(1.02); /* 更小的缩放变化 */
+  }
+  100% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* 添加微弱的品牌色光晕 */
+.VPHero .image-container::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 105%;
+  height: 105%;
+  background: radial-gradient(
+    circle at center,
+    rgba(79, 70, 229, 0.15) 0%,
+    rgba(79, 70, 229, 0.05) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0.3;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .VPHero .image-container::before {
+    width: 105%;
+    height: 105%;
+  }
+  
+  .VPHero .image-container::after {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .VPHero .image img {
+    filter: 
+      brightness(0) 
+      invert(0.15) 
+      sepia(1) 
+      saturate(2500%) 
+      hue-rotate(240deg) 
+      brightness(0.95) 
+      contrast(1.05);
+  }
 }
 </style>
 
@@ -127,6 +251,9 @@ onMounted(() => {
 </script>
 
 <RecentPosts :posts="[
-  { title: '集成学习：从Bagging到Boosting', date: '2025-7-31', link: 'D:/0.Project/Note/AI/机器学习/09.集成学习/index' },
-  { title: '更新了🔗 资源', date: '2025-8-2', link: 'D:/0.Project/Note/resources.md' }
+  { title: '集成学习：从Bagging到Boosting', date: '2025-7-31', link: '/AI/1.机器学习/09.集成学习/index' },
+  { title: '更新了🔗 资源', date: '2025-8-2', link: '/resources.md' },
+  { title: '更新驱风计划导学', date: '2025-8-6', link: 'D:/0.Project/Note/AI/0.课程基础知识/index' },
+  { title: '更新C++第三阶段实战，全是之前写过的题，包括IO，线程，容器等等的结合', date: '2025-8-6', link: 'D:/0.Project/Note/C++/3.C++进阶课程/第6节实战/index' },
+  { title: '更新C++第三阶段项目线程池（严禁商用！！！）', date: '2025-8-6', link: 'D:/0.Project/Note/C++/3.C++进阶课程/第6节实战/PTP项目' }
 ]"/>
