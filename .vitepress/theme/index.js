@@ -1,7 +1,7 @@
 import DefaultTheme from 'vitepress/theme';
-import RecentPosts from './components/RecentPosts.vue'
-import CustomLayout from './Layout.vue'
-import CustomNav from './components/CustomNav.vue' 
+import RecentPosts from './components/RecentPosts.vue';
+import CustomLayout from './Layout.vue';
+import KnowledgeGraph from './components/KnowledgeGraph.vue'; // 添加知识图谱组件
 import './custom.css';
 import { h } from 'vue';
 
@@ -48,6 +48,7 @@ export default {
   extends: DefaultTheme,
   Layout: CustomLayout,
   enhanceApp({ app }) {
-    app.component('RecentPosts', RecentPosts)
+    app.component('RecentPosts', RecentPosts);
+    app.component('KnowledgeGraph', KnowledgeGraph); // 注册知识图谱组件
   }
-}
+};

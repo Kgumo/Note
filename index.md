@@ -28,7 +28,7 @@ features:
     link: /AI/
     linkText: "探索技术 →"
   - icon: 🧩
-    title: "知识图谱（未开发）"
+    title: "知识图谱(只是示例，未更新)"
     details: "构建结构化知识体系网络"
     link: /knowledge-graph/
     linkText: "查看图谱 →"
