@@ -255,5 +255,6 @@ onMounted(() => {
   { title: '更新了🔗 资源', date: '2025-8-2', link: '/resources.md' },
   { title: '更新驱风计划导学', date: '2025-8-6', link: 'D:/0.Project/Note/AI/0.课程基础知识/index' },
   { title: '更新C++第三阶段实战，全是之前写过的题，包括IO，线程，容器等等的结合', date: '2025-8-6', link: 'D:/0.Project/Note/C++/3.C++进阶课程/第6节实战/index' },
-  { title: '更新C++第三阶段项目线程池（严禁商用！！！）', date: '2025-8-6', link: 'D:/0.Project/Note/C++/3.C++进阶课程/第6节实战/PTP项目' }
+  { title: '更新C++第三阶段项目线程池（严禁商用！！！）', date: '2025-8-6', link: 'D:/0.Project/Note/C++/3.C++进阶课程/第6节实战/PTP项目' },
+  { title: '填充知识图谱(只是示例，未具体更新)', date: '2025-8-6', link: '/knowledge-graph.md' }
 ]"/>
