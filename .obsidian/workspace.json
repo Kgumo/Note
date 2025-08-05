@@ -13,13 +13,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "C++/3.C++进阶课程/第6节实战/index.md",
+                "file": "resources.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "resources"
             }
           }
         ]
@@ -173,13 +173,13 @@
   },
   "active": "25ddd1ce847df241",
   "lastOpenFiles": [
+    "C++/3.C++进阶课程/第6节实战/index.md",
     "AI/0.课程基础知识/index.md",
     "AI/1.机器学习/09.集成学习/index.md",
     "AI/1.机器学习/09.集成学习/未被选中概率的公式的解析.md",
     "AI/index.md",
     "AI/1.机器学习/index.md",
     "AI/1.机器学习/09.集成学习/AdaBoost算法核心流程.md",
-    "C++/3.C++进阶课程/第6节实战/index.md",
     "C++/3.C++进阶课程/第6节实战/双日志系统1.0.md",
     "C++/3.C++进阶课程/第6节实战/PTP项目.md",
     "C++/3.C++进阶课程/第6节实战/异常安全的动态矩阵类Matrix实现.md",
