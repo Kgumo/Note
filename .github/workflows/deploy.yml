@@ -41,10 +41,10 @@ jobs:
 
       - name: Build with VitePress
         run: |
-          # 确保在项目根目录执行构建
+          # 确保在正确目录构建
           pnpm exec vitepress build docs --base /Note/ --clean
           
-          # 创建.nojekyll文件（确保在dist目录内）
+          # 创建.nojekyll文件（在dist目录内）
           touch docs/.vitepress/dist/.nojekyll
           
           # 修复路径问题（关键修复）
