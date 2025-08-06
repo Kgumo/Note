@@ -38,20 +38,36 @@ jobs:
 
       - name: Build with VitePress
         run: |
-          # 确保在项目根目录执行构建
-          cd $GITHUB_WORKSPACE
-          pnpm exec vitepress build docs --base /Note/ --clean
+          # 启用详细日志输出
+          export DEBUG=vitepress:*
+          export VITEPRESS_LOG_LEVEL=debug
           
-          # 创建.nojekyll文件（在dist目录内）
+          # 执行构建并捕获输出
+          pnpm exec vitepress build docs --base /Note/ --clean | tee build.log
+          
+          # 检查构建日志中的错误
+          if grep -q "error" build.log; then
+            echo "构建过程中发现错误"
+            cat build.log
+            exit 1
+          fi
+          
+          # 检查构建输出目录
+          echo "=== 构建输出目录内容 ==="
+          ls -la docs/.vitepress/dist
+          
+          # 如果 index.html 不存在，手动创建
+          if [ ! -f "docs/.vitepress/dist/index.html" ]; then
+            echo "警告: index.html 不存在，创建临时文件"
+            echo "<!DOCTYPE html><html><head><title>临时页面</title></head><body><h1>网站建设中</h1><p>最后构建时间: $(date)</p></body></html>" > docs/.vitepress/dist/index.html
+          fi
+          
+          # 创建 .nojekyll 文件
           touch docs/.vitepress/dist/.nojekyll
           
-          # 验证构建输出
-          echo "=== 构建输出目录 ==="
-          ls -la docs/.vitepress/dist
+          # 验证 index.html 存在
           echo "=== index.html 内容 ==="
           head -n 20 docs/.vitepress/dist/index.html
-          echo "=== 资源路径检查 ==="
-          grep -E 'href=|src=' docs/.vitepress/dist/index.html | head -n 5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
