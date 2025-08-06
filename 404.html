@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    // 自动重定向到正确路径
+    const path = window.location.pathname;
+    if (!path.startsWith('/Note/')) {
+      window.location.replace('/Note/' + path.replace(/^\//, ''));
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecting to correct path...</p>
+</body>
+</html>
