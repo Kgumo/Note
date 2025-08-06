@@ -4,23 +4,15 @@ on:
   push:
     branches: [master]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path: ['.vitepress/dist', 'docs/.vitepress/dist', 'dist']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -33,28 +25,31 @@ jobs:
           node-version: 18
           cache: pnpm
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
       - name: Install dependencies
         run: pnpm install
 
       - name: Build with VitePress
         run: |
-          # 使用正确的构建命令
           pnpm run docs:build
-          
-          # 在正确的输出目录创建 .nojekyll
           touch docs/.vitepress/dist/.nojekyll
           
-          # 验证构建输出
-          echo "构建输出目录内容:"
+          echo "构建输出目录:"
           ls -la docs/.vitepress/dist
+
+      - name: Verify build output
+        run: |
+          echo "检查路径: ${{ matrix.path }}"
+          if [ -d "${{ matrix.path }}" ]; then
+            echo "目录存在，内容:"
+            ls -la ${{ matrix.path }}
+          else
+            echo "目录不存在: ${{ matrix.path }}"
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/.vitepress/dist  # 修正为正确的输出路径
+          path: ${{ matrix.path }}
 
   deploy:
     environment:
@@ -62,7 +57,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
-    name: Deploy
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
