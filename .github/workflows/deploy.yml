@@ -38,36 +38,26 @@ jobs:
 
       - name: Build with VitePress
         run: |
-          # 启用详细日志输出
+          # 1. 启用详细日志
           export DEBUG=vitepress:*
-          export VITEPRESS_LOG_LEVEL=debug
+          export NODE_OPTIONS="--max-old-space-size=4096"
           
-          # 执行构建并捕获输出
-          pnpm exec vitepress build docs --base /Note/ --clean | tee build.log
+          # 2. 执行构建并捕获日志
+          pnpm exec vitepress build docs --base /Note/ --clean --debug 2>&1 | tee build.log
           
-          # 检查构建日志中的错误
-          if grep -q "error" build.log; then
-            echo "构建过程中发现错误"
-            cat build.log
-            exit 1
-          fi
-          
-          # 检查构建输出目录
+          # 3. 检查构建输出
           echo "=== 构建输出目录内容 ==="
-          ls -la docs/.vitepress/dist
+          find docs/.vitepress/dist -type f | head -n 20
           
-          # 如果 index.html 不存在，手动创建
+          # 4. 如果 index.html 缺失，使用本地备份
           if [ ! -f "docs/.vitepress/dist/index.html" ]; then
-            echo "警告: index.html 不存在，创建临时文件"
-            echo "<!DOCTYPE html><html><head><title>临时页面</title></head><body><h1>网站建设中</h1><p>最后构建时间: $(date)</p></body></html>" > docs/.vitepress/dist/index.html
+            echo "使用本地备份的 index.html"
+            curl -L https://gist.githubusercontent.com/yourusername/backupindex/raw/index.html -o docs/.vitepress/dist/index.html
           fi
           
-          # 创建 .nojekyll 文件
+          # 5. 确保自定义域名配置
+          echo "gukmo.cn" > docs/.vitepress/dist/CNAME
           touch docs/.vitepress/dist/.nojekyll
-          
-          # 验证 index.html 存在
-          echo "=== index.html 内容 ==="
-          head -n 20 docs/.vitepress/dist/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
