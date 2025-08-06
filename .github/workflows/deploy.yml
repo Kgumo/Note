@@ -16,6 +16,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,8 +43,12 @@ jobs:
 
       - name: Build with VitePress
         run: |
+          export BASE='/Note/'
           pnpm run docs:build
           touch .nojekyll
+          
+          cd .vitepress/dist
+          find . -type f -exec sed -i 's|="/|="/Note/|g' {} +
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3  # 已修复的关键更新
