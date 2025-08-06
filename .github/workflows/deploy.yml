@@ -4,12 +4,23 @@ on:
   push:
     branches: [master]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -22,35 +33,28 @@ jobs:
           node-version: 18
           cache: pnpm
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
       - name: Install dependencies
         run: pnpm install
 
       - name: Build with VitePress
         run: |
-          # 确保在项目根目录构建
-          pnpm exec vitepress build docs --base /Note/ --clean
+          # 使用正确的构建命令
+          pnpm run docs:build
           
-          # 验证构建输出存在
-          if [ ! -d "docs/.vitepress/dist" ]; then
-            echo "错误：构建输出目录不存在！"
-            ls -la docs/.vitepress
-            exit 1
-          fi
-          
-          # 创建.nojekyll文件
+          # 在正确的输出目录创建 .nojekyll
           touch docs/.vitepress/dist/.nojekyll
           
-          # 修复路径问题 - 使用完整路径操作
-          sed -i 's|="/|="/Note/|g' docs/.vitepress/dist/index.html
-          sed -i 's|/Note/Note/|/Note/|g' docs/.vitepress/dist/index.html
-          
-          # 验证修改是否成功
-          grep '="/Note/' docs/.vitepress/dist/index.html | head -n 3
+          # 验证构建输出
+          echo "构建输出目录内容:"
+          ls -la docs/.vitepress/dist
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/.vitepress/dist
+          path: docs/.vitepress/dist  # 修正为正确的输出路径
 
   deploy:
     environment:
@@ -58,6 +62,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
+    name: Deploy
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
