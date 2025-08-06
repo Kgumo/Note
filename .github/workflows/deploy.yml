@@ -4,15 +4,23 @@ on:
   push:
     branches: [master]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        path: ['.vitepress/dist', 'docs/.vitepress/dist', 'dist']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -30,26 +38,25 @@ jobs:
 
       - name: Build with VitePress
         run: |
-          pnpm run docs:build
+          # 确保在项目根目录执行构建
+          cd $GITHUB_WORKSPACE
+          pnpm exec vitepress build docs --base /Note/ --clean
+          
+          # 创建.nojekyll文件（在dist目录内）
           touch docs/.vitepress/dist/.nojekyll
           
-          echo "构建输出目录:"
+          # 验证构建输出
+          echo "=== 构建输出目录 ==="
           ls -la docs/.vitepress/dist
-
-      - name: Verify build output
-        run: |
-          echo "检查路径: ${{ matrix.path }}"
-          if [ -d "${{ matrix.path }}" ]; then
-            echo "目录存在，内容:"
-            ls -la ${{ matrix.path }}
-          else
-            echo "目录不存在: ${{ matrix.path }}"
-          fi
+          echo "=== index.html 内容 ==="
+          head -n 20 docs/.vitepress/dist/index.html
+          echo "=== 资源路径检查 ==="
+          grep -E 'href=|src=' docs/.vitepress/dist/index.html | head -n 5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ matrix.path }}
+          path: docs/.vitepress/dist
 
   deploy:
     environment:
