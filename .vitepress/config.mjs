@@ -45,7 +45,7 @@ console.log('Internship 侧边栏项目数:', InternshipSidebar?.length || 0);
 
 // 使用 withMermaid 包裹 defineConfig
 export default withMermaid(defineConfig({
-  base: "/Note/",
+  base: "/",
   head: [
     ["link", { rel: "icon", href: "/Note/head.svg" }],
     ["link", { 
@@ -59,9 +59,18 @@ export default withMermaid(defineConfig({
     }],
     ["link", { 
       rel: "stylesheet", 
-      href: "/Note/.vitepress/theme/custom.css" 
+      href: "/.vitepress/theme/custom.css" 
     }],
   ],
+
+  // 添加cleanUrls配置
+  cleanUrls: true,
+  
+  // 添加router配置
+  router: {
+    base: '/Note/', // 双重确保base路径
+    trailingSlash: true // 确保URL结尾有斜杠
+  },
 
   title: "额滴笔记",
   description: "个人技术知识库 - C++ | Qt | AI",
