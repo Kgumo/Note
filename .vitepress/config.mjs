@@ -45,7 +45,7 @@ console.log('Internship 侧边栏项目数:', InternshipSidebar?.length || 0);
 
 // 使用 withMermaid 包裹 defineConfig
 export default withMermaid(defineConfig({
-  base: "/Note/",
+  base: "/",
   head: [
     ["link", { rel: "icon", href: "/head.svg" }],
     ["link", { 
