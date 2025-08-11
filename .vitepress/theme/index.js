@@ -2,7 +2,6 @@ import DefaultTheme from 'vitepress/theme';
 import RecentPosts from './components/RecentPosts.vue';
 import CustomLayout from './Layout.vue';
 import CustomNav from './components/CustomNav.vue';
-import mermaidInit from './mermaidInit'
 import { defineClientComponent } from 'vitepress';
 import './custom.css';
 import { h } from 'vue';
@@ -58,7 +57,7 @@ export default {
     // 注册其他组件
     app.component('RecentPosts', RecentPosts);
     app.component('CustomNav', CustomNav);
-    app.component('MermaidInit', mermaidInit)
+    
     // 注册自定义渲染组件
     app.component('HeroStats', HeroStats);
     app.component('FeatureProgress', FeatureProgress);

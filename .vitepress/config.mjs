@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import fs from 'fs';
+import { withMermaid } from 'vitepress-plugin-mermaid'; // 导入官方插件
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
@@ -34,7 +35,8 @@ const aiSidebar = set_sidebar("AI", configPath);
 const PostgraduateSidebar = set_sidebar("Postgraduate", configPath);
 const InternshipSidebar = set_sidebar("Internship", configPath);
 
-export default defineConfig({
+// 使用 withMermaid 包装配置
+export default withMermaid(defineConfig({
   title: "额滴笔记",
   description: "个人技术知识库 - C++ | Qt | AI",
   base: "/Note/",
@@ -46,15 +48,25 @@ export default defineConfig({
       rel: "stylesheet", 
       href: "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" 
     }],
-    // 添加 Mermaid CDN
-    ["script", { 
-      src: "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js" 
-    }]
+    // 移除手动添加的 CDN 脚本 - 插件会自动处理
   ],
   
   cleanUrls: true,
   lastUpdated: true,
   appearance: 'dark',
+  
+  // Mermaid 配置
+  mermaid: {
+    theme: 'dark',
+    securityLevel: 'loose',
+    fontFamily: "'Noto Serif SC', sans-serif",
+    fontSize: 16,
+    htmlLabels: true,
+    flowchart: {
+      nodeSpacing: 50,
+      rankSpacing: 50
+    }
+  },
   
   themeConfig: {
     outlineTitle: "📚 本文目录",
@@ -137,15 +149,7 @@ export default defineConfig({
       const { default: katex } = await import('markdown-it-katex');
       md.use(katex);
       
-      // 添加自定义的 Mermaid 渲染
-      const defaultFenceRenderer = md.renderer.rules.fence;
-      md.renderer.rules.fence = (tokens, idx, options, env, self) => {
-        const token = tokens[idx];
-        if (token.info.trim() === 'mermaid') {
-          return `<div class="mermaid">${token.content}</div>`;
-        }
-        return defaultFenceRenderer(tokens, idx, options, env, self);
-      };
+      // 移除自定义的 Mermaid 渲染规则 - 插件会自动处理
     }
   },
   
@@ -156,7 +160,8 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './'),
-        '~': path.resolve(__dirname, '../../')
+        '~': path.resolve(__dirname, '../../'),
+        '@theme': path.resolve(__dirname, './theme')
       }
     },
     server: {
@@ -178,4 +183,4 @@ export default defineConfig({
   tempDir: './.vitepress/.temp',
   srcDir: "./docs",
   outDir: "./dist"
-});
+}));
