@@ -10,6 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_PATH = __dirname;
 const PROJECT_ROOT = path.resolve(__dirname, '../..');
+
 // 动态导入侧边栏模块
 let set_sidebar;
 try {
@@ -39,7 +40,7 @@ export default withMermaid(defineConfig({
   description: "个人技术知识库 - C++ | Qt | AI",
   base: "/Note/",
   assetsDir: 'assets',
-  // 新增的head配置
+  
   head: [
     ["link", { rel: "icon", href: "Note/head.svg" }],
     ["link", { 
@@ -47,18 +48,20 @@ export default withMermaid(defineConfig({
       href: "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" 
     }],
     ["link", { 
-    rel: "stylesheet", 
-    href: "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" 
-  }],
+      rel: "preload", 
+      href: "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js", 
+      as: "script"
+    }],
+    ["script", { 
+      src: "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js" 
+    }]
   ],
   
-  // 新增的cleanUrls配置
   cleanUrls: true,
   lastUpdated: true,
   appearance: 'dark',
   
   themeConfig: {
-    // 保留所有自定义配置
     outlineTitle: "📚 本文目录",
     outline: [2, 6],
     smoothScroll: true,
@@ -104,7 +107,6 @@ export default withMermaid(defineConfig({
       "/Internship/": InternshipSidebar
     },
     
-    // 新增的社交链接配置
     socialLinks: [
       { 
         icon: 'github',
@@ -112,13 +114,11 @@ export default withMermaid(defineConfig({
       },
     ],
     
-    // 保留其他配置
     footer: {
       message: "知识如风，常伴吾身",
       copyright: `Copyright © 2023-${new Date().getFullYear()} Kgumo`
     },
     
-    // 新增的搜索配置
     search: {
       provider: 'local',
       options: {
@@ -130,7 +130,6 @@ export default withMermaid(defineConfig({
       }
     },
     
-    // 新增的编辑链接配置
     editLink: {
       pattern: 'https://github.com/Kgumo/Note/edit/main/docs/:path',
       text: '✏️ 编辑此页'
@@ -142,6 +141,14 @@ export default withMermaid(defineConfig({
     config: async (md) => {
       const { default: katex } = await import('markdown-it-katex');
       md.use(katex);
+      
+      md.renderer.rules.html_block = (tokens, idx) => {
+        const content = tokens[idx].content;
+        if (content.includes('class="mermaid"')) {
+          return `${content}<script>mermaid.initialize({startOnLoad:true,theme:'dark'});</script>`;
+        }
+        return content;
+      };
     }
   },
   
@@ -160,13 +167,14 @@ export default withMermaid(defineConfig({
   vite: {
     build: {
       rollupOptions: {
-        external: ['mermaid', 'vitepress-plugin-mermaid', /^mermaid/]
+        // 确保 Mermaid 被打包进去
       }
     },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './'),
-        '~': path.resolve(__dirname, '../../')
+        '~': path.resolve(__dirname, '../../'),
+        'mermaid': path.resolve(__dirname, 'node_modules/mermaid')
       }
     },
     server: {
@@ -189,7 +197,6 @@ export default withMermaid(defineConfig({
     }
   },
   
-  // 保留原始目录配置
   tempDir: './.vitepress/.temp',
   srcDir: "./docs",
   outDir: "./dist"
