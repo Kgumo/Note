@@ -26,6 +26,8 @@
 <script>
 import { ref, onMounted } from 'vue';
 import DefaultTheme from 'vitepress/theme';
+import Layout from 'vitepress/dist/client/theme-default/Layout.vue'
+import Mermaid from './mermaid.vue'
 
 export default {
   name: 'CustomLayout',
@@ -56,7 +58,9 @@ export default {
   },
   
   components: {
-    VPContent: DefaultTheme.Layout
+    VPContent: DefaultTheme.Layout,
+    Layout,
+    Mermaid
   }
 };
 </script>

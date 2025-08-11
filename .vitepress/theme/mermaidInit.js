@@ -1,28 +1,43 @@
-// docs/.vitepress/theme/mermaidInit.js
+// .vitepress/theme/mermaid.js
 export default {
   mounted() {
-    // 确保 Mermaid 可用
-    if (typeof window.mermaid !== 'undefined') {
-      window.mermaid.initialize({ 
-        startOnLoad: true,
-        theme: 'dark',
-        fontFamily: "'Noto Serif SC', sans-serif",
-        securityLevel: 'loose'
-      });
-      
-      // 重绘所有图表
-      setTimeout(() => {
-        const mermaids = document.querySelectorAll('.mermaid');
-        if (mermaids.length > 0) {
-          window.mermaid.init(undefined, mermaids);
-        }
-      }, 500);
-    } else {
-      console.warn('Mermaid not loaded!');
-    }
+    this.initializeMermaid();
   },
   
   updated() {
-    this.mounted();
+    this.initializeMermaid();
+  },
+  
+  methods: {
+    initializeMermaid() {
+      if (typeof window.mermaid !== 'undefined') {
+        try {
+          window.mermaid.initialize({
+            theme: 'dark',
+            securityLevel: 'loose',
+            fontFamily: "'Noto Serif SC', sans-serif",
+            fontSize: 16,
+            htmlLabels: true,
+            flowchart: {
+              nodeSpacing: 50,
+              rankSpacing: 50
+            },
+            startOnLoad: true
+          });
+          
+          // 手动初始化所有图表
+          setTimeout(() => {
+            const mermaids = document.querySelectorAll('.mermaid');
+            if (mermaids.length > 0) {
+              window.mermaid.init(undefined, mermaids);
+            }
+          }, 500);
+        } catch (e) {
+          console.error('Mermaid initialization error:', e);
+        }
+      } else {
+        console.warn('Mermaid not loaded!');
+      }
+    }
   }
 }

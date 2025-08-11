@@ -36,8 +36,8 @@ jobs:
           rm -f package-lock.json
           npm cache clean --force
           
-          # 显式安装关键依赖
-          npm install vitepress@latest mermaid@10.9.0 vitepress-plugin-mermaid@3.0.5 --save-exact --legacy-peer-deps --force
+          # 不再安装 vitepress-plugin-mermaid
+          npm install vitepress@latest --save
           
           # 安装其他依赖
           npm install --legacy-peer-deps --force
@@ -45,10 +45,9 @@ jobs:
       # 验证安装
       - name: Verify dependencies
         run: |
-          npm list vitepress mermaid vitepress-plugin-mermaid
-          ls -la node_modules/.bin
+          npm list vitepress
       
-      # 使用 npm 脚本构建
+      # 构建
       - name: Build with VitePress
         run: npm run docs:build
       

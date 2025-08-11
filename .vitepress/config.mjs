@@ -2,7 +2,6 @@ import { defineConfig } from 'vitepress';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import fs from 'fs';
-import { withMermaid } from 'vitepress-plugin-mermaid';
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
@@ -35,23 +34,19 @@ const aiSidebar = set_sidebar("AI", configPath);
 const PostgraduateSidebar = set_sidebar("Postgraduate", configPath);
 const InternshipSidebar = set_sidebar("Internship", configPath);
 
-export default withMermaid(defineConfig({
+export default defineConfig({
   title: "额滴笔记",
   description: "个人技术知识库 - C++ | Qt | AI",
   base: "/Note/",
   assetsDir: 'assets',
   
   head: [
-    ["link", { rel: "icon", href: "Note/head.svg" }],
+    ["link", { rel: "icon", href: "/head.svg" }],
     ["link", { 
       rel: "stylesheet", 
       href: "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" 
     }],
-    ["link", { 
-      rel: "preload", 
-      href: "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js", 
-      as: "script"
-    }],
+    // 添加 Mermaid CDN
     ["script", { 
       src: "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js" 
     }]
@@ -142,39 +137,26 @@ export default withMermaid(defineConfig({
       const { default: katex } = await import('markdown-it-katex');
       md.use(katex);
       
-      md.renderer.rules.html_block = (tokens, idx) => {
-        const content = tokens[idx].content;
-        if (content.includes('class="mermaid"')) {
-          return `${content}<script>mermaid.initialize({startOnLoad:true,theme:'dark'});</script>`;
+      // 添加自定义的 Mermaid 渲染
+      const defaultFenceRenderer = md.renderer.rules.fence;
+      md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+        const token = tokens[idx];
+        if (token.info.trim() === 'mermaid') {
+          return `<div class="mermaid">${token.content}</div>`;
         }
-        return content;
+        return defaultFenceRenderer(tokens, idx, options, env, self);
       };
-    }
-  },
-  
-  mermaid: {
-    theme: 'dark',
-    securityLevel: 'loose',
-    fontFamily: "'Noto Serif SC', sans-serif",
-    fontSize: 16,
-    htmlLabels: true,
-    flowchart: {
-      nodeSpacing: 50,
-      rankSpacing: 50
     }
   },
   
   vite: {
     build: {
-      rollupOptions: {
-        // 确保 Mermaid 被打包进去
-      }
+      rollupOptions: {}
     },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './'),
-        '~': path.resolve(__dirname, '../../'),
-        'mermaid': path.resolve(__dirname, 'node_modules/mermaid')
+        '~': path.resolve(__dirname, '../../')
       }
     },
     server: {
@@ -187,17 +169,13 @@ export default withMermaid(defineConfig({
       }
     },
     optimizeDeps: {
-      include: ['mermaid', 'vitepress-plugin-mermaid'],
       esbuildOptions: {
         target: 'esnext'
       }
-    },
-    ssr: {
-      noExternal: ['mermaid']
     }
   },
   
   tempDir: './.vitepress/.temp',
   srcDir: "./docs",
   outDir: "./dist"
-}));
+});
