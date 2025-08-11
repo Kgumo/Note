@@ -42,7 +42,7 @@ jobs:
         run: npm run docs:build
         env:
           NODE_ENV: production  # 确保生产环境构建
-      
+          BASE_URL: '/'
       # 上传构建产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
