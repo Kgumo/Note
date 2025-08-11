@@ -2,9 +2,9 @@ import DefaultTheme from 'vitepress/theme';
 import RecentPosts from './components/RecentPosts.vue';
 import CustomLayout from './Layout.vue';
 import CustomNav from './components/CustomNav.vue';
-import { defineClientComponent } from 'vitepress';
+import 'vite/modulepreload-polyfill';
 import './custom.css';
-import { h } from 'vue';
+import { h, defineAsyncComponent } from 'vue';
 
 // 自定义组件
 const HeroStats = {
@@ -49,16 +49,14 @@ export default {
   extends: DefaultTheme,
   Layout: CustomLayout,
   enhanceApp({ app }) {
-    // 使用 defineClientComponent 注册知识图谱组件
-    app.component('KnowledgeGraph', defineClientComponent(() => 
+    // 修改为使用 defineAsyncComponent
+    app.component('KnowledgeGraph', defineAsyncComponent(() => 
       import('./components/KnowledgeGraph.vue')
     ));
     
-    // 注册其他组件
+    // 注册其他组件 (保持不变)
     app.component('RecentPosts', RecentPosts);
     app.component('CustomNav', CustomNav);
-    
-    // 注册自定义渲染组件
     app.component('HeroStats', HeroStats);
     app.component('FeatureProgress', FeatureProgress);
     app.component('FeatureTags', FeatureTags);

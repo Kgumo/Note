@@ -159,6 +159,7 @@ export default withMermaid(defineConfig({
     },
     resolve: {
       alias: {
+        'langium/lib/utils/cancellation': 'cancellation-shim',
         '@': path.resolve(__dirname, './'),
         '~': path.resolve(__dirname, '../../'),
         '@theme': path.resolve(__dirname, './theme')
@@ -174,6 +175,11 @@ export default withMermaid(defineConfig({
       }
     },
     optimizeDeps: {
+      include: [
+      // 确保 langium 相关依赖被正确优化
+      'langium',
+      'langium-ast'
+    ],
       esbuildOptions: {
         target: 'esnext'
       }
