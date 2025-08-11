@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Runtime API Examples | 额滴笔记</title>
+    <meta name="description" content="个人技术知识库 - C++ | Qt | AI">
+    <meta name="generator" content="VitePress v1.6.4">
+    <link rel="preload stylesheet" href="/Note/assets/style.D-Jh4GEs.css" as="style">
+    <link rel="preload stylesheet" href="/Note/vp-icons.css" as="style">
+    
+    <script type="module" src="/Note/assets/app.C6dKe1Nl.js"></script>
+    <link rel="preload" href="/Note/assets/inter-roman-latin.Di8DUHzh.woff2" as="font" type="font/woff2" crossorigin="">
+    <link rel="modulepreload" href="/Note/assets/chunks/framework.BQlL4Ck5.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/theme.A37vlt9q.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/katex.ChWnQ-fc.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/dagre-JOIXM2OF.D9f459YD.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/c4Diagram-6F6E4RAY.DsdAswfa.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/flowDiagram-KYDEHFYC.6T_DBrQk.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/erDiagram-3M52JZNH.C0BhOm7N.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/gitGraphDiagram-GW3U2K7C.BTGneyT_.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/ganttDiagram-EK5VF46D.WQOar1cM.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/infoDiagram-LHK5PUON.36sPCKe1.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/pieDiagram-NIOCPIFQ.y5s6dxze.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/quadrantDiagram-2OG54O6I.D-m2H8fd.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/xychartDiagram-H2YORKM3.DrAFGedg.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/requirementDiagram-QOLK2EJ7.BhDsgvQy.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/sequenceDiagram-SKLFT4DO.WLKGKX7S.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/classDiagram-M3E45YP4.CJTDQyoR.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/classDiagram-v2-YAWTLIQI.CJTDQyoR.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/stateDiagram-MI5ZYTHO.BBRzoeBd.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/stateDiagram-v2-5AN5P6BG.CgdFzaWb.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/journeyDiagram-EWQZEKCU.D1F0wMb_.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/timeline-definition-MYPXXCX6.lDeRxXwm.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/mindmap-definition-6CBA2TL7.D982DvAV.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/kanban-definition-ZSS6B67P.C3OlnEi-.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/sankeyDiagram-4UZDY2LN.BomtRMoD.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/diagram-5UYTHUR4.Csx4bNcY.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/diagram-ZTM2IBQH.B5m417RW.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/blockDiagram-6J76NXCF.BVG5tTSO.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/architectureDiagram-SUXI7LT5.BmSDNKPt.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/diagram-VMROVX33.BKOsp2IV.js">
+    <link rel="modulepreload" href="/Note/assets/chunks/virtual_mermaid-config.CuEn1_UZ.js">
+    <link rel="modulepreload" href="/Note/assets/api-examples.md.wM9be7uM.lean.js">
+    <link rel="icon" href="/head.svg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap">
+    <script id="check-dark-mode">(()=>{const e=localStorage.getItem("vitepress-theme-appearance")||"dark",a=window.matchMedia("(prefers-color-scheme: dark)").matches;(!e||e==="auto"?a:e==="dark")&&document.documentElement.classList.add("dark")})();</script>
+    <script id="check-mac-os">document.documentElement.classList.toggle("mac",/Mac|iPhone|iPod|iPad/i.test(navigator.platform));</script>
+  </head>
+  <body>
+    <div id="app"><div class="Layout" data-v-cf7a8e40 data-v-5d98c3a5><!--[--><button class="sidebar-toggle" aria-label="显示侧边栏" data-v-cf7a8e40><svg class="toggle-icon" viewBox="0 0 24 24" data-v-cf7a8e40><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" data-v-cf7a8e40></path></svg></button><!--]--><!--[--><span tabindex="-1" data-v-0b0ada53></span><a href="#VPContent" class="VPSkipLink visually-hidden" data-v-0b0ada53>Skip to content</a><!--]--><!----><header class="VPNav" data-v-5d98c3a5 data-v-ae24b3ad><div class="VPNavBar" data-v-ae24b3ad data-v-6aa21345><div class="wrapper" data-v-6aa21345><div class="container" data-v-6aa21345><div class="title" data-v-6aa21345><div class="VPNavBarTitle" data-v-6aa21345 data-v-1168a8e4><a class="title" href="/Note/" data-v-1168a8e4><!--[--><!--]--><!--[--><img class="VPImage logo" src="/Note/whead.png" alt data-v-8426fc1a><!--]--><span data-v-1168a8e4>额滴笔记</span><!--[--><!--]--></a></div></div><div class="content" data-v-6aa21345><div class="content-body" data-v-6aa21345><!--[--><!--]--><div class="VPNavBarSearch search" data-v-6aa21345><!--[--><!----><div id="local-search"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search"><span class="DocSearch-Button-Container"><span class="vp-icon DocSearch-Search-Icon"></span><span class="DocSearch-Button-Placeholder">🔍 搜索笔记...</span></span><span class="DocSearch-Button-Keys"><kbd class="DocSearch-Button-Key"></kbd><kbd class="DocSearch-Button-Key">K</kbd></span></button></div><!--]--></div><nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu" data-v-6aa21345 data-v-dc692963><span id="main-nav-aria-label" class="visually-hidden" data-v-dc692963> Main Navigation </span><!--[--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/Note/" tabindex="0" data-v-dc692963 data-v-e56f3d57><!--[--><span data-v-e56f3d57>🏠 首页</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/Note/%E6%88%91%E4%BB%AC%E5%8F%AA%E6%98%AF%E9%80%9A%E8%BF%87%E6%97%A0%E6%95%B0%E7%9A%84%E6%80%9D%E7%BB%B4%E6%A8%A1%E5%9E%8B%E5%9C%A8%E7%BB%99%E4%B8%96%E7%95%8C%E5%BB%BA%E6%A8%A1" tabindex="0" data-v-dc692963 data-v-e56f3d57><!--[--><span data-v-e56f3d57>🌍 认知边界</span><!--]--></a><!--]--><!--[--><div class="VPFlyout VPNavBarMenuGroup" data-v-dc692963 data-v-cf11d7a2><button type="button" class="button" aria-haspopup="true" aria-expanded="false" data-v-cf11d7a2><span class="text" data-v-cf11d7a2><!----><span data-v-cf11d7a2>🧪 实验室</span><span class="vpi-chevron-down text-icon" data-v-cf11d7a2></span></span></button><div class="menu" data-v-cf11d7a2><div class="VPMenu" data-v-cf11d7a2 data-v-b98bc113><div class="items" data-v-b98bc113><!--[--><!--[--><div class="VPMenuLink" data-v-b98bc113 data-v-35975db6><a class="VPLink link" href="/Note/C++/" data-v-35975db6><!--[--><span data-v-35975db6>C++/Qt</span><!--]--></a></div><!--]--><!--[--><div class="VPMenuLink" data-v-b98bc113 data-v-35975db6><a class="VPLink link" href="/Note/AI/" data-v-35975db6><!--[--><span data-v-35975db6>AI研究</span><!--]--></a></div><!--]--><!--]--></div><!--[--><!--]--></div></div></div><!--]--><!--[--><div class="VPFlyout VPNavBarMenuGroup" data-v-dc692963 data-v-cf11d7a2><button type="button" class="button" aria-haspopup="true" aria-expanded="false" data-v-cf11d7a2><span class="text" data-v-cf11d7a2><!----><span data-v-cf11d7a2>🚤 跨越两岸</span><span class="vpi-chevron-down text-icon" data-v-cf11d7a2></span></span></button><div class="menu" data-v-cf11d7a2><div class="VPMenu" data-v-cf11d7a2 data-v-b98bc113><div class="items" data-v-b98bc113><!--[--><!--[--><div class="VPMenuLink" data-v-b98bc113 data-v-35975db6><a class="VPLink link" href="/Note/Postgraduate/" data-v-35975db6><!--[--><span data-v-35975db6>考研</span><!--]--></a></div><!--]--><!--[--><div class="VPMenuLink" data-v-b98bc113 data-v-35975db6><a class="VPLink link" href="/Note/Internship/" data-v-35975db6><!--[--><span data-v-35975db6>实习</span><!--]--></a></div><!--]--><!--]--></div><!--[--><!--]--></div></div></div><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/Note/resources" tabindex="0" data-v-dc692963 data-v-e56f3d57><!--[--><span data-v-e56f3d57>🔗 资源</span><!--]--></a><!--]--><!--]--></nav><!----><div class="VPNavBarAppearance appearance" data-v-6aa21345 data-v-6c893767><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" title aria-checked="true" data-v-6c893767 data-v-5337faa4 data-v-1d5665e3><span class="check" data-v-1d5665e3><span class="icon" data-v-1d5665e3><!--[--><span class="vpi-sun sun" data-v-5337faa4></span><span class="vpi-moon moon" data-v-5337faa4></span><!--]--></span></span></button></div><div class="VPSocialLinks VPNavBarSocialLinks social-links" data-v-6aa21345 data-v-0394ad82 data-v-7bc22406><!--[--><a class="VPSocialLink no-icon" href="https://github.com/Kgumo" aria-label="github" target="_blank" rel="noopener" data-v-7bc22406 data-v-bd121fe5><span class="vpi-social-github"></span></a><!--]--></div><div class="VPFlyout VPNavBarExtra extra" data-v-6aa21345 data-v-bb2aa2f0 data-v-cf11d7a2><button type="button" class="button" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation" data-v-cf11d7a2><span class="vpi-more-horizontal icon" data-v-cf11d7a2></span></button><div class="menu" data-v-cf11d7a2><div class="VPMenu" data-v-cf11d7a2 data-v-b98bc113><!----><!--[--><!--[--><!----><div class="group" data-v-bb2aa2f0><div class="item appearance" data-v-bb2aa2f0><p class="label" data-v-bb2aa2f0>Appearance</p><div class="appearance-action" data-v-bb2aa2f0><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" title aria-checked="true" data-v-bb2aa2f0 data-v-5337faa4 data-v-1d5665e3><span class="check" data-v-1d5665e3><span class="icon" data-v-1d5665e3><!--[--><span class="vpi-sun sun" data-v-5337faa4></span><span class="vpi-moon moon" data-v-5337faa4></span><!--]--></span></span></button></div></div></div><div class="group" data-v-bb2aa2f0><div class="item social-links" data-v-bb2aa2f0><div class="VPSocialLinks social-links-list" data-v-bb2aa2f0 data-v-7bc22406><!--[--><a class="VPSocialLink no-icon" href="https://github.com/Kgumo" aria-label="github" target="_blank" rel="noopener" data-v-7bc22406 data-v-bd121fe5><span class="vpi-social-github"></span></a><!--]--></div></div></div><!--]--><!--]--></div></div></div><!--[--><!--]--><button type="button" class="VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen" data-v-6aa21345 data-v-e5dd9c1c><span class="container" data-v-e5dd9c1c><span class="top" data-v-e5dd9c1c></span><span class="middle" data-v-e5dd9c1c></span><span class="bottom" data-v-e5dd9c1c></span></span></button></div></div></div></div><div class="divider" data-v-6aa21345><div class="divider-line" data-v-6aa21345></div></div></div><!----></header><div class="VPLocalNav empty fixed" data-v-5d98c3a5 data-v-a6f0e41e><div class="container" data-v-a6f0e41e><!----><div class="VPLocalNavOutlineDropdown" style="--vp-vh:0px;" data-v-a6f0e41e data-v-8a42e2b4><button data-v-8a42e2b4>Return to top</button><!----></div></div></div><!----><div class="VPContent" id="VPContent" data-v-5d98c3a5 data-v-1428d186><div class="VPDoc has-aside" data-v-1428d186 data-v-39a288b8><!--[--><!--]--><div class="container" data-v-39a288b8><div class="aside" data-v-39a288b8><div class="aside-curtain" data-v-39a288b8></div><div class="aside-container" data-v-39a288b8><div class="aside-content" data-v-39a288b8><div class="VPDocAside" data-v-39a288b8 data-v-3f215769><!--[--><!--]--><!--[--><!--]--><nav aria-labelledby="doc-outline-aria-label" class="VPDocAsideOutline" data-v-3f215769 data-v-a5bbad30><div class="content" data-v-a5bbad30><div class="outline-marker" data-v-a5bbad30></div><div aria-level="2" class="outline-title" id="doc-outline-aria-label" role="heading" data-v-a5bbad30>📚 本文目录</div><ul class="VPDocOutlineItem root" data-v-a5bbad30 data-v-b933a997><!--[--><!--]--></ul></div></nav><!--[--><!--]--><div class="spacer" data-v-3f215769></div><!--[--><!--]--><!----><!--[--><!--]--><!--[--><!--]--></div></div></div></div><div class="content" data-v-39a288b8><div class="content-container" data-v-39a288b8><!--[--><!--]--><main class="main" data-v-39a288b8><div style="position:relative;" class="vp-doc _Note_api-examples" data-v-39a288b8><div><h1 id="runtime-api-examples" tabindex="-1">Runtime API Examples <a class="header-anchor" href="#runtime-api-examples" aria-label="Permalink to &quot;Runtime API Examples&quot;">​</a></h1><p>This page demonstrates usage of some of the runtime APIs provided by VitePress.</p><p>The main <code>useData()</code> API can be used to access site, theme, and page data for the current page. It works in both <code>.md</code> and <code>.vue</code> files:</p><div class="language-md vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">md</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;script setup&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">import { useData } from &#39;vitepress&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">const { theme, page, frontmatter } = useData()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;/script&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Results</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">### Theme Data</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;pre&gt;{{ theme }}&lt;/pre&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">### Page Data</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;pre&gt;{{ page }}&lt;/pre&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">### Page Frontmatter</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;pre&gt;{{ frontmatter }}&lt;/pre&gt;</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h2 id="results" tabindex="-1">Results <a class="header-anchor" href="#results" aria-label="Permalink to &quot;Results&quot;">​</a></h2><h3 id="theme-data" tabindex="-1">Theme Data <a class="header-anchor" href="#theme-data" aria-label="Permalink to &quot;Theme Data&quot;">​</a></h3><pre>{
+  &quot;outlineTitle&quot;: &quot;📚 本文目录&quot;,
+  &quot;outline&quot;: [
+    2,
+    6
+  ],
+  &quot;smoothScroll&quot;: true,
+  &quot;logo&quot;: &quot;/whead.png&quot;,
+  &quot;nav&quot;: [
+    {
+      &quot;text&quot;: &quot;🏠 首页&quot;,
+      &quot;link&quot;: &quot;/&quot;,
+      &quot;activeMatch&quot;: &quot;^/$&quot;
+    },
+    {
+      &quot;text&quot;: &quot;🌍 认知边界&quot;,
+      &quot;link&quot;: &quot;/我们只是通过无数的思维模型在给世界建模&quot;,
+      &quot;activeMatch&quot;: &quot;/我们只是通过无数的思维模型在给世界建模&quot;
+    },
+    {
+      &quot;text&quot;: &quot;🧪 实验室&quot;,
+      &quot;items&quot;: [
+        {
+          &quot;text&quot;: &quot;C++/Qt&quot;,
+          &quot;link&quot;: &quot;/C++/&quot;
+        },
+        {
+          &quot;text&quot;: &quot;AI研究&quot;,
+          &quot;link&quot;: &quot;/AI/&quot;
+        }
+      ]
+    },
+    {
+      &quot;text&quot;: &quot;🚤 跨越两岸&quot;,
+      &quot;items&quot;: [
+        {
+          &quot;text&quot;: &quot;考研&quot;,
+          &quot;link&quot;: &quot;/Postgraduate/&quot;
+        },
+        {
+          &quot;text&quot;: &quot;实习&quot;,
+          &quot;link&quot;: &quot;/Internship/&quot;
+        }
+      ],
+      &quot;className&quot;: &quot;nav-right&quot;
+    },
+    {
+      &quot;text&quot;: &quot;🔗 资源&quot;,
+      &quot;link&quot;: &quot;/resources&quot;,
+      &quot;activeMatch&quot;: &quot;/resources&quot;,
+      &quot;className&quot;: &quot;nav-right&quot;
+    }
+  ],
+  &quot;sidebar&quot;: {
+    &quot;/C++/&quot;: [
+      {
+        &quot;text&quot;: &quot;概述&quot;,
+        &quot;link&quot;: &quot;/C++/&quot;
+      },
+      {
+        &quot;text&quot;: &quot;C语言基础&quot;,
+        &quot;collapsible&quot;: true,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;变量&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/01.变量&quot;
+          },
+          {
+            &quot;text&quot;: &quot;Scanf 函数的缓冲区问题、整型数据类型的补充&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/02.scanf 函数的缓冲区问题、整型数据类型的补充&quot;
+          },
+          {
+            &quot;text&quot;: &quot;原码、反码、补码和类型转换&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/03.原码、反码、补码和类型转换&quot;
+          },
+          {
+            &quot;text&quot;: &quot;流程结构之顺序结构和选择结构&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/04.流程结构之顺序结构和选择结构&quot;
+          },
+          {
+            &quot;text&quot;: &quot;流程结构之循环结构和跳转语句&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/05.流程结构之循环结构和跳转语句&quot;
+          },
+          {
+            &quot;text&quot;: &quot;函数&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/06.函数&quot;
+          },
+          {
+            &quot;text&quot;: &quot;数组&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/07.数组&quot;
+          },
+          {
+            &quot;text&quot;: &quot;字符串和指针基础&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/08.字符串和指针基础&quot;
+          },
+          {
+            &quot;text&quot;: &quot;指针和数组&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/09.指针和数组&quot;
+          },
+          {
+            &quot;text&quot;: &quot;指针和函数、动态内存分配和结构体&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/10.指针和函数、动态内存分配和结构体&quot;
+          },
+          {
+            &quot;text&quot;: &quot;Index&quot;,
+            &quot;link&quot;: &quot;/C++/1.C语言基础/index&quot;
+          }
+        ]
+      },
+      {
+        &quot;text&quot;: &quot;C++基础课程&quot;,
+        &quot;collapsible&quot;: true,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;概述&quot;,
+            &quot;link&quot;: &quot;/C++/2.C++基础课程/&quot;
+          },
+          {
+            &quot;text&quot;: &quot;基础语法和程序结构&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;数据&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/01.数据&quot;
+              },
+              {
+                &quot;text&quot;: &quot;进制&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/02.进制&quot;
+              },
+              {
+                &quot;text&quot;: &quot;运算符和类型转换&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/03.运算符和类型转换&quot;
+              },
+              {
+                &quot;text&quot;: &quot;流程结构&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/04.流程结构&quot;
+              },
+              {
+                &quot;text&quot;: &quot;数组与字符串&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/05.数组与字符串&quot;
+              },
+              {
+                &quot;text&quot;: &quot;函数基础&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/06.函数基础&quot;
+              },
+              {
+                &quot;text&quot;: &quot;函数重载和递归函数&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/07.函数重载和递归函数&quot;
+              },
+              {
+                &quot;text&quot;: &quot;指针基础&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/08.指针基础&quot;
+              },
+              {
+                &quot;text&quot;: &quot;指针和函数、字符串&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/09.指针和函数、字符串&quot;
+              },
+              {
+                &quot;text&quot;: &quot;动态内存分配和二级指针&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/10.动态内存分配和二级指针&quot;
+              },
+              {
+                &quot;text&quot;: &quot;结构体&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/11.结构体&quot;
+              },
+              {
+                &quot;text&quot;: &quot;C++程序组成和编译过程&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/1.基础语法和程序结构/12.C++程序组成和编译过程&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;面向对象编程&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/2.面向对象编程/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;面向对象编程&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/2.面向对象编程/01.面向对象编程&quot;
+              },
+              {
+                &quot;text&quot;: &quot;构造函数和析构函数&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/2.面向对象编程/02.构造函数和析构函数&quot;
+              },
+              {
+                &quot;text&quot;: &quot;引用以及拷贝构造和拷贝赋值&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/2.面向对象编程/03.引用以及拷贝构造和拷贝赋值&quot;
+              },
+              {
+                &quot;text&quot;: &quot;运算符重载和内联&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/2.面向对象编程/04.运算符重载和内联&quot;
+              },
+              {
+                &quot;text&quot;: &quot;类型转换和异常&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/2.面向对象编程/05.类型转换和异常&quot;
+              },
+              {
+                &quot;text&quot;: &quot;友元和静态&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/2.面向对象编程/06.友元和静态&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;高级面向对象&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;设计模式之迭代器模式&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/01.设计模式之迭代器模式&quot;
+              },
+              {
+                &quot;text&quot;: &quot;单例模式&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/02.单例模式&quot;
+              },
+              {
+                &quot;text&quot;: &quot;观察者模式&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/03.观察者模式&quot;
+              },
+              {
+                &quot;text&quot;: &quot;函数对象和lambda函数&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/04.函数对象和lambda函数&quot;
+              },
+              {
+                &quot;text&quot;: &quot;右值引用和移动语义&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/05.右值引用和移动语义&quot;
+              },
+              {
+                &quot;text&quot;: &quot;继承&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/06.继承&quot;
+              },
+              {
+                &quot;text&quot;: &quot;多态&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/07.多态&quot;
+              },
+              {
+                &quot;text&quot;: &quot;多继承&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/08.多继承&quot;
+              },
+              {
+                &quot;text&quot;: &quot;泛型编程和模板&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/09.泛型编程和模板&quot;
+              },
+              {
+                &quot;text&quot;: &quot;顺序容器&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/10.顺序容器&quot;
+              },
+              {
+                &quot;text&quot;: &quot;关联容器&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/11.关联容器&quot;
+              },
+              {
+                &quot;text&quot;: &quot;全局算法&quot;,
+                &quot;link&quot;: &quot;/C++/2.C++基础课程/3.高级面向对象/12.全局算法&quot;
+              }
+            ]
+          }
+        ]
+      },
+      {
+        &quot;text&quot;: &quot;C++进阶课程&quot;,
+        &quot;collapsible&quot;: true,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;第1节linux基础&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第1节linux基础/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Linux基础操作&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第1节linux基础/1.linux基础操作&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Linux常用指令&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第1节linux基础/2.linux常用指令&quot;
+              },
+              {
+                &quot;text&quot;: &quot;用户管理&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第1节linux基础/3.用户管理&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Shell 脚本&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第1节linux基础/4.shell 脚本&quot;
+              },
+              {
+                &quot;text&quot;: &quot;正则表达式&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第1节linux基础/5.正则表达式&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Makefile工程管理文件&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第1节linux基础/6.Makefile工程管理文件&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;第2节数据结构与基本算法&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;链表-单链表&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/01.链表-单链表&quot;
+              },
+              {
+                &quot;text&quot;: &quot;链表-双链表&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/02.链表-双链表&quot;
+              },
+              {
+                &quot;text&quot;: &quot;链表-其他形态&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/03.链表-其他形态&quot;
+              },
+              {
+                &quot;text&quot;: &quot;栈与队列-栈&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/04.栈与队列-栈&quot;
+              },
+              {
+                &quot;text&quot;: &quot;栈与队列-队列&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/05.栈与队列-队列&quot;
+              },
+              {
+                &quot;text&quot;: &quot;二叉树 - 树与二叉树&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/06.二叉树 - 树与二叉树&quot;
+              },
+              {
+                &quot;text&quot;: &quot;二叉树 - 二叉排序树&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/07.二叉树 - 二叉排序树&quot;
+              },
+              {
+                &quot;text&quot;: &quot;二叉树 - 平衡二叉树&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/08.二叉树 - 平衡二叉树&quot;
+              },
+              {
+                &quot;text&quot;: &quot;二叉树 - 哈夫曼树&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/09.二叉树 - 哈夫曼树&quot;
+              },
+              {
+                &quot;text&quot;: &quot;图-图的概念&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/10.图-图的概念&quot;
+              },
+              {
+                &quot;text&quot;: &quot;图-图的存储&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/11.图-图的存储&quot;
+              },
+              {
+                &quot;text&quot;: &quot;图-图的遍历&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/12.图-图的遍历&quot;
+              },
+              {
+                &quot;text&quot;: &quot;图-最短路径问题&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/13.图-最短路径问题&quot;
+              },
+              {
+                &quot;text&quot;: &quot;基础算法&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第2节数据结构与基本算法/14.基础算法&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;第3节文件IO&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第3节文件IO/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;系统IO&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第3节文件IO/1.系统IO&quot;
+              },
+              {
+                &quot;text&quot;: &quot; 目录操作&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第3节文件IO/2. 目录操作&quot;
+              },
+              {
+                &quot;text&quot;: &quot;标准IO&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第3节文件IO/3.标准IO&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;第4节多线程与并发&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第4节多线程与并发/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;进程&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第4节多线程与并发/1.进程&quot;
+              },
+              {
+                &quot;text&quot;: &quot;IPC通信&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第4节多线程与并发/2.IPC通信&quot;
+              },
+              {
+                &quot;text&quot;: &quot; 线程&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第4节多线程与并发/3. 线程&quot;
+              },
+              {
+                &quot;text&quot;: &quot;线程池&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第4节多线程与并发/4.线程池&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;第5节网络编程&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第5节网络编程/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;网络编程预备知识&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第5节网络编程/1.网络编程预备知识&quot;
+              },
+              {
+                &quot;text&quot;: &quot;TCP和udp及通信协议&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第5节网络编程/2.TCP和udp及通信协议&quot;
+              },
+              {
+                &quot;text&quot;: &quot;广播与多播&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第5节网络编程/4.广播与多播&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Unix与多路复用&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第5节网络编程/5.unix与多路复用&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;第6节实战&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第6节实战/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;利用线程找最大值&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第6节实战/利用线程找最大值&quot;
+              },
+              {
+                &quot;text&quot;: &quot;双日志系统1.0&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第6节实战/双日志系统1.0&quot;
+              },
+              {
+                &quot;text&quot;: &quot;双日志系统2.0&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第6节实战/双日志系统2.0&quot;
+              },
+              {
+                &quot;text&quot;: &quot;异常安全的动态矩阵类Matrix实现&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第6节实战/异常安全的动态矩阵类Matrix实现&quot;
+              },
+              {
+                &quot;text&quot;: &quot;PTP项目&quot;,
+                &quot;link&quot;: &quot;/C++/3.C++进阶课程/第6节实战/PTP项目&quot;
+              }
+            ]
+          }
+        ]
+      },
+      {
+        &quot;text&quot;: &quot;C++研修阶段&quot;,
+        &quot;collapsible&quot;: true,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;概述&quot;,
+            &quot;link&quot;: &quot;/C++/4.C++研修阶段/&quot;
+          },
+          {
+            &quot;text&quot;: &quot;第1节数据库&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第1节数据库/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;数据库语句一库与表&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第1节数据库/1.数据库语句一库与表&quot;
+              },
+              {
+                &quot;text&quot;: &quot;数据库语句二数据操作&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第1节数据库/2.数据库语句二数据操作&quot;
+              },
+              {
+                &quot;text&quot;: &quot;数据库语句三事务与索引&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第1节数据库/3.数据库语句三事务与索引&quot;
+              },
+              {
+                &quot;text&quot;: &quot;数据库C++API接口&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第1节数据库/4.数据库C++API接口&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;第2节QT图形库&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;QT-安装与使用&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/1.QT-安装与使用&quot;
+              },
+              {
+                &quot;text&quot;: &quot;QT-元对象系统&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/2.QT-元对象系统&quot;
+              },
+              {
+                &quot;text&quot;: &quot; 对象树&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/3. 对象树&quot;
+              },
+              {
+                &quot;text&quot;: &quot;事件系统&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/4.事件系统&quot;
+              },
+              {
+                &quot;text&quot;: &quot;GUI开发&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/5.GUI开发&quot;
+              },
+              {
+                &quot;text&quot;: &quot;自定义控件&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/6.自定义控件&quot;
+              },
+              {
+                &quot;text&quot;: &quot;布局管理&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/7.布局管理&quot;
+              },
+              {
+                &quot;text&quot;: &quot;项目详解&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/8.项目详解&quot;
+              },
+              {
+                &quot;text&quot;: &quot;绘图系统&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/9.绘图系统&quot;
+              },
+              {
+                &quot;text&quot;: &quot;文件与目录&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/10.文件与目录&quot;
+              },
+              {
+                &quot;text&quot;: &quot;网络与多线程&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/11.网络与多线程&quot;
+              },
+              {
+                &quot;text&quot;: &quot;数据库&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第2节QT图形库/12.数据库&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;第3节工具使用&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第3节工具使用/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;VisualStudio&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第3节工具使用/1.VisualStudio&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Git远程仓库&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第3节工具使用/2.Git远程仓库&quot;
+              },
+              {
+                &quot;text&quot;: &quot;CMake&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第3节工具使用/3.CMake&quot;
+              },
+              {
+                &quot;text&quot;: &quot;杂项&quot;,
+                &quot;link&quot;: &quot;/C++/4.C++研修阶段/第3节工具使用/4.杂项&quot;
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    &quot;/AI/&quot;: [
+      {
+        &quot;text&quot;: &quot;概述&quot;,
+        &quot;link&quot;: &quot;/AI/&quot;
+      },
+      {
+        &quot;text&quot;: &quot;课程基础知识&quot;,
+        &quot;collapsible&quot;: true,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;概述&quot;,
+            &quot;link&quot;: &quot;/AI/0.课程基础知识/&quot;
+          },
+          {
+            &quot;text&quot;: &quot;🎲概率论&quot;,
+            &quot;link&quot;: &quot;/AI/0.课程基础知识/🎲概率论&quot;
+          },
+          {
+            &quot;text&quot;: &quot;📐线性代数&quot;,
+            &quot;link&quot;: &quot;/AI/0.课程基础知识/📐线性代数&quot;
+          },
+          {
+            &quot;text&quot;: &quot;🔢高数&quot;,
+            &quot;link&quot;: &quot;/AI/0.课程基础知识/🔢高数&quot;
+          },
+          {
+            &quot;text&quot;: &quot;Python&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/0.课程基础知识/Python/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Jupyter Notebook&quot;,
+                &quot;link&quot;: &quot;/AI/0.课程基础知识/Python/Jupyter notebook&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Matplotlib&quot;,
+                &quot;link&quot;: &quot;/AI/0.课程基础知识/Python/Matplotlib&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Numpy&quot;,
+                &quot;link&quot;: &quot;/AI/0.课程基础知识/Python/Numpy&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Pandas&quot;,
+                &quot;link&quot;: &quot;/AI/0.课程基础知识/Python/Pandas&quot;
+              }
+            ]
+          }
+        ]
+      },
+      {
+        &quot;text&quot;: &quot;机器学习&quot;,
+        &quot;collapsible&quot;: true,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;概述&quot;,
+            &quot;link&quot;: &quot;/AI/1.机器学习/&quot;
+          },
+          {
+            &quot;text&quot;: &quot;机器学习基础&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/01.机器学习基础/&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;决策树&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/03.决策树/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;单棵树——一个独立的决策树模型&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/03.决策树/单棵树——一个独立的决策树模型&quot;
+              },
+              {
+                &quot;text&quot;: &quot;基于决策树的LOL胜负预测&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/03.决策树/基于决策树的LOL胜负预测&quot;
+              },
+              {
+                &quot;text&quot;: &quot;决策树构建思路与修正&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/03.决策树/决策树构建思路与修正&quot;
+              },
+              {
+                &quot;text&quot;: &quot;决策树里随机数的作用&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/03.决策树/决策树里随机数的作用&quot;
+              },
+              {
+                &quot;text&quot;: &quot;随机森林与决策树的关系&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/03.决策树/随机森林与决策树的关系&quot;
+              },
+              {
+                &quot;text&quot;: &quot;叶子节点概率预测&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/03.决策树/叶子节点概率预测&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;回归分析&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/04.回归分析/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;离群点的检测&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/04.回归分析/离群点的检测&quot;
+              },
+              {
+                &quot;text&quot;: &quot;线性回归里面的相关系数和决定系数&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/04.回归分析/线性回归里面的相关系数和决定系数&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Exp2：基于回归分析的大学综合得分预测&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/04.回归分析/Exp2：基于回归分析的大学综合得分预测&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;贝叶斯学习&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/05.贝叶斯学习/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;极大后验假设与极大似然&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/05.贝叶斯学习/极大后验假设与极大似然&quot;
+              },
+              {
+                &quot;text&quot;: &quot;叶贝斯定理  朴素叶贝斯假设 朴素叶贝斯分类器&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/05.贝叶斯学习/叶贝斯定理  朴素叶贝斯假设 朴素叶贝斯分类器&quot;
+              },
+              {
+                &quot;text&quot;: &quot;MDL和 MAP&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/05.贝叶斯学习/MDL和 MAP&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;基于实例的学习方法&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/06.基于实例的学习方法/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;在无限样本下，1-NN的错误率不超过贝叶斯最优错误率的2倍的解析&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/06.基于实例的学习方法/在无限样本下，1-NN的错误率不超过贝叶斯最优错误率的2倍的解析&quot;
+              },
+              {
+                &quot;text&quot;: &quot;最近邻&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/06.基于实例的学习方法/最近邻&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;支持向量机（SVM）&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/07.支持向量机（SVM）/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;分类决策函数各个部分及其意义&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/07.支持向量机（SVM）/分类决策函数各个部分及其意义&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;无监督学习&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/08.无监督学习/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;Hw5&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/08.无监督学习/hw5&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;集成学习&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/09.集成学习/&quot;
+              },
+              {
+                &quot;text&quot;: &quot;未被选中概率的公式的解析&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/09.集成学习/未被选中概率的公式的解析&quot;
+              },
+              {
+                &quot;text&quot;: &quot;AdaBoost算法核心流程&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/09.集成学习/AdaBoost算法核心流程&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;深度学习基础&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/10.深度学习基础/&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;基于群体智慧的机器学习数据集构建&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/11.基于群体智慧的机器学习数据集构建/&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;机器学习算法总结&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/12.机器学习算法总结/&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;毕业设计&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/13.毕业设计/&quot;
+              }
+            ]
+          },
+          {
+            &quot;text&quot;: &quot;02,机器学习实验方法与原则&quot;,
+            &quot;collapsible&quot;: true,
+            &quot;collapsed&quot;: true,
+            &quot;items&quot;: [
+              {
+                &quot;text&quot;: &quot;概述&quot;,
+                &quot;link&quot;: &quot;/AI/1.机器学习/02,机器学习实验方法与原则/&quot;
+              }
+            ]
+          }
+        ]
+      },
+      {
+        &quot;text&quot;: &quot;深度学习&quot;,
+        &quot;collapsible&quot;: true,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;概述&quot;,
+            &quot;link&quot;: &quot;/AI/2.深度学习/&quot;
+          }
+        ]
+      },
+      {
+        &quot;text&quot;: &quot;NPL&quot;,
+        &quot;collapsible&quot;: true,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;概述&quot;,
+            &quot;link&quot;: &quot;/AI/3.NPL/&quot;
+          }
+        ]
+      },
+      {
+        &quot;text&quot;: &quot;算法&quot;,
+        &quot;collapsible&quot;: true,
+        &quot;collapsed&quot;: true,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;概述&quot;,
+            &quot;link&quot;: &quot;/AI/4.算法/&quot;
+          }
+        ]
+      }
+    ],
+    &quot;/Postgraduate/&quot;: [
+      {
+        &quot;text&quot;: &quot;概述&quot;,
+        &quot;link&quot;: &quot;/Postgraduate/&quot;
+      }
+    ],
+    &quot;/Internship/&quot;: [
+      {
+        &quot;text&quot;: &quot;概述&quot;,
+        &quot;link&quot;: &quot;/Internship/&quot;
+      }
+    ]
+  },
+  &quot;socialLinks&quot;: [
+    {
+      &quot;icon&quot;: &quot;github&quot;,
+      &quot;link&quot;: &quot;https://github.com/Kgumo&quot;
+    }
+  ],
+  &quot;footer&quot;: {
+    &quot;message&quot;: &quot;知识如风，常伴吾身&quot;,
+    &quot;copyright&quot;: &quot;Copyright © 2023-2025 Kgumo&quot;
+  },
+  &quot;search&quot;: {
+    &quot;provider&quot;: &quot;local&quot;,
+    &quot;options&quot;: {
+      &quot;translations&quot;: {
+        &quot;button&quot;: {
+          &quot;buttonText&quot;: &quot;🔍 搜索笔记...&quot;
+        }
+      }
+    }
+  },
+  &quot;editLink&quot;: {
+    &quot;pattern&quot;: &quot;https://github.com/Kgumo/Note/edit/main/docs/:path&quot;,
+    &quot;text&quot;: &quot;✏️ 编辑此页&quot;
+  }
+}</pre><h3 id="page-data" tabindex="-1">Page Data <a class="header-anchor" href="#page-data" aria-label="Permalink to &quot;Page Data&quot;">​</a></h3><pre>{
+  &quot;title&quot;: &quot;Runtime API Examples&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;frontmatter&quot;: {
+    &quot;outline&quot;: &quot;deep&quot;
+  },
+  &quot;headers&quot;: [],
+  &quot;relativePath&quot;: &quot;api-examples.md&quot;,
+  &quot;filePath&quot;: &quot;api-examples.md&quot;,
+  &quot;lastUpdated&quot;: 1754871536000
+}</pre><h3 id="page-frontmatter" tabindex="-1">Page Frontmatter <a class="header-anchor" href="#page-frontmatter" aria-label="Permalink to &quot;Page Frontmatter&quot;">​</a></h3><pre>{
+  &quot;outline&quot;: &quot;deep&quot;
+}</pre><h2 id="more" tabindex="-1">More <a class="header-anchor" href="#more" aria-label="Permalink to &quot;More&quot;">​</a></h2><p>Check out the documentation for the <a href="https://vitepress.dev/reference/runtime-api#usedata" target="_blank" rel="noreferrer">full list of runtime APIs</a>.</p></div></div></main><footer class="VPDocFooter" data-v-39a288b8 data-v-e257564d><!--[--><!--]--><div class="edit-info" data-v-e257564d><div class="edit-link" data-v-e257564d><a class="VPLink link vp-external-link-icon no-icon edit-link-button" href="https://github.com/Kgumo/Note/edit/main/docs/api-examples.md" target="_blank" rel="noreferrer" data-v-e257564d><!--[--><span class="vpi-square-pen edit-link-icon" data-v-e257564d></span> ✏️ 编辑此页<!--]--></a></div><div class="last-updated" data-v-e257564d><p class="VPLastUpdated" data-v-e257564d data-v-e98dd255>Last updated: <time datetime="2025-08-11T00:18:56.000Z" data-v-e98dd255></time></p></div></div><!----></footer><!--[--><!--]--></div></div></div><!--[--><!--]--></div></div><footer class="VPFooter" data-v-5d98c3a5 data-v-e315a0ad><div class="container" data-v-e315a0ad><p class="message" data-v-e315a0ad>知识如风，常伴吾身</p><p class="copyright" data-v-e315a0ad>Copyright © 2023-2025 Kgumo</p></div></footer><!--[--><div class="vp-bg-elements" data-v-cf7a8e40><div class="vp-floating-element vp-element-1" data-v-cf7a8e40></div><div class="vp-floating-element vp-element-2" data-v-cf7a8e40></div><div class="vp-floating-element vp-element-3" data-v-cf7a8e40></div></div><div class="vp-grid-overlay" data-v-cf7a8e40></div><!----><!--]--></div></div>
+    <script>window.__VP_HASH_MAP__=JSON.parse("{\"ai_0.课程基础知识_index.md\":\"DeP2bx3k\",\"ai_0.课程基础知识_python_index.md\":\"D94Rf3jk\",\"ai_0.课程基础知识_python_jupyter notebook.md\":\"Diq8cOMF\",\"ai_0.课程基础知识_python_matplotlib.md\":\"T-XPpdwF\",\"ai_0.课程基础知识_python_numpy.md\":\"CiuiIMsJ\",\"ai_0.课程基础知识_python_pandas.md\":\"r4NWbDwG\",\"ai_0.课程基础知识_🎲概率论.md\":\"W8v9upGV\",\"ai_0.课程基础知识_📐线性代数.md\":\"D4fb8CyK\",\"ai_0.课程基础知识_🔢高数.md\":\"DhpJXMtN\",\"ai_1.机器学习_01.机器学习基础_index.md\":\"BlzjfxxL\",\"ai_1.机器学习_02_机器学习实验方法与原则_index.md\":\"CbRlgT_d\",\"ai_1.机器学习_03.决策树_index.md\":\"DSRYkiTw\",\"ai_1.机器学习_03.决策树_决策树构建思路与修正.md\":\"DFKpc24N\",\"ai_1.机器学习_03.决策树_决策树里随机数的作用.md\":\"UncQaFlG\",\"ai_1.机器学习_03.决策树_单棵树——一个独立的决策树模型.md\":\"DIGf0De1\",\"ai_1.机器学习_03.决策树_叶子节点概率预测.md\":\"Dh2rfxQW\",\"ai_1.机器学习_03.决策树_基于决策树的lol胜负预测.md\":\"CnDzMzd1\",\"ai_1.机器学习_03.决策树_随机森林与决策树的关系.md\":\"CsGsjgK4\",\"ai_1.机器学习_04.回归分析_exp2：基于回归分析的大学综合得分预测.md\":\"mhE0rish\",\"ai_1.机器学习_04.回归分析_index.md\":\"DoFOEsZd\",\"ai_1.机器学习_04.回归分析_离群点的检测.md\":\"D-YYg_0F\",\"ai_1.机器学习_04.回归分析_线性回归里面的相关系数和决定系数.md\":\"Davj6TGf\",\"ai_1.机器学习_05.贝叶斯学习_index.md\":\"DwqQkYFz\",\"ai_1.机器学习_05.贝叶斯学习_mdl和 map.md\":\"DnWmxNuU\",\"ai_1.机器学习_05.贝叶斯学习_叶贝斯定理  朴素叶贝斯假设 朴素叶贝斯分类器.md\":\"BWhXelu7\",\"ai_1.机器学习_05.贝叶斯学习_极大后验假设与极大似然.md\":\"BuLWQlDK\",\"ai_1.机器学习_06.基于实例的学习方法_index.md\":\"CcZYQdsw\",\"ai_1.机器学习_06.基于实例的学习方法_在无限样本下，1-nn的错误率不超过贝叶斯最优错误率的2倍的解析.md\":\"ewXBUqtE\",\"ai_1.机器学习_06.基于实例的学习方法_最近邻.md\":\"CNMuQb8k\",\"ai_1.机器学习_07.支持向量机（svm）_index.md\":\"CsdthnOL\",\"ai_1.机器学习_07.支持向量机（svm）_分类决策函数各个部分及其意义.md\":\"BsJ_B8fD\",\"ai_1.机器学习_08.无监督学习_hw5.md\":\"Bpj1NutC\",\"ai_1.机器学习_08.无监督学习_index.md\":\"C4GDAdMQ\",\"ai_1.机器学习_09.集成学习_adaboost算法核心流程.md\":\"CL1u9FGc\",\"ai_1.机器学习_09.集成学习_index.md\":\"4NzrfquH\",\"ai_1.机器学习_09.集成学习_未被选中概率的公式的解析.md\":\"DDqG00o4\",\"ai_1.机器学习_10.深度学习基础_index.md\":\"BUfu_vjv\",\"ai_1.机器学习_11.基于群体智慧的机器学习数据集构建_index.md\":\"CJj5oCDX\",\"ai_1.机器学习_12.机器学习算法总结_index.md\":\"-R_4FBwt\",\"ai_1.机器学习_13.毕业设计_index.md\":\"sM-KLQve\",\"ai_1.机器学习_index.md\":\"DXNgFmBW\",\"ai_2.深度学习_index.md\":\"Dh8K1GPR\",\"ai_3.npl_index.md\":\"6xf5RMVH\",\"ai_4.算法_index.md\":\"BSwCNZqV\",\"ai_index.md\":\"DiHwp0RM\",\"api-examples.md\":\"wM9be7uM\",\"c___1.c语言基础_01.变量.md\":\"DlaR0JDm\",\"c___1.c语言基础_02.scanf 函数的缓冲区问题、整型数据类型的补充.md\":\"C1RfvtwU\",\"c___1.c语言基础_03.原码、反码、补码和类型转换.md\":\"DL-XGhGn\",\"c___1.c语言基础_04.流程结构之顺序结构和选择结构.md\":\"VMTGMqal\",\"c___1.c语言基础_05.流程结构之循环结构和跳转语句.md\":\"CvXCVTgE\",\"c___1.c语言基础_06.函数.md\":\"TCuLtWSv\",\"c___1.c语言基础_07.数组.md\":\"D8W2GvtP\",\"c___1.c语言基础_08.字符串和指针基础.md\":\"D4d-lSIl\",\"c___1.c语言基础_09.指针和数组.md\":\"DpkiwhWR\",\"c___1.c语言基础_10.指针和函数、动态内存分配和结构体.md\":\"CLGnt0kj\",\"c___1.c语言基础_index.md\":\"v8sutTlv\",\"c___2.c__基础课程_1.基础语法和程序结构_01.数据.md\":\"vffGOVTT\",\"c___2.c__基础课程_1.基础语法和程序结构_02.进制.md\":\"Tg8tTEyl\",\"c___2.c__基础课程_1.基础语法和程序结构_03.运算符和类型转换.md\":\"77WgsUoe\",\"c___2.c__基础课程_1.基础语法和程序结构_04.流程结构.md\":\"Dxt2T_sL\",\"c___2.c__基础课程_1.基础语法和程序结构_05.数组与字符串.md\":\"pHPuJbOG\",\"c___2.c__基础课程_1.基础语法和程序结构_06.函数基础.md\":\"B8IH_I-J\",\"c___2.c__基础课程_1.基础语法和程序结构_07.函数重载和递归函数.md\":\"DT3YapL8\",\"c___2.c__基础课程_1.基础语法和程序结构_08.指针基础.md\":\"UwZjDhw3\",\"c___2.c__基础课程_1.基础语法和程序结构_09.指针和函数、字符串.md\":\"CUQbNsSv\",\"c___2.c__基础课程_1.基础语法和程序结构_10.动态内存分配和二级指针.md\":\"C-_qhc78\",\"c___2.c__基础课程_1.基础语法和程序结构_11.结构体.md\":\"B5nOD4OV\",\"c___2.c__基础课程_1.基础语法和程序结构_12.c__程序组成和编译过程.md\":\"dJkU0RZa\",\"c___2.c__基础课程_1.基础语法和程序结构_index.md\":\"JAatvr0e\",\"c___2.c__基础课程_2.面向对象编程_01.面向对象编程.md\":\"Bi7jV2GO\",\"c___2.c__基础课程_2.面向对象编程_02.构造函数和析构函数.md\":\"W7ue8J5j\",\"c___2.c__基础课程_2.面向对象编程_03.引用以及拷贝构造和拷贝赋值.md\":\"OhMALwuk\",\"c___2.c__基础课程_2.面向对象编程_04.运算符重载和内联.md\":\"BWFgftkm\",\"c___2.c__基础课程_2.面向对象编程_05.类型转换和异常.md\":\"pqo1f1NR\",\"c___2.c__基础课程_2.面向对象编程_06.友元和静态.md\":\"BxV1YfcL\",\"c___2.c__基础课程_2.面向对象编程_index.md\":\"2UtHRmaA\",\"c___2.c__基础课程_3.高级面向对象_01.设计模式之迭代器模式.md\":\"B4j36gtv\",\"c___2.c__基础课程_3.高级面向对象_02.单例模式.md\":\"mhrXvOFa\",\"c___2.c__基础课程_3.高级面向对象_03.观察者模式.md\":\"CSOPmSsY\",\"c___2.c__基础课程_3.高级面向对象_04.函数对象和lambda函数.md\":\"BDCym1hh\",\"c___2.c__基础课程_3.高级面向对象_05.右值引用和移动语义.md\":\"Dlf56T5R\",\"c___2.c__基础课程_3.高级面向对象_06.继承.md\":\"dCjvEXrA\",\"c___2.c__基础课程_3.高级面向对象_07.多态.md\":\"DHPZ98JX\",\"c___2.c__基础课程_3.高级面向对象_08.多继承.md\":\"DP1FQlOs\",\"c___2.c__基础课程_3.高级面向对象_09.泛型编程和模板.md\":\"CWWsjQ_7\",\"c___2.c__基础课程_3.高级面向对象_10.顺序容器.md\":\"CpFIhTVB\",\"c___2.c__基础课程_3.高级面向对象_11.关联容器.md\":\"DZPzmQRE\",\"c___2.c__基础课程_3.高级面向对象_12.全局算法.md\":\"2De1royn\",\"c___2.c__基础课程_3.高级面向对象_index.md\":\"DzosttUR\",\"c___2.c__基础课程_index.md\":\"CJL9ZZje\",\"c___3.c__进阶课程_第1节linux基础_1.linux基础操作.md\":\"CypWTai6\",\"c___3.c__进阶课程_第1节linux基础_2.linux常用指令.md\":\"B4nB9S0P\",\"c___3.c__进阶课程_第1节linux基础_3.用户管理.md\":\"BhqqideP\",\"c___3.c__进阶课程_第1节linux基础_4.shell 脚本.md\":\"Cio6US_R\",\"c___3.c__进阶课程_第1节linux基础_5.正则表达式.md\":\"fESLBEcP\",\"c___3.c__进阶课程_第1节linux基础_6.makefile工程管理文件.md\":\"BzAjEop1\",\"c___3.c__进阶课程_第1节linux基础_index.md\":\"CnGrGee-\",\"c___3.c__进阶课程_第2节数据结构与基本算法_01.链表-单链表.md\":\"JS6udFJf\",\"c___3.c__进阶课程_第2节数据结构与基本算法_02.链表-双链表.md\":\"938Vdv-Y\",\"c___3.c__进阶课程_第2节数据结构与基本算法_03.链表-其他形态.md\":\"B1gO0miF\",\"c___3.c__进阶课程_第2节数据结构与基本算法_04.栈与队列-栈.md\":\"DpXL2RO0\",\"c___3.c__进阶课程_第2节数据结构与基本算法_05.栈与队列-队列.md\":\"D_SBzM7d\",\"c___3.c__进阶课程_第2节数据结构与基本算法_06.二叉树 - 树与二叉树.md\":\"MQADmSTH\",\"c___3.c__进阶课程_第2节数据结构与基本算法_07.二叉树 - 二叉排序树.md\":\"D6Jm0AKF\",\"c___3.c__进阶课程_第2节数据结构与基本算法_08.二叉树 - 平衡二叉树.md\":\"DsCoxIV7\",\"c___3.c__进阶课程_第2节数据结构与基本算法_09.二叉树 - 哈夫曼树.md\":\"CvxNFRry\",\"c___3.c__进阶课程_第2节数据结构与基本算法_10.图-图的概念.md\":\"DlmbjHPj\",\"c___3.c__进阶课程_第2节数据结构与基本算法_11.图-图的存储.md\":\"D6Py-XLl\",\"c___3.c__进阶课程_第2节数据结构与基本算法_12.图-图的遍历.md\":\"BslvAsYY\",\"c___3.c__进阶课程_第2节数据结构与基本算法_13.图-最短路径问题.md\":\"OFKCfYUa\",\"c___3.c__进阶课程_第2节数据结构与基本算法_14.基础算法.md\":\"D8TI3anC\",\"c___3.c__进阶课程_第2节数据结构与基本算法_index.md\":\"COUAA7YH\",\"c___3.c__进阶课程_第3节文件io_1.系统io.md\":\"BFJHvyEr\",\"c___3.c__进阶课程_第3节文件io_2. 目录操作.md\":\"I4Wk38vk\",\"c___3.c__进阶课程_第3节文件io_3.标准io.md\":\"CLO8Mp0E\",\"c___3.c__进阶课程_第3节文件io_index.md\":\"CSEWF8cN\",\"c___3.c__进阶课程_第4节多线程与并发_1.进程.md\":\"CHufxMqT\",\"c___3.c__进阶课程_第4节多线程与并发_2.ipc通信.md\":\"DE-kiP9m\",\"c___3.c__进阶课程_第4节多线程与并发_3. 线程.md\":\"DCTa-3eV\",\"c___3.c__进阶课程_第4节多线程与并发_4.线程池.md\":\"CIs6KdPr\",\"c___3.c__进阶课程_第4节多线程与并发_index.md\":\"5SZYtjlK\",\"c___3.c__进阶课程_第5节网络编程_1.网络编程预备知识.md\":\"CpgMJEyQ\",\"c___3.c__进阶课程_第5节网络编程_2.tcp和udp及通信协议.md\":\"BaFp1uPw\",\"c___3.c__进阶课程_第5节网络编程_4.广播与多播.md\":\"DwPFC-jz\",\"c___3.c__进阶课程_第5节网络编程_5.unix与多路复用.md\":\"BTHI3t1u\",\"c___3.c__进阶课程_第5节网络编程_index.md\":\"0Q0Ggoqo\",\"c___3.c__进阶课程_第6节实战_index.md\":\"20Q-sbfS\",\"c___3.c__进阶课程_第6节实战_ptp项目.md\":\"PCPOU-pT\",\"c___3.c__进阶课程_第6节实战_利用线程找最大值.md\":\"CpOqRM2J\",\"c___3.c__进阶课程_第6节实战_双日志系统1.0.md\":\"Bz1p4Q0R\",\"c___3.c__进阶课程_第6节实战_双日志系统2.0.md\":\"YYOwOy8E\",\"c___3.c__进阶课程_第6节实战_异常安全的动态矩阵类matrix实现.md\":\"Bryo0Dal\",\"c___4.c__研修阶段_index.md\":\"DhCN818h\",\"c___4.c__研修阶段_第1节数据库_1.数据库语句一库与表.md\":\"0T4f6Pod\",\"c___4.c__研修阶段_第1节数据库_2.数据库语句二数据操作.md\":\"AlnQhaXX\",\"c___4.c__研修阶段_第1节数据库_3.数据库语句三事务与索引.md\":\"MrdCgZYA\",\"c___4.c__研修阶段_第1节数据库_4.数据库c__api接口.md\":\"DFLXCRpw\",\"c___4.c__研修阶段_第1节数据库_index.md\":\"CD61gxy7\",\"c___4.c__研修阶段_第2节qt图形库_1.qt-安装与使用.md\":\"DQoOMYfb\",\"c___4.c__研修阶段_第2节qt图形库_10.文件与目录.md\":\"f0fz6_Ln\",\"c___4.c__研修阶段_第2节qt图形库_11.网络与多线程.md\":\"D2Zfg8cT\",\"c___4.c__研修阶段_第2节qt图形库_12.数据库.md\":\"DFDOOEzJ\",\"c___4.c__研修阶段_第2节qt图形库_2.qt-元对象系统.md\":\"Dd4dXGMw\",\"c___4.c__研修阶段_第2节qt图形库_3. 对象树.md\":\"DgZaha34\",\"c___4.c__研修阶段_第2节qt图形库_4.事件系统.md\":\"DhI__G9K\",\"c___4.c__研修阶段_第2节qt图形库_5.gui开发.md\":\"Cs20WmPi\",\"c___4.c__研修阶段_第2节qt图形库_6.自定义控件.md\":\"BPfkLVM4\",\"c___4.c__研修阶段_第2节qt图形库_7.布局管理.md\":\"pu5QMeMd\",\"c___4.c__研修阶段_第2节qt图形库_8.项目详解.md\":\"B57YQlNY\",\"c___4.c__研修阶段_第2节qt图形库_9.绘图系统.md\":\"tGgiEEWK\",\"c___4.c__研修阶段_第2节qt图形库_index.md\":\"DmjlporB\",\"c___4.c__研修阶段_第3节工具使用_1.visualstudio.md\":\"DV8068rt\",\"c___4.c__研修阶段_第3节工具使用_2.git远程仓库.md\":\"C_BGclfF\",\"c___4.c__研修阶段_第3节工具使用_3.cmake.md\":\"B_DTVWYr\",\"c___4.c__研修阶段_第3节工具使用_4.杂项.md\":\"DvwSVSNo\",\"c___4.c__研修阶段_第3节工具使用_index.md\":\"BT0pTuNO\",\"c___index.md\":\"CfeNg75d\",\"index.md\":\"BdlpQY5G\",\"internship_index.md\":\"C55mJ0cD\",\"knowledge-graph.md\":\"blsRtax4\",\"markdown-examples.md\":\"tY3_9A7X\",\"postgraduate_index.md\":\"-RatRb8I\",\"resources.md\":\"CLyO6J8e\",\"我们只是通过无数的思维模型在给世界建模.md\":\"BLvuUD5G\"}");window.__VP_SITE_DATA__=JSON.parse("{\"lang\":\"en-US\",\"dir\":\"ltr\",\"title\":\"额滴笔记\",\"description\":\"个人技术知识库 - C++ | Qt | AI\",\"base\":\"/Note/\",\"head\":[],\"router\":{\"prefetchLinks\":true},\"appearance\":\"dark\",\"themeConfig\":{\"outlineTitle\":\"📚 本文目录\",\"outline\":[2,6],\"smoothScroll\":true,\"logo\":\"/whead.png\",\"nav\":[{\"text\":\"🏠 首页\",\"link\":\"/\",\"activeMatch\":\"^/$\"},{\"text\":\"🌍 认知边界\",\"link\":\"/我们只是通过无数的思维模型在给世界建模\",\"activeMatch\":\"/我们只是通过无数的思维模型在给世界建模\"},{\"text\":\"🧪 实验室\",\"items\":[{\"text\":\"C++/Qt\",\"link\":\"/C++/\"},{\"text\":\"AI研究\",\"link\":\"/AI/\"}]},{\"text\":\"🚤 跨越两岸\",\"items\":[{\"text\":\"考研\",\"link\":\"/Postgraduate/\"},{\"text\":\"实习\",\"link\":\"/Internship/\"}],\"className\":\"nav-right\"},{\"text\":\"🔗 资源\",\"link\":\"/resources\",\"activeMatch\":\"/resources\",\"className\":\"nav-right\"}],\"sidebar\":{\"/C++/\":[{\"text\":\"概述\",\"link\":\"/C++/\"},{\"text\":\"C语言基础\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"变量\",\"link\":\"/C++/1.C语言基础/01.变量\"},{\"text\":\"Scanf 函数的缓冲区问题、整型数据类型的补充\",\"link\":\"/C++/1.C语言基础/02.scanf 函数的缓冲区问题、整型数据类型的补充\"},{\"text\":\"原码、反码、补码和类型转换\",\"link\":\"/C++/1.C语言基础/03.原码、反码、补码和类型转换\"},{\"text\":\"流程结构之顺序结构和选择结构\",\"link\":\"/C++/1.C语言基础/04.流程结构之顺序结构和选择结构\"},{\"text\":\"流程结构之循环结构和跳转语句\",\"link\":\"/C++/1.C语言基础/05.流程结构之循环结构和跳转语句\"},{\"text\":\"函数\",\"link\":\"/C++/1.C语言基础/06.函数\"},{\"text\":\"数组\",\"link\":\"/C++/1.C语言基础/07.数组\"},{\"text\":\"字符串和指针基础\",\"link\":\"/C++/1.C语言基础/08.字符串和指针基础\"},{\"text\":\"指针和数组\",\"link\":\"/C++/1.C语言基础/09.指针和数组\"},{\"text\":\"指针和函数、动态内存分配和结构体\",\"link\":\"/C++/1.C语言基础/10.指针和函数、动态内存分配和结构体\"},{\"text\":\"Index\",\"link\":\"/C++/1.C语言基础/index\"}]},{\"text\":\"C++基础课程\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/2.C++基础课程/\"},{\"text\":\"基础语法和程序结构\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/\"},{\"text\":\"数据\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/01.数据\"},{\"text\":\"进制\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/02.进制\"},{\"text\":\"运算符和类型转换\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/03.运算符和类型转换\"},{\"text\":\"流程结构\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/04.流程结构\"},{\"text\":\"数组与字符串\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/05.数组与字符串\"},{\"text\":\"函数基础\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/06.函数基础\"},{\"text\":\"函数重载和递归函数\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/07.函数重载和递归函数\"},{\"text\":\"指针基础\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/08.指针基础\"},{\"text\":\"指针和函数、字符串\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/09.指针和函数、字符串\"},{\"text\":\"动态内存分配和二级指针\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/10.动态内存分配和二级指针\"},{\"text\":\"结构体\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/11.结构体\"},{\"text\":\"C++程序组成和编译过程\",\"link\":\"/C++/2.C++基础课程/1.基础语法和程序结构/12.C++程序组成和编译过程\"}]},{\"text\":\"面向对象编程\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/2.C++基础课程/2.面向对象编程/\"},{\"text\":\"面向对象编程\",\"link\":\"/C++/2.C++基础课程/2.面向对象编程/01.面向对象编程\"},{\"text\":\"构造函数和析构函数\",\"link\":\"/C++/2.C++基础课程/2.面向对象编程/02.构造函数和析构函数\"},{\"text\":\"引用以及拷贝构造和拷贝赋值\",\"link\":\"/C++/2.C++基础课程/2.面向对象编程/03.引用以及拷贝构造和拷贝赋值\"},{\"text\":\"运算符重载和内联\",\"link\":\"/C++/2.C++基础课程/2.面向对象编程/04.运算符重载和内联\"},{\"text\":\"类型转换和异常\",\"link\":\"/C++/2.C++基础课程/2.面向对象编程/05.类型转换和异常\"},{\"text\":\"友元和静态\",\"link\":\"/C++/2.C++基础课程/2.面向对象编程/06.友元和静态\"}]},{\"text\":\"高级面向对象\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/\"},{\"text\":\"设计模式之迭代器模式\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/01.设计模式之迭代器模式\"},{\"text\":\"单例模式\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/02.单例模式\"},{\"text\":\"观察者模式\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/03.观察者模式\"},{\"text\":\"函数对象和lambda函数\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/04.函数对象和lambda函数\"},{\"text\":\"右值引用和移动语义\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/05.右值引用和移动语义\"},{\"text\":\"继承\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/06.继承\"},{\"text\":\"多态\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/07.多态\"},{\"text\":\"多继承\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/08.多继承\"},{\"text\":\"泛型编程和模板\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/09.泛型编程和模板\"},{\"text\":\"顺序容器\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/10.顺序容器\"},{\"text\":\"关联容器\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/11.关联容器\"},{\"text\":\"全局算法\",\"link\":\"/C++/2.C++基础课程/3.高级面向对象/12.全局算法\"}]}]},{\"text\":\"C++进阶课程\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"第1节linux基础\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/3.C++进阶课程/第1节linux基础/\"},{\"text\":\"Linux基础操作\",\"link\":\"/C++/3.C++进阶课程/第1节linux基础/1.linux基础操作\"},{\"text\":\"Linux常用指令\",\"link\":\"/C++/3.C++进阶课程/第1节linux基础/2.linux常用指令\"},{\"text\":\"用户管理\",\"link\":\"/C++/3.C++进阶课程/第1节linux基础/3.用户管理\"},{\"text\":\"Shell 脚本\",\"link\":\"/C++/3.C++进阶课程/第1节linux基础/4.shell 脚本\"},{\"text\":\"正则表达式\",\"link\":\"/C++/3.C++进阶课程/第1节linux基础/5.正则表达式\"},{\"text\":\"Makefile工程管理文件\",\"link\":\"/C++/3.C++进阶课程/第1节linux基础/6.Makefile工程管理文件\"}]},{\"text\":\"第2节数据结构与基本算法\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/\"},{\"text\":\"链表-单链表\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/01.链表-单链表\"},{\"text\":\"链表-双链表\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/02.链表-双链表\"},{\"text\":\"链表-其他形态\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/03.链表-其他形态\"},{\"text\":\"栈与队列-栈\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/04.栈与队列-栈\"},{\"text\":\"栈与队列-队列\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/05.栈与队列-队列\"},{\"text\":\"二叉树 - 树与二叉树\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/06.二叉树 - 树与二叉树\"},{\"text\":\"二叉树 - 二叉排序树\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/07.二叉树 - 二叉排序树\"},{\"text\":\"二叉树 - 平衡二叉树\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/08.二叉树 - 平衡二叉树\"},{\"text\":\"二叉树 - 哈夫曼树\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/09.二叉树 - 哈夫曼树\"},{\"text\":\"图-图的概念\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/10.图-图的概念\"},{\"text\":\"图-图的存储\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/11.图-图的存储\"},{\"text\":\"图-图的遍历\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/12.图-图的遍历\"},{\"text\":\"图-最短路径问题\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/13.图-最短路径问题\"},{\"text\":\"基础算法\",\"link\":\"/C++/3.C++进阶课程/第2节数据结构与基本算法/14.基础算法\"}]},{\"text\":\"第3节文件IO\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/3.C++进阶课程/第3节文件IO/\"},{\"text\":\"系统IO\",\"link\":\"/C++/3.C++进阶课程/第3节文件IO/1.系统IO\"},{\"text\":\" 目录操作\",\"link\":\"/C++/3.C++进阶课程/第3节文件IO/2. 目录操作\"},{\"text\":\"标准IO\",\"link\":\"/C++/3.C++进阶课程/第3节文件IO/3.标准IO\"}]},{\"text\":\"第4节多线程与并发\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/3.C++进阶课程/第4节多线程与并发/\"},{\"text\":\"进程\",\"link\":\"/C++/3.C++进阶课程/第4节多线程与并发/1.进程\"},{\"text\":\"IPC通信\",\"link\":\"/C++/3.C++进阶课程/第4节多线程与并发/2.IPC通信\"},{\"text\":\" 线程\",\"link\":\"/C++/3.C++进阶课程/第4节多线程与并发/3. 线程\"},{\"text\":\"线程池\",\"link\":\"/C++/3.C++进阶课程/第4节多线程与并发/4.线程池\"}]},{\"text\":\"第5节网络编程\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/3.C++进阶课程/第5节网络编程/\"},{\"text\":\"网络编程预备知识\",\"link\":\"/C++/3.C++进阶课程/第5节网络编程/1.网络编程预备知识\"},{\"text\":\"TCP和udp及通信协议\",\"link\":\"/C++/3.C++进阶课程/第5节网络编程/2.TCP和udp及通信协议\"},{\"text\":\"广播与多播\",\"link\":\"/C++/3.C++进阶课程/第5节网络编程/4.广播与多播\"},{\"text\":\"Unix与多路复用\",\"link\":\"/C++/3.C++进阶课程/第5节网络编程/5.unix与多路复用\"}]},{\"text\":\"第6节实战\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/3.C++进阶课程/第6节实战/\"},{\"text\":\"利用线程找最大值\",\"link\":\"/C++/3.C++进阶课程/第6节实战/利用线程找最大值\"},{\"text\":\"双日志系统1.0\",\"link\":\"/C++/3.C++进阶课程/第6节实战/双日志系统1.0\"},{\"text\":\"双日志系统2.0\",\"link\":\"/C++/3.C++进阶课程/第6节实战/双日志系统2.0\"},{\"text\":\"异常安全的动态矩阵类Matrix实现\",\"link\":\"/C++/3.C++进阶课程/第6节实战/异常安全的动态矩阵类Matrix实现\"},{\"text\":\"PTP项目\",\"link\":\"/C++/3.C++进阶课程/第6节实战/PTP项目\"}]}]},{\"text\":\"C++研修阶段\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/4.C++研修阶段/\"},{\"text\":\"第1节数据库\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/4.C++研修阶段/第1节数据库/\"},{\"text\":\"数据库语句一库与表\",\"link\":\"/C++/4.C++研修阶段/第1节数据库/1.数据库语句一库与表\"},{\"text\":\"数据库语句二数据操作\",\"link\":\"/C++/4.C++研修阶段/第1节数据库/2.数据库语句二数据操作\"},{\"text\":\"数据库语句三事务与索引\",\"link\":\"/C++/4.C++研修阶段/第1节数据库/3.数据库语句三事务与索引\"},{\"text\":\"数据库C++API接口\",\"link\":\"/C++/4.C++研修阶段/第1节数据库/4.数据库C++API接口\"}]},{\"text\":\"第2节QT图形库\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/\"},{\"text\":\"QT-安装与使用\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/1.QT-安装与使用\"},{\"text\":\"QT-元对象系统\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/2.QT-元对象系统\"},{\"text\":\" 对象树\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/3. 对象树\"},{\"text\":\"事件系统\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/4.事件系统\"},{\"text\":\"GUI开发\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/5.GUI开发\"},{\"text\":\"自定义控件\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/6.自定义控件\"},{\"text\":\"布局管理\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/7.布局管理\"},{\"text\":\"项目详解\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/8.项目详解\"},{\"text\":\"绘图系统\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/9.绘图系统\"},{\"text\":\"文件与目录\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/10.文件与目录\"},{\"text\":\"网络与多线程\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/11.网络与多线程\"},{\"text\":\"数据库\",\"link\":\"/C++/4.C++研修阶段/第2节QT图形库/12.数据库\"}]},{\"text\":\"第3节工具使用\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/C++/4.C++研修阶段/第3节工具使用/\"},{\"text\":\"VisualStudio\",\"link\":\"/C++/4.C++研修阶段/第3节工具使用/1.VisualStudio\"},{\"text\":\"Git远程仓库\",\"link\":\"/C++/4.C++研修阶段/第3节工具使用/2.Git远程仓库\"},{\"text\":\"CMake\",\"link\":\"/C++/4.C++研修阶段/第3节工具使用/3.CMake\"},{\"text\":\"杂项\",\"link\":\"/C++/4.C++研修阶段/第3节工具使用/4.杂项\"}]}]}],\"/AI/\":[{\"text\":\"概述\",\"link\":\"/AI/\"},{\"text\":\"课程基础知识\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/0.课程基础知识/\"},{\"text\":\"🎲概率论\",\"link\":\"/AI/0.课程基础知识/🎲概率论\"},{\"text\":\"📐线性代数\",\"link\":\"/AI/0.课程基础知识/📐线性代数\"},{\"text\":\"🔢高数\",\"link\":\"/AI/0.课程基础知识/🔢高数\"},{\"text\":\"Python\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/0.课程基础知识/Python/\"},{\"text\":\"Jupyter Notebook\",\"link\":\"/AI/0.课程基础知识/Python/Jupyter notebook\"},{\"text\":\"Matplotlib\",\"link\":\"/AI/0.课程基础知识/Python/Matplotlib\"},{\"text\":\"Numpy\",\"link\":\"/AI/0.课程基础知识/Python/Numpy\"},{\"text\":\"Pandas\",\"link\":\"/AI/0.课程基础知识/Python/Pandas\"}]}]},{\"text\":\"机器学习\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/\"},{\"text\":\"机器学习基础\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/01.机器学习基础/\"}]},{\"text\":\"决策树\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/03.决策树/\"},{\"text\":\"单棵树——一个独立的决策树模型\",\"link\":\"/AI/1.机器学习/03.决策树/单棵树——一个独立的决策树模型\"},{\"text\":\"基于决策树的LOL胜负预测\",\"link\":\"/AI/1.机器学习/03.决策树/基于决策树的LOL胜负预测\"},{\"text\":\"决策树构建思路与修正\",\"link\":\"/AI/1.机器学习/03.决策树/决策树构建思路与修正\"},{\"text\":\"决策树里随机数的作用\",\"link\":\"/AI/1.机器学习/03.决策树/决策树里随机数的作用\"},{\"text\":\"随机森林与决策树的关系\",\"link\":\"/AI/1.机器学习/03.决策树/随机森林与决策树的关系\"},{\"text\":\"叶子节点概率预测\",\"link\":\"/AI/1.机器学习/03.决策树/叶子节点概率预测\"}]},{\"text\":\"回归分析\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/04.回归分析/\"},{\"text\":\"离群点的检测\",\"link\":\"/AI/1.机器学习/04.回归分析/离群点的检测\"},{\"text\":\"线性回归里面的相关系数和决定系数\",\"link\":\"/AI/1.机器学习/04.回归分析/线性回归里面的相关系数和决定系数\"},{\"text\":\"Exp2：基于回归分析的大学综合得分预测\",\"link\":\"/AI/1.机器学习/04.回归分析/Exp2：基于回归分析的大学综合得分预测\"}]},{\"text\":\"贝叶斯学习\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/05.贝叶斯学习/\"},{\"text\":\"极大后验假设与极大似然\",\"link\":\"/AI/1.机器学习/05.贝叶斯学习/极大后验假设与极大似然\"},{\"text\":\"叶贝斯定理  朴素叶贝斯假设 朴素叶贝斯分类器\",\"link\":\"/AI/1.机器学习/05.贝叶斯学习/叶贝斯定理  朴素叶贝斯假设 朴素叶贝斯分类器\"},{\"text\":\"MDL和 MAP\",\"link\":\"/AI/1.机器学习/05.贝叶斯学习/MDL和 MAP\"}]},{\"text\":\"基于实例的学习方法\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/06.基于实例的学习方法/\"},{\"text\":\"在无限样本下，1-NN的错误率不超过贝叶斯最优错误率的2倍的解析\",\"link\":\"/AI/1.机器学习/06.基于实例的学习方法/在无限样本下，1-NN的错误率不超过贝叶斯最优错误率的2倍的解析\"},{\"text\":\"最近邻\",\"link\":\"/AI/1.机器学习/06.基于实例的学习方法/最近邻\"}]},{\"text\":\"支持向量机（SVM）\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/07.支持向量机（SVM）/\"},{\"text\":\"分类决策函数各个部分及其意义\",\"link\":\"/AI/1.机器学习/07.支持向量机（SVM）/分类决策函数各个部分及其意义\"}]},{\"text\":\"无监督学习\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/08.无监督学习/\"},{\"text\":\"Hw5\",\"link\":\"/AI/1.机器学习/08.无监督学习/hw5\"}]},{\"text\":\"集成学习\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/09.集成学习/\"},{\"text\":\"未被选中概率的公式的解析\",\"link\":\"/AI/1.机器学习/09.集成学习/未被选中概率的公式的解析\"},{\"text\":\"AdaBoost算法核心流程\",\"link\":\"/AI/1.机器学习/09.集成学习/AdaBoost算法核心流程\"}]},{\"text\":\"深度学习基础\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/10.深度学习基础/\"}]},{\"text\":\"基于群体智慧的机器学习数据集构建\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/11.基于群体智慧的机器学习数据集构建/\"}]},{\"text\":\"机器学习算法总结\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/12.机器学习算法总结/\"}]},{\"text\":\"毕业设计\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/13.毕业设计/\"}]},{\"text\":\"02,机器学习实验方法与原则\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/1.机器学习/02,机器学习实验方法与原则/\"}]}]},{\"text\":\"深度学习\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/2.深度学习/\"}]},{\"text\":\"NPL\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/3.NPL/\"}]},{\"text\":\"算法\",\"collapsible\":true,\"collapsed\":true,\"items\":[{\"text\":\"概述\",\"link\":\"/AI/4.算法/\"}]}],\"/Postgraduate/\":[{\"text\":\"概述\",\"link\":\"/Postgraduate/\"}],\"/Internship/\":[{\"text\":\"概述\",\"link\":\"/Internship/\"}]},\"socialLinks\":[{\"icon\":\"github\",\"link\":\"https://github.com/Kgumo\"}],\"footer\":{\"message\":\"知识如风，常伴吾身\",\"copyright\":\"Copyright © 2023-2025 Kgumo\"},\"search\":{\"provider\":\"local\",\"options\":{\"translations\":{\"button\":{\"buttonText\":\"🔍 搜索笔记...\"}}}},\"editLink\":{\"pattern\":\"https://github.com/Kgumo/Note/edit/main/docs/:path\",\"text\":\"✏️ 编辑此页\"}},\"locales\":{},\"scrollOffset\":134,\"cleanUrls\":true}");</script>
+    
+  </body>
+</html>
