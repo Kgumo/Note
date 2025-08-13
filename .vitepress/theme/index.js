@@ -45,30 +45,29 @@ const FeatureTags = {
   }
 };
 
-// 添加路径修复函数
-function fixBasePath() {
-  if (typeof window !== 'undefined') {
-    const base = import.meta.env.BASE_URL;
-    
-    // 修复 <link> 和 <script> 标签的路径
-    document.querySelectorAll('link[href], script[src]').forEach(el => {
+// 全局路径修复函数
+const fixBasePathGlobally = () => {
+  if (import.meta.env.PROD && typeof window !== 'undefined') {
+    // 修复所有资源路径
+    document.querySelectorAll('link[href], script[src], img[src]').forEach(el => {
       const attr = el.href ? 'href' : 'src';
       const value = el[attr];
       
-      if (value.startsWith(base) && !value.startsWith('http')) {
-        el[attr] = value.replace(base, '/');
+      if (value && value.includes('/Note/')) {
+        el[attr] = value.replace('/Note/', '/');
       }
     });
     
     // 修复内联样式中的路径
     document.querySelectorAll('style').forEach(style => {
       style.textContent = style.textContent.replace(
-        new RegExp(`url\\(${base.replace(/\//g, '\\/')}`, 'g'),
+        /url\(['"]?\/Note\//g, 
         'url(/'
       );
     });
   }
-}
+};
+
 
 
 export default {
