@@ -4,7 +4,8 @@ import path from 'node:path';
 import fs from 'fs';
 import { withMermaid } from 'vitepress-plugin-mermaid'; // 导入官方插件
 import { createRequire } from 'module';
-
+import pkgConfig from 'vite-plugin-package-config';
+import optimizePersist from 'vite-plugin-optimize-persist';
 const require = createRequire(import.meta.url);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -154,12 +155,17 @@ export default withMermaid(defineConfig({
   },
   
   vite: {
+    plugins: [
+      pkgConfig.default(),
+      optimizePersist.default()
+    ],
     build: {
       rollupOptions: {}
     },
     resolve: {
       alias: {
         'langium/lib/utils/cancellation': 'cancellation-shim',
+        'langium-ast': 'langium/lib/ast',
         '@': path.resolve(__dirname, './'),
         '~': path.resolve(__dirname, '../../'),
         '@theme': path.resolve(__dirname, './theme')
@@ -176,12 +182,25 @@ export default withMermaid(defineConfig({
     },
     optimizeDeps: {
       include: [
-      // 确保 langium 相关依赖被正确优化
-      'langium',
-      'langium-ast'
-    ],
+        // 确保 langium 相关依赖被正确优化
+        'langium',
+        
+        // 修正依赖名称
+        'markdown-it',
+        'element-plus',
+        '@vueuse/core',
+        'd3',
+        
+        // 移除本地组件路径（Vite 无法优化本地 Vue 文件）
+        // 改为优化其依赖的第三方库
+      ],
+      exclude: [
+        'vitepress-plugin-mermaid',
+        'vitepress' // 避免标记为 external
+      ],
       esbuildOptions: {
-        target: 'esnext'
+        target: 'esnext',
+        // 添加以下配置解决入口点问题
       }
     }
   },

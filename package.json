@@ -5,12 +5,18 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "@vueuse/core": "^13.6.0",
     "d3": "^7.9.0",
+    "element-plus": "^2.10.7",
+    "langium": "^4.0.0",
+    "markdown-it": "^14.1.0",
     "markdown-it-katex": "^2.0.3",
     "prismjs": "^1.30.0"
   },
   "devDependencies": {
     "mermaid": "^11.9.0",
+    "vite-plugin-optimize-persist": "^0.1.2",
+    "vite-plugin-package-config": "^0.1.1",
     "vitepress": "^1.0.0",
     "vitepress-plugin-mermaid": "^2.0.17"
   }
