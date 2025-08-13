@@ -22,7 +22,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: recursive  # 确保包含子模块（如果有）
       
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -30,19 +29,25 @@ jobs:
           node-version: 20
           cache: npm
       
-      # 使用缓存优化安装
+      # 修复 npm 的 bug
+      - name: Fix npm bug
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+          npm cache clean --force
+      
+      # 安装依赖
       - name: Install dependencies
         run: |
-          npm ci --legacy-peer-deps --omit=optional
-          # 确保安装最新版本的插件
+          npm install --legacy-peer-deps --force
           npm install vitepress-plugin-mermaid@latest mermaid@10.9.0
       
       # 构建
       - name: Build with VitePress
         run: npm run docs:build
         env:
-          NODE_ENV: production  # 确保生产环境构建
-          BASE_URL: '/'
+          NODE_ENV: production
+      
       # 上传构建产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
