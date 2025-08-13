@@ -34,22 +34,25 @@ const cppSidebar = set_sidebar("C++", configPath);
 const aiSidebar = set_sidebar("AI", configPath);
 const PostgraduateSidebar = set_sidebar("Postgraduate", configPath);
 const InternshipSidebar = set_sidebar("Internship", configPath);
-// 获取正确的 base URL
-const isProduction = process.env.NODE_ENV === 'production';
-const basePath = isProduction ? '/Note/' : '/';
+
 // 使用 withMermaid 包装配置
 export default withMermaid(defineConfig({
   title: "额滴笔记",
   description: "个人技术知识库 - C++ | Qt | AI",
-  base: basePath,
+  base: process.env.NODE_ENV === 'production' ? '/Note/' : '/',
   assetsDir: 'assets',
   
   head: [
+    // 使用 base 变量构建路径
     ["link", { 
       rel: "icon", 
-      href: basePath + "head.svg"
+      href: process.env.NODE_ENV === 'production' 
+        ? '/Note/head.svg' 
+        : '/head.svg' 
     }],
-    ["meta", { 
+    
+    // 添加 CSP 修复重定向问题
+    ['meta', { 
       'http-equiv': 'Content-Security-Policy',
       content: 'upgrade-insecure-requests' 
     }]
@@ -77,7 +80,9 @@ export default withMermaid(defineConfig({
     outline: [2, 6],
     smoothScroll: true,
     
-    logo: basePath + "whead.png",
+    logo: process.env.NODE_ENV === 'production' 
+      ? '/Note/whead.png' 
+      : '/whead.png',
     nav: [
       { 
         text: '🏠 首页', 
@@ -158,20 +163,19 @@ export default withMermaid(defineConfig({
   },
   
   vite: {
-     base: basePath,
+    base: process.env.NODE_ENV === 'production' ? '/Note/' : '/',
      build: {
       assetsDir: 'assets',
       rollupOptions: {
         output: {
-          assetFileNames: (assetInfo) => {
-            const extType = assetInfo.name.split('.').at(1);
-            if (extType === 'woff2') {
+          // 确保资源路径包含 base
+          assetFileNames: ({ name }) => {
+            const ext = name.split('.').pop();
+            if (['woff', 'woff2', 'ttf', 'eot'].includes(ext)) {
               return `assets/fonts/[name].[hash][extname]`;
             }
             return `assets/[name].[hash][extname]`;
-          },
-          chunkFileNames: 'assets/[name].[hash].js',
-          entryFileNames: 'assets/[name].[hash].js',
+          }
         }
       }
     },
@@ -209,5 +213,5 @@ export default withMermaid(defineConfig({
   
   tempDir: './.vitepress/.temp',
   srcDir: "./docs",
-  outDir: "../dist"
+  outDir: "./dist"
 }));
