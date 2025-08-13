@@ -43,8 +43,15 @@ export default withMermaid(defineConfig({
   assetsDir: 'assets',
   
   head: [
-    ["link", { rel: "icon", href: "Note/head.svg" }],
-    // 移除手动添加的 CDN 脚本 - 插件会自动处理
+    // 使用 base 变量构建路径
+    ["link", { 
+      rel: "icon", 
+      href: process.env.NODE_ENV === 'production' 
+        ? '/Note/head.svg' 
+        : '/head.svg' 
+    }],
+    
+    // 添加 CSP 修复重定向问题
     ['meta', { 
       'http-equiv': 'Content-Security-Policy',
       content: 'upgrade-insecure-requests' 
@@ -73,7 +80,9 @@ export default withMermaid(defineConfig({
     outline: [2, 6],
     smoothScroll: true,
     
-    logo: 'Note/whead.png',
+    logo: process.env.NODE_ENV === 'production' 
+      ? '/Note/whead.png' 
+      : '/whead.png',
     nav: [
       { 
         text: '🏠 首页', 
@@ -172,6 +181,9 @@ export default withMermaid(defineConfig({
           __dirname
         ],
         deny: ['node_modules', '.git']
+      },
+      headers: {
+        'Content-Type': 'application/javascript'
       }
     },
     optimizeDeps: {
