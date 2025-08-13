@@ -48,8 +48,15 @@ jobs:
           npm install prismjs@latest
       
       # 构建
+           # 构建
       - name: Build with VitePress
-        run: npm run docs:build
+        run: |
+          npm run docs:build
+          # 修复资源路径
+          find dist -type f -name "*.html" -exec sed -i 's|="/assets|="/Note/assets|g' {} +
+          find dist -type f -name "*.js"   -exec sed -i 's|"/assets|="/Note/assets|g' {} +
+          find dist -type f -name "*.css"  -exec sed -i 's|url(/assets|url(/Note/assets|g' {} +
+          find dist -type f -name "*.css"  -exec sed -i 's|url("/assets|url("/Note/assets|g' {} +
         env:
           NODE_ENV: production
       
@@ -57,7 +64,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: ./dist
 
   deploy:
     environment:
