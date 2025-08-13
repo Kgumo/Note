@@ -39,16 +39,16 @@ const InternshipSidebar = set_sidebar("Internship", configPath);
 export default withMermaid(defineConfig({
   title: "额滴笔记",
   description: "个人技术知识库 - C++ | Qt | AI",
-  base: process.env.NODE_ENV === 'production' ? '/' : '/Note/',
+  base: process.env.NODE_ENV === 'production' ? '/Note/' : '/',
   assetsDir: 'assets',
   
   head: [
-    ["link", { rel: "icon", href: "/head.svg" }],
-    ["link", { 
-      rel: "stylesheet", 
-      href: "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" 
-    }],
+    ["link", { rel: "icon", href: "Note/head.svg" }],
     // 移除手动添加的 CDN 脚本 - 插件会自动处理
+    ['meta', { 
+      'http-equiv': 'Content-Security-Policy',
+      content: 'upgrade-insecure-requests' 
+    }]
   ],
   
   cleanUrls: true,
@@ -73,7 +73,7 @@ export default withMermaid(defineConfig({
     outline: [2, 6],
     smoothScroll: true,
     
-    logo: '/whead.png',
+    logo: 'Note/whead.png',
     nav: [
       { 
         text: '🏠 首页', 

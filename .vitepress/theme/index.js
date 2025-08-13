@@ -74,17 +74,7 @@ export default {
   extends: DefaultTheme,
   Layout: CustomLayout,
   enhanceApp({ app, router }) {
-    // 生产环境路径修复
-    if (import.meta.env.PROD) {
-      // 初始加载时修复
-      setTimeout(fixBasePathGlobally, 300);
-      
-      // 路由变化后修复
-      router.onAfterRouteChanged = () => {
-        setTimeout(fixBasePathGlobally, 100);
-      };
-    }
-    
+
     // 注册组件
     app.component('KnowledgeGraph', defineAsyncComponent(() => 
       import('./components/KnowledgeGraph.vue')

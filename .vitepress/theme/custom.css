@@ -1,10 +1,12 @@
 /* 基础样式重置与增强 */
 :root {
-  --vp-font-family-base: 'Noto Serif SC', -apple-system, BlinkMacSystemFont, 
-    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", 
-    "Droid Sans", "Helvetica Neue", sans-serif;
-  --vp-font-family-mono: "Fira Code", "JetBrains Mono", source-code-pro, 
-    Menlo, Monaco, Consolas, "Courier New", monospace;
+   --vp-font-family-base: -apple-system, BlinkMacSystemFont, 
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, 
+    "Fira Sans", "Droid Sans", "Helvetica Neue", 
+    sans-serif;
+  
+  --vp-font-family-mono: "SFMono-Regular", Menlo, 
+    Consolas, monospace;
     
   /* ========== 新增背景系统变量 ========== */
   /* 背景渐变 - 更新为更柔和的颜色 */
