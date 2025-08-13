@@ -1,4 +1,3 @@
-<!-- .vitepress/theme/Layout.vue -->
 <template>
   <VPContent>
     <template #layout-top>
@@ -26,6 +25,8 @@
 <script>
 import { ref, onMounted } from 'vue';
 import DefaultTheme from 'vitepress/theme';
+import { withBase } from 'vitepress';
+
 export default {
   name: 'CustomLayout',
   
@@ -43,14 +44,25 @@ export default {
       document.body.classList.toggle('sidebar-closed', !isSidebarOpen.value);
     };
     
+    const fixResourcePaths = () => {
+      setTimeout(() => {
+        // 修复导航栏 logo 路径
+        const logo = document.querySelector('.VPNavBar .logo');
+        if (logo && (logo.src.includes('/Note/') || logo.src.includes('localhost'))) {
+          logo.src = withBase('/whead.png');
+        }
+      }, 500);
+    };
+    
     onMounted(() => {
-      isSidebarOpen.value = false;
       updateBodyClass();
+      fixResourcePaths();
     });
     
     return {
       isSidebarOpen,
-      toggleSidebar
+      toggleSidebar,
+      withBase
     };
   },
   

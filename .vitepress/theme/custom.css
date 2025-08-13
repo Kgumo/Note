@@ -695,3 +695,15 @@ body.sidebar-closed:not(.is-home) .mermaid-container {
   max-width: 90%;
 }
 
+/* 修复字体路径问题 */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: 
+    local('Inter'),
+    /* 使用相对路径 */
+    url('./assets/inter-roman-latin.woff2') format('woff2');
+}
+

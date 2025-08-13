@@ -39,7 +39,7 @@ const InternshipSidebar = set_sidebar("Internship", configPath);
 export default withMermaid(defineConfig({
   title: "额滴笔记",
   description: "个人技术知识库 - C++ | Qt | AI",
-  base: "/Note/",
+  base: process.env.NODE_ENV === 'production' ? '/' : '/Note/',
   assetsDir: 'assets',
   
   head: [
