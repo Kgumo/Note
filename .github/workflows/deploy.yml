@@ -12,55 +12,52 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true  # 确保只有一个部署运行
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: master  # 确保使用正确的分支
       
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: 20
+          cache: npm
       
+      # 修复 npm 的 bug
+      - name: Fix npm bug
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+          npm cache clean --force
+      
+      # 安装依赖
       - name: Install dependencies
         run: |
-          npm install
-          # 确保安装所有必要的插件
+          npm install --legacy-peer-deps --force
           npm install vitepress-plugin-mermaid@latest mermaid@10.9.0
       
-      - name: Build with VitePress
+      # 解决 qmake 语言高亮问题
+      - name: Install PrismJS dependencies
         run: |
-          # 设置环境变量
-          export NODE_ENV=production
-          export BASE_PATH=/Note/
-          
-          # 构建并验证输出
-          npm run docs:build
-          
-          # 检查构建输出
-          echo "构建输出:"
-          ls -la .vitepress/dist
-          echo "资源目录:"
-          ls -la .vitepress/dist/assets
-          echo "字体目录:"
-          ls -la .vitepress/dist/assets/fonts || echo "无字体目录"
-          
-          # 创建必要的文件
-          touch .vitepress/dist/.nojekyll
-          echo "Build version: $(date +%Y%m%d-%H%M%S)" > .vitepress/dist/version.txt
+          npm install prismjs@latest
       
+      # 构建
+      - name: Build with VitePress
+        run: npm run docs:build
+        env:
+          NODE_ENV: production
+      
+      # 上传构建产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .vitepress/dist
+          path: dist
 
   deploy:
     environment:
@@ -68,9 +65,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
+    name: Deploy
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
