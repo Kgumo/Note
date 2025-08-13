@@ -55,7 +55,16 @@ export default withMermaid(defineConfig({
     ['meta', { 
       'http-equiv': 'Content-Security-Policy',
       content: 'upgrade-insecure-requests' 
-    }]
+    }],
+    ['link', {
+    rel: 'preload',
+    href: process.env.NODE_ENV === 'production' 
+      ? '/Note/assets/fonts/inter-roman-latin.woff2'
+      : '/assets/fonts/inter-roman-latin.woff2',
+    as: 'font',
+    type: 'font/woff2',
+    crossorigin: 'anonymous'
+  }]
   ],
   
   cleanUrls: true,
@@ -72,7 +81,10 @@ export default withMermaid(defineConfig({
     flowchart: {
       nodeSpacing: 50,
       rankSpacing: 50
-    }
+    },
+    cdnBase: process.env.NODE_ENV === 'production' 
+    ? 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/'
+    : '/node_modules/mermaid/dist/'
   },
   
   themeConfig: {
@@ -165,20 +177,22 @@ export default withMermaid(defineConfig({
   vite: {
     base: process.env.NODE_ENV === 'production' ? '/Note/' : '/',
      build: {
-      assetsDir: 'assets',
-      rollupOptions: {
-        output: {
-          // 确保资源路径包含 base
-          assetFileNames: ({ name }) => {
-            const ext = name.split('.').pop();
-            if (['woff', 'woff2', 'ttf', 'eot'].includes(ext)) {
-              return `assets/fonts/[name].[hash][extname]`;
-            }
-            return `assets/[name].[hash][extname]`;
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        // 确保所有资源路径都包含 base
+        assetFileNames: (assetInfo) => {
+          const extType = assetInfo.name.split('.').pop();
+          if (['woff', 'woff2', 'ttf', 'eot'].includes(extType)) {
+            return `assets/fonts/[name]-[hash][extname]`;
           }
-        }
+          return `assets/[name]-[hash][extname]`;
+        },
+        entryFileNames: `assets/[name]-[hash].js`,
+        chunkFileNames: `assets/[name]-[hash].js`,
       }
-    },
+    }
+  },
     resolve: {
       alias: {
         'langium/lib/utils/cancellation': 'cancellation-shim',

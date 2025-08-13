@@ -45,36 +45,35 @@ const FeatureTags = {
   }
 };
 
-// 全局路径修复函数
-const fixBasePathGlobally = () => {
-  if (import.meta.env.PROD && typeof window !== 'undefined') {
+
+export default {
+  extends: DefaultTheme,
+  Layout: CustomLayout,
+  enhanceApp({ app, router }) {
+    if (typeof window !== 'undefined') {
+  // 修复资源路径
+  document.addEventListener('DOMContentLoaded', () => {
+    const base = '/Note/';
+    
     // 修复所有资源路径
     document.querySelectorAll('link[href], script[src], img[src]').forEach(el => {
       const attr = el.href ? 'href' : 'src';
       const value = el[attr];
       
-      if (value && value.includes('/Note/')) {
-        el[attr] = value.replace('/Note/', '/');
+      if (value && !value.startsWith('http') && !value.startsWith(base)) {
+        el[attr] = base + value.replace(/^\//, '');
       }
     });
     
     // 修复内联样式中的路径
     document.querySelectorAll('style').forEach(style => {
       style.textContent = style.textContent.replace(
-        /url\(['"]?\/Note\//g, 
-        'url(/'
+        /url\(['"]?\/assets\//g, 
+        `url(${base}assets/`
       );
     });
-  }
-};
-
-
-
-export default {
-  extends: DefaultTheme,
-  Layout: CustomLayout,
-  enhanceApp({ app, router }) {
-
+  });
+}
     // 注册组件
     app.component('KnowledgeGraph', defineAsyncComponent(() => 
       import('./components/KnowledgeGraph.vue')
