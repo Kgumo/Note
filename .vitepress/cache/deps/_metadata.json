@@ -2,78 +2,84 @@
   "hash": "f614ec5f",
   "configHash": "bc42b1f2",
   "lockfileHash": "880dfe37",
-  "browserHash": "e1fa611a",
+  "browserHash": "9042dbc6",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "3f89ea17",
+      "fileHash": "27e42a39",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "9b6409e2",
+      "fileHash": "d6e36ddc",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "db788279",
+      "fileHash": "22ce9dd9",
       "needsInterop": false
     },
     "langium": {
       "src": "../../../node_modules/langium/lib/index.js",
       "file": "langium.js",
-      "fileHash": "b431fd1a",
+      "fileHash": "4ef998ed",
       "needsInterop": false
     },
     "@braintree/sanitize-url": {
       "src": "../../../node_modules/@braintree/sanitize-url/dist/index.js",
       "file": "@braintree_sanitize-url.js",
-      "fileHash": "65291e8b",
+      "fileHash": "96028046",
       "needsInterop": true
     },
     "dayjs": {
       "src": "../../../node_modules/dayjs/dayjs.min.js",
       "file": "dayjs.js",
-      "fileHash": "52bd0915",
+      "fileHash": "5a611aef",
       "needsInterop": true
     },
     "debug": {
       "src": "../../../node_modules/debug/src/browser.js",
       "file": "debug.js",
-      "fileHash": "2eddf262",
+      "fileHash": "29ed7dc2",
       "needsInterop": true
     },
     "cytoscape-cose-bilkent": {
       "src": "../../../node_modules/cytoscape-cose-bilkent/cytoscape-cose-bilkent.js",
       "file": "cytoscape-cose-bilkent.js",
-      "fileHash": "2ae87736",
+      "fileHash": "4569a166",
       "needsInterop": true
     },
     "cytoscape": {
       "src": "../../../node_modules/cytoscape/dist/cytoscape.esm.mjs",
       "file": "cytoscape.js",
-      "fileHash": "6e1a596b",
+      "fileHash": "66c2ce34",
       "needsInterop": false
     },
     "vitepress > @vueuse/integrations/useFocusTrap": {
       "src": "../../../node_modules/@vueuse/integrations/useFocusTrap.mjs",
       "file": "vitepress___@vueuse_integrations_useFocusTrap.js",
-      "fileHash": "a318470d",
+      "fileHash": "9988e9df",
       "needsInterop": false
     },
     "vitepress > mark.js/src/vanilla.js": {
       "src": "../../../node_modules/mark.js/src/vanilla.js",
       "file": "vitepress___mark__js_src_vanilla__js.js",
-      "fileHash": "ef6f7fc3",
+      "fileHash": "6c6f13a1",
       "needsInterop": false
     },
     "vitepress > minisearch": {
       "src": "../../../node_modules/minisearch/dist/es/index.js",
       "file": "vitepress___minisearch.js",
-      "fileHash": "17af8e90",
+      "fileHash": "44e39b38",
+      "needsInterop": false
+    },
+    "d3": {
+      "src": "../../../node_modules/d3/src/index.js",
+      "file": "d3.js",
+      "fileHash": "b16f0f09",
       "needsInterop": false
     }
   },

@@ -163,8 +163,21 @@ export default withMermaid(defineConfig({
   },
   
   vite: {
-    build: {
-      rollupOptions: {}
+    base: process.env.NODE_ENV === 'production' ? '/Note/' : '/',
+     build: {
+      assetsDir: 'assets',
+      rollupOptions: {
+        output: {
+          // 确保资源路径包含 base
+          assetFileNames: ({ name }) => {
+            const ext = name.split('.').pop();
+            if (['woff', 'woff2', 'ttf', 'eot'].includes(ext)) {
+              return `assets/fonts/[name].[hash][extname]`;
+            }
+            return `assets/[name].[hash][extname]`;
+          }
+        }
+      }
     },
     resolve: {
       alias: {
