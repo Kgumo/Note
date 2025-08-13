@@ -45,35 +45,44 @@ const FeatureTags = {
   }
 };
 
-
-export default {
-  extends: DefaultTheme,
-  Layout: CustomLayout,
-  enhanceApp({ app, router }) {
-    if (typeof window !== 'undefined') {
-  // 修复资源路径
-  document.addEventListener('DOMContentLoaded', () => {
-    const base = '/Note/';
-    
+// 全局路径修复函数
+const fixBasePathGlobally = () => {
+  if (import.meta.env.PROD && typeof window !== 'undefined') {
     // 修复所有资源路径
     document.querySelectorAll('link[href], script[src], img[src]').forEach(el => {
       const attr = el.href ? 'href' : 'src';
       const value = el[attr];
       
-      if (value && !value.startsWith('http') && !value.startsWith(base)) {
-        el[attr] = base + value.replace(/^\//, '');
+      if (value && value.includes('/Note/')) {
+        el[attr] = value.replace('/Note/', '/');
       }
     });
     
     // 修复内联样式中的路径
     document.querySelectorAll('style').forEach(style => {
       style.textContent = style.textContent.replace(
-        /url\(['"]?\/assets\//g, 
-        `url(${base}assets/`
+        /url\(['"]?\/Note\//g, 
+        'url(/'
       );
     });
-  });
-}
+  }
+};
+
+
+
+export default {
+  extends: DefaultTheme,
+  Layout: CustomLayout,
+  enhanceApp({ app, router }) {
+    // 生产环境路径修复
+    if (import.meta.env.PROD) {
+      
+      // 路由变化后修复
+      router.onAfterRouteChanged = () => {
+        setTimeout(fixBasePathGlobally, 100);
+      };
+    }
+    
     // 注册组件
     app.component('KnowledgeGraph', defineAsyncComponent(() => 
       import('./components/KnowledgeGraph.vue')
