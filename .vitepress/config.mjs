@@ -39,32 +39,16 @@ const InternshipSidebar = set_sidebar("Internship", configPath);
 export default withMermaid(defineConfig({
   title: "额滴笔记",
   description: "个人技术知识库 - C++ | Qt | AI",
-  base: process.env.NODE_ENV === 'production' ? '/Note/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/' : '/Note/',
   assetsDir: 'assets',
   
   head: [
-    // 使用 base 变量构建路径
+    ["link", { rel: "icon", href: "/head.svg" }],
     ["link", { 
-      rel: "icon", 
-      href: process.env.NODE_ENV === 'production' 
-        ? '/Note/head.svg' 
-        : '/head.svg' 
+      rel: "stylesheet", 
+      href: "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" 
     }],
-    
-    // 添加 CSP 修复重定向问题
-    ['meta', { 
-      'http-equiv': 'Content-Security-Policy',
-      content: 'upgrade-insecure-requests' 
-    }],
-    ['link', {
-    rel: 'preload',
-    href: process.env.NODE_ENV === 'production' 
-      ? '/Note/assets/fonts/inter-roman-latin.woff2'
-      : '/assets/fonts/inter-roman-latin.woff2',
-    as: 'font',
-    type: 'font/woff2',
-    crossorigin: 'anonymous'
-  }]
+    // 移除手动添加的 CDN 脚本 - 插件会自动处理
   ],
   
   cleanUrls: true,
@@ -81,10 +65,7 @@ export default withMermaid(defineConfig({
     flowchart: {
       nodeSpacing: 50,
       rankSpacing: 50
-    },
-    cdnBase: process.env.NODE_ENV === 'production' 
-    ? 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/'
-    : '/node_modules/mermaid/dist/'
+    }
   },
   
   themeConfig: {
@@ -92,9 +73,7 @@ export default withMermaid(defineConfig({
     outline: [2, 6],
     smoothScroll: true,
     
-    logo: process.env.NODE_ENV === 'production' 
-      ? '/Note/whead.png' 
-      : '/whead.png',
+    logo: '/whead.png',
     nav: [
       { 
         text: '🏠 首页', 
@@ -175,24 +154,9 @@ export default withMermaid(defineConfig({
   },
   
   vite: {
-    base: process.env.NODE_ENV === 'production' ? '/Note/' : '/',
-     build: {
-    assetsDir: 'assets',
-    rollupOptions: {
-      output: {
-        // 确保所有资源路径都包含 base
-        assetFileNames: (assetInfo) => {
-          const extType = assetInfo.name.split('.').pop();
-          if (['woff', 'woff2', 'ttf', 'eot'].includes(extType)) {
-            return `assets/fonts/[name]-[hash][extname]`;
-          }
-          return `assets/[name]-[hash][extname]`;
-        },
-        entryFileNames: `assets/[name]-[hash].js`,
-        chunkFileNames: `assets/[name]-[hash].js`,
-      }
-    }
-  },
+    build: {
+      rollupOptions: {}
+    },
     resolve: {
       alias: {
         'langium/lib/utils/cancellation': 'cancellation-shim',
@@ -208,9 +172,6 @@ export default withMermaid(defineConfig({
           __dirname
         ],
         deny: ['node_modules', '.git']
-      },
-      headers: {
-        'Content-Type': 'application/javascript'
       }
     },
     optimizeDeps: {
