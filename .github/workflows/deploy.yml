@@ -42,6 +42,11 @@ jobs:
           npm install --legacy-peer-deps --force
           npm install vitepress-plugin-mermaid@latest mermaid@10.9.0
       
+      # 解决 qmake 语言高亮问题
+      - name: Install PrismJS dependencies
+        run: |
+          npm install prismjs@latest
+      
       # 构建
       - name: Build with VitePress
         run: npm run docs:build
