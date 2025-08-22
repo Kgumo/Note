@@ -1,9 +1,55 @@
 <script setup>
-import { useData } from 'vitepress'
+import { useData, useRoute } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import { ref, onMounted, watch } from 'vue'
 
 const { Layout } = DefaultTheme
 const { theme } = useData()
+const route = useRoute()
+const instance = getCurrentInstance()
+// 修复属性处理 - 更严格的过滤
+// 修复属性处理
+const cleanProps = (props) => {
+  if (instance && instance.appContext.config.globalProperties.$validateAttributes) {
+    return instance.appContext.config.globalProperties.$validateAttributes(props, 'CustomNav');
+  }
+  
+  // 备用方案
+  const clean = {}
+  for (const key in props) {
+    if (Object.prototype.hasOwnProperty.call(props, key)) {
+      // 确保属性名是有效的，且不是数字
+      if (typeof key === 'string' && key.match(/^[a-zA-Z_$][a-zA-Z0-9_$]*$/) && !/^\d+$/.test(key)) {
+        clean[key] = props[key]
+      } else {
+        console.warn(`Invalid attribute name: ${key}`)
+      }
+    }
+  }
+  return clean
+}
+
+
+// 响应式导航状态
+const isMobileMenuOpen = ref(false)
+const currentPath = ref('/')
+
+// 更新当前路径
+// 添加路由监听器，在路由变化时重置状态
+watch(() => route.path, (newPath) => {
+  currentPath.value = newPath
+  isMobileMenuOpen.value = false
+}, { immediate: true })
+
+// 处理移动端菜单切换
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+// 检查是否为活动链接
+const isActiveLink = (link) => {
+  return currentPath.value === link || currentPath.value.startsWith(link + '/')
+}
 </script>
 
 <template>
@@ -17,13 +63,14 @@ const { theme } = useData()
               v-if="!item.items"
               class="nav-link"
               :href="item.link"
-              :class="{ active: $route.path === item.link }"
+              :class="{ active: isActiveLink(item.link) }"
+              v-bind="cleanProps({})"
             >
               {{ item.text }}
             </a>
             
             <div v-else class="nav-dropdown">
-              <button class="nav-dropdown-toggle">
+              <button class="nav-dropdown-toggle" v-bind="cleanProps({})">
                 {{ item.text }}
                 <span class="dropdown-arrow">▼</span>
               </button>
@@ -33,6 +80,8 @@ const { theme } = useData()
                   :key="subItem.text"
                   :href="subItem.link"
                   class="nav-dropdown-item"
+                  :class="{ active: isActiveLink(subItem.link) }"
+                  v-bind="cleanProps({})"
                 >
                   {{ subItem.text }}
                 </a>
@@ -53,13 +102,14 @@ const { theme } = useData()
                 v-if="!item.items"
                 class="nav-link"
                 :href="item.link"
-                :class="{ active: $route.path === item.link }"
+                :class="{ active: isActiveLink(item.link) }"
+                v-bind="cleanProps({})"
               >
                 {{ item.text }}
               </a>
               
               <div v-else class="nav-dropdown">
-                <button class="nav-dropdown-toggle">
+                <button class="nav-dropdown-toggle" v-bind="cleanProps({})">
                   {{ item.text }}
                   <span class="dropdown-arrow">▼</span>
                 </button>
@@ -69,6 +119,8 @@ const { theme } = useData()
                     :key="subItem.text"
                     :href="subItem.link"
                     class="nav-dropdown-item"
+                    :class="{ active: isActiveLink(subItem.link) }"
+                    v-bind="cleanProps({})"
                   >
                     {{ subItem.text }}
                   </a>
@@ -83,7 +135,46 @@ const { theme } = useData()
     <template #nav-bar-content-after>
       <!-- 移动端菜单按钮 -->
       <div class="menu-container">
-        <button class="menu-toggle">☰</button>
+        <button class="menu-toggle" @click="toggleMobileMenu" v-bind="cleanProps({})">☰</button>
+        
+        <!-- 移动端菜单 -->
+        <div v-if="isMobileMenuOpen" class="mobile-menu">
+          <div class="mobile-menu-content">
+            <template v-for="item in theme.nav" :key="item.text">
+              <div class="mobile-nav-item">
+                <a
+                  v-if="!item.items"
+                  class="mobile-nav-link"
+                  :href="item.link"
+                  :class="{ active: isActiveLink(item.link) }"
+                  @click="toggleMobileMenu"
+                  v-bind="cleanProps({})"
+                >
+                  {{ item.text }}
+                </a>
+                
+                <div v-else class="mobile-nav-dropdown">
+                  <div class="mobile-nav-dropdown-header">
+                    {{ item.text }}
+                  </div>
+                  <div class="mobile-nav-dropdown-content">
+                    <a
+                      v-for="subItem in item.items"
+                      :key="subItem.text"
+                      :href="subItem.link"
+                      class="mobile-nav-dropdown-item"
+                      :class="{ active: isActiveLink(subItem.link) }"
+                      @click="toggleMobileMenu"
+                      v-bind="cleanProps({})"
+                    >
+                      {{ subItem.text }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
       </div>
     </template>
   </Layout>
@@ -184,20 +275,6 @@ const { theme } = useData()
   color: var(--vp-c-brand);
 }
 
-/* 移动端菜单按钮 */
-.menu-container {
-  display: none;
-}
-
-.menu-toggle {
-  background: none;
-  border: none;
-  color: var(--vp-c-text-1);
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
 /* 右侧导航容器 */
 .nav-right-container {
   display: flex;
@@ -209,6 +286,85 @@ const { theme } = useData()
   display: flex;
   gap: 1rem;
   height: 100%;
+}
+
+/* 移动端菜单 */
+.menu-container {
+  display: none;
+  position: relative;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  color: var(--vp-c-text-1);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobile-menu-content {
+  width: 70%;
+  height: 100%;
+  background: var(--vp-c-bg);
+  padding: 2rem 1rem;
+  overflow-y: auto;
+}
+
+.mobile-nav-item {
+  margin-bottom: 1rem;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-brand);
+}
+
+.mobile-nav-dropdown-header {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+.mobile-nav-dropdown-content {
+  padding-left: 1rem;
+}
+
+.mobile-nav-dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.mobile-nav-dropdown-item:hover,
+.mobile-nav-dropdown-item.active {
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-brand);
 }
 
 @media (max-width: 768px) {

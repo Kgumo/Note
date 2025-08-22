@@ -27,6 +27,8 @@ onMounted(() => {
 
 // 修正的路径规范化函数
 function normalizePath(filePath) {
+  if (!filePath) return '/';
+  
   // 移除可能的绝对路径前缀
   let cleanPath = filePath
     .replace(/^.*[\\/]Note[\\/]/, '') // 移除项目路径前缀
@@ -38,6 +40,7 @@ function normalizePath(filePath) {
   
   // 处理特殊情况
   if (cleanPath.endsWith('/index')) cleanPath = cleanPath.slice(0, -6);
+  if (cleanPath === '') cleanPath = '/';
   
   // 使用 Vitepress 的 withBase 处理基础路径
   return withBase(cleanPath);

@@ -1,4 +1,6 @@
-# Exp2：基于回归分析的大学综合得分预测
+
+通过网盘分享的文件：基于回归分析的大学综合得分预测 (1).zip
+链接: https://pan.baidu.com/s/1Jdu24uRYY4wDDqvfIsDQAg?pwd=nt29 提取码: nt29 
 
 ------
 

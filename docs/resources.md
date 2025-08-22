@@ -7,7 +7,7 @@
 ### Zlibrary — 全球最大的电子图书馆，九百万本电子书免费下载
 
 Zlibrary被称为全球最大的数字图书馆，里面包含 9,826,996 本电子书，84,837,646 篇期刊文章。 从各种知名文学著作，理工学科，人文艺术、到学术论文等应有尽有！支持PDF、epub、mobi等多种格式图书资源下载绝对是你找书的不二选择。
-![](/public/images/Zlibrary.png)
+![](public/images/Zlibrary.png)
 **更新日期：2025年6月22日01:34:41**
 
 最新解决方案：
@@ -20,7 +20,7 @@ Zlibrary被称为全球最大的数字图书馆，里面包含 9,826,996 本电�
 ### Hello算法
 这是目前我找到最好的关于数据结构的书，包含了各种基础语言形式的代码去讲解相关的算法或者结构。
 是通过清晰易懂的动画图解和可运行的代码示例，使读者理解算法和数据结构的核心概念，并能够通过编程来实现它们
-![](/public/images/Hello.png)
+![](public/images/Hello.png)
 网站链接： https://www.hello-algo.com/
 
 ## 计算机自学
@@ -28,7 +28,7 @@ Zlibrary被称为全球最大的数字图书馆，里面包含 9,826,996 本电�
 一份供参考的 CS 学习规划：我根据自己的自学经历制定的全面的、系统化的 CS 自学规划。
 必学工具：一些  CS er  效率工具介绍，例如 IDE, 翻墙,  Stack Overflow, Git, GitHub, Vim, LaTeX, GNU Make, Docker, 工作流 等等。
 该网站包含了C/C++/Java/JS/Python/Go/Rust 等主流语言，对算法、电路、体系、网络、操统、编译、人工智能、机器学习、计算机视觉、自然语言处理、强化学习、密码学、信息论、博弈论、数值分析、统计学、分布式、数据库、图形学、Web开发、云服务、超算等等方面
-![](/public/images/CS.png)
+![](public/images/CS.png)
 网站链接： https://csdiy.wiki/
 
 ## 编程学习与技术知识分享平台
@@ -57,7 +57,6 @@ Clash是用Go语言开发的开源多平台代理工具，支持Shadowsocks、VM
 ## AI相关网站
 ### AI集
 整合各类AI资源的平台，会涵盖AI工具信息、知识科普与使用教程等内容，为用户了解和使用AI提供便利。不过其信息准确性和安全性有待考量，使用时需谨慎甄别。
-我一般不怎么去浏览
 
 网站链接：[[https://ai-bot.cn/]]
 
@@ -97,7 +96,7 @@ DeepSeek-R1 32b、AI-40、AI-4.0、DeepSeek-R1 0528、DeepSeek-V3 0324、Doubao 
 还能根据需要创建相关的智能体
 
 网站链接： https://wetab.link/
-![WeTab截图](/public/images/wetab.png)
+![WeTab截图](public/images/wetab.png)
 
 ## 托管平台和开源项目
 ### GitHub 
@@ -114,7 +113,7 @@ GitHub社区氛围活跃，汇聚海量开源项目，覆盖各类编程语言�
 这个是目前最好的一个，但是新手第一眼可能很懵，所以存在上手难度问题，但是一旦上手包你爱上它的🐶✨ ，现在我用的编辑就是用的Obsidian
 Obsidian是一款本地优先、支持双向链接、具备丰富插件生态与高度界面定制性，以Markdown存储数据，适合学生和知识工作者构建个人知识体系的知识管理及笔记应用程序。 
 
-![](/public/images/Obsidian.png)
+![](public/images/Obsidian.png)
 官网链接：[Obsidian - Sharpen your thinking](https://obsidian.md/)
 
 ###  typora
@@ -132,7 +131,7 @@ Typora也是一款备受欢迎的Markdown编辑器。它采用即时渲染模式
 
 效果演示
 展示电子商务订单处理系统的完整工作流，包含并行处理、条件分支和异常处理（只是为了演示可以做很复杂的图）具体可以参考AI里面的文件会有展示的
-![](/public/images/mermaid效果演示.png)
+![](public/images/mermaid效果演示.png)
 
 这是官网链接：[Mermaid | Diagramming and charting tool](http://mermaid.js.org/)
 
@@ -149,5 +148,15 @@ Napkin的核心作用在于把文本转化为各种可视化元素，包括但�
 拿一段文本举例，以下这段来自《认知觉醒》：
 
 > 缺乏自我观察意识的人只能无意识地顺着感觉和喜好行事，无论在生理上还是在精神上，都会不自觉地追求眼前的舒适和简单，觉察不到自己当前的思维和行为有什么不妥，直到碰壁。而人生是由无数个选择组成的，不同选择的累加造就了不同的人生。如果你觉得自己的人生不如意，问题十有八九就出在这里。
-![](/public/images/640.gif)
+![](public/images/640.gif)
 地址：[Napkin AI - The visual AI for business storytelling](https://www.napkin.ai/)
+
+## 智能体
+AI Agent智能体最简洁的定义是：能够自主感知环境、规划任务、调用工具并执行的AI系统。它不是单一模型，而是一套“大模型+记忆+规划+工具”的组合拳。
+
+之前用过，也只是单纯用于生成题，和做一些解答，但是智能体的功能非常强大
+
+### 扣子空间
+[扣子空间](https://dis.csqixiang.cn/unpo/cozeaibot.html)（Coze Space）是字节跳动推出的通用型 AI Agent，多功能AI办公助手通过智能化工具提升用户的工作效率和创造力。扣子空间AI助手支持播客生成、PPT制作、网页开发及报告写作，覆盖科研、商业、舆情等领域的专家Agent 7×24小时响应，生活工作无缝切换，提升50%效率！ 扣子空间具备创意辅助功能，例如随机抽签、配色方案生成器等，为用户带来趣味性和实用性。AI搜索和市场调研功能进一步拓展了信息获取和分析的能力。对个人用户或企业用户，都可以在扣子空间找到适合自己的工具，轻松应对各种办公和创作任务。
+
+- **官网地址**：[space.coze.cn](https://dis.csqixiang.cn/unpo/cozeaibot.html)

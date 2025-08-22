@@ -10,7 +10,6 @@ const require = createRequire(import.meta.url);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_PATH = __dirname;
-const PROJECT_ROOT = path.resolve(__dirname, '../..');
 
 // 动态导入侧边栏模块
 let set_sidebar;
@@ -144,13 +143,58 @@ export default withMermaid(defineConfig({
     }
   },
   
-  markdown: {
+markdown: {
     lineNumbers: true,
     config: async (md) => {
       const { default: katex } = await import('markdown-it-katex');
       md.use(katex);
       
-      // 移除自定义的 Mermaid 渲染规则 - 插件会自动处理
+      // 添加一个处理器来清理无效属性
+      md.core.ruler.push('clean-attributes', (state) => {
+        state.tokens.forEach((token) => {
+          if (token.attrs) {
+            // 过滤掉无效的属性名（如纯数字）
+            token.attrs = token.attrs.filter(([name]) => {
+              return !/^\d+$/.test(name) && typeof name === 'string';
+            });
+          }
+        });
+      });
+      
+      const defaultImageRule = md.renderer.rules.image;
+      md.renderer.rules.image = (tokens, idx, options, env, self) => {
+        const token = tokens[idx];
+        const srcIndex = token.attrIndex('src');
+        
+        if (srcIndex >= 0) {
+          let src = token.attrs[srcIndex][1];
+          
+          // 处理相对路径的图片
+          if (src && !src.startsWith('http') && !src.startsWith('/') && !src.startsWith('data:')) {
+            // 移除可能的 public/ 前缀
+            if (src.startsWith('public/')) {
+              src = src.substring(7);
+            }
+            
+            // 添加前导斜杠
+            if (!src.startsWith('/')) {
+              src = '/' + src;
+            }
+            
+            // 确保只修改 src 属性，不修改其他属性
+            token.attrs[srcIndex][1] = src;
+          }
+        }
+        
+        // 确保所有属性都是有效的键值对
+        const validAttrs = token.attrs.filter(attr => 
+          Array.isArray(attr) && attr.length === 2 && typeof attr[0] === 'string'
+        );
+        
+        token.attrs = validAttrs;
+        
+        return defaultImageRule(tokens, idx, options, env, self);
+      };
     }
   },
   

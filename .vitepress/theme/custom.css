@@ -697,3 +697,17 @@ body.sidebar-closed:not(.is-home) .mermaid-container {
 
 
 
+/* .vitepress/theme/custom.css */
+.math-container {
+  overflow-x: auto;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+/* 确保数学公式不会溢出 */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}

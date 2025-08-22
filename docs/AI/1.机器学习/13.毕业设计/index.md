@@ -1,11 +1,3 @@
-### 
-# 🚀 驱风计划 - AI 研究
-
-"机器学习是让计算机具备学习能力而不需要显式编程的科学" - Arthur Samuel
-
-## 学习路线
-
-```
-
-```
-
+题：
+通过网盘分享的文件：某闯关类手游用户流失预测 (1).zip
+链接: https://pan.baidu.com/s/1-xzZZUBy-h2BSuAk8WjWNg?pwd=hatp 提取码: hatp 

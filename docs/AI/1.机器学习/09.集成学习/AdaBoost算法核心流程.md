@@ -48,7 +48,7 @@ graph TD
 - **核心公式**：  
   $\alpha_t = \frac{1}{2} \ln \left( \frac{1 - \epsilon_t}{\epsilon_t} \right)$
 - **行为分析**：  
-  ![](/public/images/AdaBoostCore.png)
+  ![](public/images/AdaBoostCore.png)
   - $\epsilon_t \to 0$时：$\alpha_t \to +\infty$（完美分类器）  
   - $\epsilon_t = 0.5$时：$\alpha_t = 0$（随机猜测）
 #### **函数曲线与模型权重的数学内涵深度解析**
@@ -143,7 +143,7 @@ $(\max \alpha_t \iff \min \epsilon_t(1-\epsilon_t))$（优化目标）
    - 当出现$( \epsilon_t < 0.05 )$时减少后续模型权重
 
 3. **噪声数据处理**：
-![](/public/images/AdaBoostzaoyin.png)
+![](public/images/AdaBoostzaoyin.png)
    其中λ是噪声抑制因子（通常取0.5-1.0）
    
 ---
@@ -152,7 +152,7 @@ $(\max \alpha_t \iff \min \epsilon_t(1-\epsilon_t))$（优化目标）
 - **核心公式**：  
   $\alpha_t = \frac{1}{2} \ln \left( \frac{1 - \epsilon_t}{\epsilon_t} \right)$
 - **行为分析**：  
-  ![](/public/images/AdaBoostCore.png)
+  ![](public/images/AdaBoostCore.png)
   - $\epsilon_t \to 0$时：$\alpha_t \to +\infty$（完美分类器）  
   - $\epsilon_t = 0.5$时：$\alpha_t = 0$（随机猜测）
 ##### **5. 更新样本权重**

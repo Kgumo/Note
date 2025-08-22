@@ -4,7 +4,7 @@
 - **群体智慧原理**：  
   “三个臭皮匠顶个诸葛亮” → 融合多个弱模型的预测优于单一强模型  
 - **有效性条件**（基于三场景图示）：  
-![](/public/images/ensemble-learning-intro.png)
+![](public/images/ensemble-learning-intro.png)
 
 | **场景**   | 模型预测行为                  | 集成效果 |
 | -------- | ----------------------- | ---- |
@@ -546,7 +546,7 @@ graph LR
 ---
 
 #### **3.2错题特训班流程**
-看图：![](/public/images/AdaBoost.png)
+看图：![](public/images/AdaBoost.png)
 **大概意思就是**
 **AdaBoost**  是一种迭代的机器学习算法，主要用于解决分类问题。它的核心思想是通过一系列弱学习器（weak learner）的组合来构建一个强学习器（strong learner）。每个弱学习器在训练过程中都会对数据集中的样本进行加权，使得那些被前一个弱学习器错误分类的样本在后续的学习中得到更多的关注。
 **初始权重分配**：  

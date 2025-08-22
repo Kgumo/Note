@@ -1,3 +1,6 @@
+通过网盘分享的文件：AAAI 会议论文聚类分析 (1).zip
+链接: https://pan.baidu.com/s/1tb3snXfjhkIWkggq_J49lg?pwd=yynf 提取码: yynf 
+
 本次实验以AAAI 2014会议论文数据为基础，要求实现或调用无监督聚类算法，了解聚类方法。
 
 ### 任务介绍
