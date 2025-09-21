@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/AI/2.深度学习/3.多层感知机/index.md",
+                "file": "docs/AI/2.深度学习/2.回归和分类/MNIST手写数字识别：SoftMax回归实验报告.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "MNIST手写数字识别：SoftMax回归实验报告"
             }
           }
         ],
@@ -186,6 +186,7 @@
   },
   "active": "d53e94d615d3b487",
   "lastOpenFiles": [
+    "docs/AI/2.深度学习/3.多层感知机/index.md",
     "docs/AI/2.深度学习/3.多层感知机/Hw2的实验报告.md",
     "docs/AI/2.深度学习/3.多层感知机/hw2_构建自己的多层感知机.md",
     "docs/AI/2.深度学习/3.多层感知机/hw2.md",
@@ -197,7 +198,6 @@
     "docs/public/hw2_files/hw2_22_41.png",
     "docs/public/hw2_files/hw2_21_41.png",
     "docs/public/hw2_files",
-    "docs/AI/2.深度学习/3.多层感知机/index.md",
     "docs/AI/2.深度学习/4.卷积神经网络/index.md",
     "Pasted image 20250911194357.png",
     "Pasted image 20250911193952.png",
