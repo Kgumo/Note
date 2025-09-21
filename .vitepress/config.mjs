@@ -89,7 +89,8 @@ export default withMermaid(defineConfig({
         text: '🧪 实验室', 
         items: [
           { text: "C++/Qt", link: '/C++/' },
-          { text: "AI研究", link: '/AI/' }
+          { text: "AI研究", link: '/AI/' },
+          { text: "综合技术", link: '/build/' }
         ]
       },
       {

@@ -250,10 +250,10 @@ $$
      → *如同车间工人对半成品加工：先称重配料（加权求和），再按标准整形（激活函数）*  
 ![](public/images/神经网络中的矩阵和向量维度.png)
 2. **输出层**：  
-   - 分类任务：$\mathbf{y}^{(L)} = \text{softmax}(\mathbf{u}^{(L)})$  
+   - 分类任务：
+   $$\mathbf{y}^{(L)} = \text{softmax}(\mathbf{u}^{(L)})$$  
+     $$\text{softmax}(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}} \quad \text{→ 输出概率分布}  
      $$
-   \text{softmax}(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}} \quad \text{→ 输出概率分布}
-		$$  
    - 回归任务：$\mathbf{y}^{(L)} = \mathbf{u}^{(L)}$ （线性输出）  
      → *最终质检员给出结果：产品合格率（分类）或尺寸数据（回归）*
 

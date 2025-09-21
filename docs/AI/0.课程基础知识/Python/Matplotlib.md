@@ -2,6 +2,10 @@
 
 [Examples — Matplotlib 3.10.3 documentation](https://matplotlib.org/stable/gallery/index.html)
 
+## 菜鸟
+
+[Matplotlib 教程 | 菜鸟教程](https://www.runoob.com/matplotlib/matplotlib-tutorial.html)
+
 开局先把这些打上去
 
 ```python

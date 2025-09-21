@@ -1,4 +1,4 @@
-# 数学基础
+## 数学基础
 ---
 
 ## 🧮 线性代数：深度学习的语法
@@ -936,10 +936,13 @@ flowchart TD
 
 ---
 
-# 🤖 机器学习基础：构建智能系统的蓝图
+## 🤖 机器学习基础：构建智能系统的蓝图
 
 Tom Mitchell 的这段定义是理解机器学习的基石：
-
+“A computer program is said to learn from experience **𝐸** w.r.t. 
+some class of tasks **𝑇** and performance measure **𝑃**, if its 
+performance at tasks in 𝑇, as measured by 𝑃, improves with 
+experience 𝐸.” ---Tom Mitchell, 1997
 > “对于一个计算机程序，给它一些**任务T** 和**性能度量P**，如果通过**经验E**，它在T上的性能（由P评定）得到了提高，那么我们就说这个程序从E中学习了。”
 
 这就像一个学做饭的徒弟：
@@ -1190,3 +1193,6 @@ flowchart TD
 
     G --> I[部署模型]
 ```
+整篇文章参考![深度学习](public/images/DS_book.png)
+只链接是其中一个作者的书籍链接)(有会可能失效)
+_[伊恩·古德费洛 (Ian Goodfellow)](https://zh.z-lib.by/author/%E4%BC%8A%E6%81%A9%C2%B7%E5%8F%A4%E5%BE%B7%E8%B4%B9%E6%B4%9B%20%28Ian%20Goodfellow%29 "找到作者的所有书籍")_

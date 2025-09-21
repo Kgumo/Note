@@ -60,6 +60,12 @@ Clash是用Go语言开发的开源多平台代理工具，支持Shadowsocks、VM
 
 网站链接：[[https://ai-bot.cn/]]
 
+### 动手学深度学习
+动手学深度学习是GitHub上一个[开源项目](https://zhida.zhihu.com/search?content_id=234890919&content_type=Article&match_order=1&q=%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE&zd_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGlkYV9zZXJ2ZXIiLCJleHAiOjE3NTYzNjcyMTAsInEiOiLlvIDmupDpobnnm64iLCJ6aGlkYV9zb3VyY2UiOiJlbnRpdHkiLCJjb250ZW50X2lkIjoyMzQ4OTA5MTksImNvbnRlbnRfdHlwZSI6IkFydGljbGUiLCJtYXRjaF9vcmRlciI6MSwiemRfdG9rZW4iOm51bGx9.qpmCbfXq0jPEtxVNNYGpB3xyZYUE02NY98ZBqLdPkqk&zhida_source=entity)，面向中文读者的能运行、可讨论的深度学习教科书，含 NumPy/MXNet、PyTorch 和 TensorFlow 实现，被全球70个国家的500所大学用于教学，支持中英文版本，本书面向学生（本科生或研究生）、工程师和研究人员，让深度学习可平易近人。
+
+![](https://pic3.zhimg.com/v2-3f1d0b178fd242782280c42928cf12b6_1440w.jpg)
+
+网站链接： https://zh-v2.d2l.ai/chapter_preface/index.html
 
 ## 编程刷题
 我这有好几个，按照自己的水平可以去刷对应的题，别一题一梦一破碎喽！

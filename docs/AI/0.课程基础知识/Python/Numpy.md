@@ -2,6 +2,10 @@
 
 [What is NumPy? — NumPy v2.2 Manual](https://numpy.org/doc/stable/user/whatisnumpy.html)
 
+## 菜鸟
+
+[NumPy 教程 | 菜鸟教程](https://www.runoob.com/numpy/numpy-tutorial.html)
+
 主要是做==数据处理== 数据分析的基础
 
 核心数据是==数组==

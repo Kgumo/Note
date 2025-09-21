@@ -2,6 +2,7 @@ import DefaultTheme from 'vitepress/theme';
 import RecentPosts from './components/RecentPosts.vue';
 import CustomLayout from './Layout.vue';
 import CustomNav from './components/CustomNav.vue';
+import IntegrationSection from './components/IntegrationSection.vue';
 import 'vite/modulepreload-polyfill';
 import './custom.css';
 import { h, defineAsyncComponent } from 'vue';
@@ -143,5 +144,6 @@ export default {
     app.component('HeroStats', HeroStats);
     app.component('FeatureProgress', FeatureProgress);
     app.component('FeatureTags', FeatureTags);
+    app.component('IntegrationSection', IntegrationSection); 
   }
 };

@@ -34,6 +34,8 @@ features:
     linkText: "查看图谱 →"
 ---
 
+<IntegrationSection />
+
 <style>
 .custom-hero-title {
   background: linear-gradient(120deg, 
@@ -252,9 +254,9 @@ onMounted(() => {
 
 <RecentPosts :posts="[
   { title: '持续更新AI（驱风计划）', date: '2025-2026', link: '/AI' },
+  { title: '填充知识图谱', date: '2025-8-23', link: '/knowledge-graph' },
   { title: '更新驱风计划导学', date: '2025-8-6', link: '/AI/0.课程基础知识' },
   { title: '更新C++第三阶段实战', date: '2025-8-6', link: '/C++/3.C++进阶课程/第6节实战' },
   { title: '更新C++线程池项目', date: '2025-8-6', link: '/C++/3.C++进阶课程/第6节实战/PTP项目' },
-  { title: '填充知识图谱', date: '2025-8-6', link: '/knowledge-graph' },
   { title: '更新了🔗 资源', date: '2025-8-2', link: '/resources' }
 ]"/>

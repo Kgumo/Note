@@ -2,6 +2,10 @@
 
 [10 minutes to pandas — pandas 2.2.3 documentation](https://pandas.pydata.org/docs/user_guide/10min.html)
 
+## 菜鸟
+
+[Pandas 教程 | 菜鸟教程](https://www.runoob.com/pandas/pandas-tutorial.html)
+
 业务处理
 
 使用前先导入
