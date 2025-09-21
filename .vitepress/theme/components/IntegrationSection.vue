@@ -58,25 +58,6 @@
                     <p>利用C++处理大规模数据，Qt实现交互式可视化，AI提供预测分析与模式识别</p>
                 </div>
             </div>
-
-            <div class="action-buttons">
-                <a class="action-link" href="/Note/C++/">
-                    <span class="action-icon">📚</span>
-                    <span class="action-text">开始学习C++/Qt</span>
-                </a>
-                <a class="action-link" href="/Note/AI/">
-                    <span class="action-icon">🧠</span>
-                    <span class="action-text">探索AI技术</span>
-                </a>
-                <a class="action-link" href="/Note/build/">
-                    <span class="action-icon">📚</span>
-                    <span class="action-text">学习综合开发指南</span>
-                </a>
-                <a class="action-link" href="/Note/build/">
-                    <span class="action-icon">🚀</span>
-                    <span class="action-text">查看实战项目</span>
-                </a>
-            </div>
         </div>
     </div>
 </template>
