@@ -388,7 +388,7 @@ A -->|"∂E/∂a⁽ˡ⁻¹⁾ = (W⁽ˡ⁾)ᵀδ⁽ˡ⁾"| Prev
 ## 九、实现（从零到实验）
 A) 实验1：二维平面点分类（Numpy，从零写前向+反向，Softmax+CE）
 - 数据：两同心圆（Circle vs. Ring），线性不可分，MLP 应该能学到非线性边界。
-
+网站：[A Neural Network Playground](https://playground.tensorflow.org/#activation=relu&batchSize=10&dataset=xor&regDataset=reg-plane&learningRate=0.00001&regularizationRate=0&noise=0&networkShape=4,2&seed=0.32858&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false)
 代码（可直接运行）
 ```python
 # numpy MLP: 2D -> [Hidden 32] -> [Hidden 16] -> 2-class Softmax
@@ -508,6 +508,7 @@ for ep in range(1, epochs+1):
 
 B) 手写体数字识别（MNIST，PyTorch，MLP）
 - 思路：把 28×28 图像拉平成 784 维向量，接 2~3 个 ReLU 隐层，输出 10 类 Softmax（用 CrossEntropyLoss）。
+- 网站：[A Neural Network Playground](https://playground.tensorflow.org/#activation=relu&batchSize=10&dataset=xor&regDataset=reg-plane&learningRate=0.00001&regularizationRate=0&noise=0&networkShape=4,2&seed=0.32858&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false)
 - 代码（CPU/GPU 皆可运行）：
 ```python
 # pip install torch torchvision tqdm
@@ -609,7 +610,7 @@ for ep in range(1, epochs+1):
 
 如果你愿意，我可以把二维分类的决策边界可视化代码也补上，或把 MNIST 实验改成“同时对比 Sigmoid/Tanh vs ReLU 的收敛与梯度消失差异”的对照实验，进一步直观看到激活与初始化对训练的影响。
 
-## 一、层分解（Layer Decomposition）
+# 层分解（Layer Decomposition）
 要点：把每层“线性变换 + 非线性激活”明确拆分为两个子层，便于统一、可替换与推导梯度。
 
 - 隐含层或输入到隐含层的标准计算
@@ -621,8 +622,12 @@ for ep in range(1, epochs+1):
 层分解示意（FC + 激活）：
 ```mermaid
 graph LR
-A[y^(l-1)] --> L[FC: u^(l)=W^(l) y^(l-1)+b^(l)]
-L --> F[Act: y^(l)=f(u^(l))]
+A[输入 y_l-1] --> L[全连接层]
+L --> F[激活函数]
+F --> O[输出 y_l]
+    
+L --> E1["u_l = W_l · y_l-1 + b_l"]
+F --> E2["y_l = f(u_l)"]
 ```
 
 - 平方损失也可分解为“输出层激活 + 损失层”
@@ -632,8 +637,11 @@ L --> F[Act: y^(l)=f(u^(l))]
 输出层分解示意（激活 + 损失）：
 ```mermaid
 graph LR
-Z[u^(L)] --> G[Output Act: y^(L)=f(u^(L))]
-G --> Loss[MSE: E=1/2 || y^(L) - t ||^2]
+Z["输入 u^(L)"] --> G["输出激活函数"]
+G --> Loss["均方误差损失"]
+    
+G --> Eq1["y^(L) = f(u^(L))"]
+Loss --> Eq2["E = ½||y^(L) - t||²"]
 ```
 
 ## 二、更灵活的方式（为什么要分解）
@@ -751,6 +759,7 @@ G --> Loss[MSE: E=1/2 || y^(L) - t ||^2]
 - 两个例子（MSE 与 Softmax+CE）覆盖回归与分类的最常见情形，记住“FC 层梯度 = 当前层敏感度 × 前一层激活转置”。
 - 向量化反向传播是工程高效实现的关键；与稳定的激活/损失/初始化组合使用，可有效缓解梯度消失。
 
+# 深度学习模型训练技巧1
 ## 一、参数初始化（为什么与怎么做）
 目标（大白话）：
 - 让信号在前向与反向时的方差“既不爆炸也不衰减”，避免一开局就陷入梯度消失/爆炸或训练不稳。
@@ -816,9 +825,16 @@ PDF 要点：
 “沟壑 + 对策”示意
 ```mermaid
 flowchart TB
-Start[随机初始化] --> Valley[狭长沟壑(病态曲率)]
-Valley -->|无动量/大LR| Zigzag[两侧震荡]
-Valley -->|动量/自适应| Smooth[沿谷底平稳前进]
+Start[随机初始化] --> Valley[遇到狭长沟壑]
+    
+Valley --> Condition1[使用无动量方法<br>学习率过大]
+Condition1 --> Result1[优化路径震荡]
+
+Valley --> Condition2[使用动量方法<br>或自适应学习率]
+Condition2 --> Result2[优化路径平稳]
+
+Result1 --> Issue[收敛缓慢<br>可能发散]
+Result2 --> Success[快速收敛<br>稳定性好]
 ```
 
 ## 五、动量（Momentum）

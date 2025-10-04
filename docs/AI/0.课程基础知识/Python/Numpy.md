@@ -238,3 +238,5 @@ arr2=np.random.randint(10,20,size=(3,3))
 np.concatenate((arr1,arr2),axis=1)
 # 行数相同，只能横向级联，axis=1
 ```
+
+

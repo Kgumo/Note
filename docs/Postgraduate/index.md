@@ -1,6 +1,6 @@
 
 ---
-![|125](/public/images/look_here.png)
+![|125](public/images/look_here.png)
 tips:这些都是参考我姐给我讲的去总结的，什么资料了，那个博主了，这个博主了，有，太多整理是个问题，这是之后的事
 
 ---

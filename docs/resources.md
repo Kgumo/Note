@@ -67,6 +67,10 @@ Clash是用Go语言开发的开源多平台代理工具，支持Shadowsocks、VM
 
 网站链接： https://zh-v2.d2l.ai/chapter_preface/index.html
 
+### LMArena
+https://lmarena.ai/
+这个网站可以进行大模型文字聊天、也可以进行文生图绘画，还能够进行多个模型的pk。它集成了常见的主流的大模型，包括：gpt-5、gemini-2.5pro、claude-opus-4、grok-4、flux-1-kontext-pro、flux-1-kontext-max、dall-e-3、seedream-3等等
+最重要的特点：访问这个网站不需要注册,可以免费使用,不需要魔法
 ## 编程刷题
 我这有好几个，按照自己的水平可以去刷对应的题，别一题一梦一破碎喽！
 ### 牛客
@@ -94,6 +98,8 @@ Clash是用Go语言开发的开源多平台代理工具，支持Shadowsocks、VM
 ### GitHub （下面有链接）
 在GitHub上面也有很多，甚至还有很多关于一年一月的黑客节，以及众多开发者上传的题，以及开源项目和first issue
 
+AI陪练（豆包）
+[豆包 MarsCode - 登录](https://www.marscode.cn/login?redirect_url=https%3A%2F%2Fwww.marscode.cn%2Fpractice%2F6weo34knl3erxj%3Fproblem_id%3D7414004855077912620)
 ## 浏览器自定义标签
 ### WeTab
 这个是我最喜欢用的一个标签页，edge自带的我看着不习惯，这个我能快速访问自己常用的网站，还包括了各种办公AI，各种网站的链接等等 非常推荐！！！！！

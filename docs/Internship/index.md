@@ -5,7 +5,7 @@
 **这是我学校25届毕业生的简历**
 
 
-![](/public/images/liwenliang.png)
+![](public/images/liwenliang.png)
 
 先思考
 
@@ -17,5 +17,5 @@
 
 再看底下大佬的评价
 
-![](/public/images/liwenliangpingyu.png)
+![](public/images/liwenliangpingyu.png)
 
