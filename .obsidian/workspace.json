@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/AI/2.深度学习/6.深度学习在计算机视觉中的应用/index.md",
+                "file": "docs/index.md",
                 "mode": "source",
                 "source": false
               },
@@ -171,6 +171,7 @@
   },
   "active": "aeb4033b4d1fdfbc",
   "lastOpenFiles": [
+    "docs/AI/2.深度学习/6.深度学习在计算机视觉中的应用/index.md",
     "docs/AI/2.深度学习/5.深度学习模型的训练技巧Ⅱ/index.md",
     "docs/build/2.实战/CNN_CIFAR-10/1.推理/0.准备.md",
     "docs/build/2.实战/CNN_CIFAR-10/2.部署",
@@ -200,7 +201,6 @@
     "docs/AI/0.课程基础知识/index.md",
     "docs/AI/1.机器学习/01.机器学习基础/index.md",
     "docs/AI/1.机器学习/10.深度学习基础/index.md",
-    "docs/AI/2.深度学习/index.md",
     "未命名.base",
     "未命名 1.base",
     "docs/build/1.基础准备与工具熟悉",
