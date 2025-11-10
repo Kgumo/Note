@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/AI/2.深度学习/9.深度生产式模型/报告.md",
+                "file": "docs/AI/2.深度学习/8.深度学习在自然语言中的应用/index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "报告"
+              "title": "index"
             }
           }
         ]
@@ -170,10 +170,11 @@
   },
   "active": "f2dac6d19ccc751a",
   "lastOpenFiles": [
+    "docs/AI/2.深度学习/8.深度学习在自然语言中的应用/图像自然语言描述生成实验报告.md",
+    "docs/AI/2.深度学习/9.深度生产式模型/报告.md",
     "Pasted image 20251109224534.png",
     "Pasted image 20251109224505.png",
     "docs/AI/2.深度学习/9.深度生产式模型/index.md",
-    "docs/AI/2.深度学习/9.深度生产式模型/报告.md",
     "docs/AI/2.深度学习/4.卷积神经网络/卷积实验报告.md",
     "docs/AI/2.深度学习/5.深度学习模型的训练技巧Ⅱ/index.md",
     "docs/AI/2.深度学习/4.卷积神经网络/index.md",
@@ -187,7 +188,6 @@
     "docs/AI/1.机器学习/03.决策树/基于深度卷积神经网络的花卉图像识别方法研究.md",
     "docs/AI/1.机器学习/03.决策树/决策树信息增益详解与实例.md",
     "docs/AI/2.深度学习/index.md",
-    "docs/AI/2.深度学习/8.深度学习在自然语言中的应用/图像自然语言描述生成实验报告.md",
     "docs/AI/2.深度学习/8.深度学习在自然语言中的应用/index.md",
     "docs/我们只是通过无数的思维模型在给世界建模.md",
     "docs/index.md",
@@ -208,7 +208,6 @@
     "docs/Postgraduate/English",
     "11a4fa1b0110e828fb8b9a14a29eddf9.jpg",
     "c5b30fa3cb1e2a2dabb6ed2b9f4c41b8.jpg",
-    "11a4fa1b0110e828fb8b9a14a29eddf9 1.jpg",
     "docs/public/images/hw.html",
     "docs/public/images/hw_files",
     "docs/public/hw.html",
