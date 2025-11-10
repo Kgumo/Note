@@ -22,7 +22,12 @@ const DEFAULT_CONFIG = {
   ignorePatterns: [
     '.vitepress', 'node_modules', '.idea', '.git',
     'assets', 'public', 'dist', '*.tmp', '*.log',
-    '*.html', '*.css', '*.json', '*.js', '*.mjs'
+    '*.html', '*.css', '*.json', '*.js', '*.mjs',
+    // 添加图片和其他静态资源文件类型
+    '*.png', '*.jpg', '*.jpeg', '*.gif', '*.svg',
+    '*.webp', '*.ico', '*.bmp', '*.mp4', '*.webm',
+    '*.ogg', '*.mp3', '*.wav', '*.flac', '*.aac',
+    '*.woff', '*.woff2', '*.eot', '*.ttf', '*.otf'
   ]
 };
 
@@ -152,6 +157,7 @@ function generateSidebarItems(basePath, relativePath, config) {
     
     return sidebarItems;
   } catch (error) {
+    console.error(`生成侧边栏错误 (${basePath}):`, error);
     return [];
   }
 }
@@ -163,7 +169,14 @@ function formatTitle(name) {
     .replace(/^\d+\./, "")
     .replace(/_/g, ' ')
     .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map(word => {
+      // 保留表情符号
+      const emojiMatch = word.match(/^[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}]/u);
+      if (emojiMatch) {
+        return word;
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
     .join(' ');
 }
 
@@ -207,10 +220,12 @@ module.exports.set_sidebar = (pathname = "", configPath) => {
   try {
     safePath = resolveSafePath(cleanPathname);
   } catch (error) {
+    console.error(`解析路径错误 (${cleanPathname}):`, error);
     return [];
   }
   
   if (!fs.existsSync(safePath)) {
+    console.warn(`路径不存在: ${safePath}`);
     return [];
   }
   
