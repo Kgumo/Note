@@ -254,9 +254,9 @@ onMounted(() => {
 
 <RecentPosts :posts="[
   { title: '持续更新AI（驱风计划）', date: '2025-2026', link: '/AI' },
+  { title: '更新4.C++研修阶段中C++/python数据库的连接', date: '2025-8-6', link: '/C++/4.C++研修阶段/第1节数据库' },
   { title: '更新了build,开始C++ ONNX推理的学习', date: '2025-10-4', link: '/build' },
   { title: 'resources', date: '2025-10-2', link: '/resources' },
   { title: '填充知识图谱', date: '2025-8-23', link: '/knowledge-graph' },
-  { title: '更新驱风计划导学', date: '2025-8-6', link: '/AI/0.课程基础知识' },
   { title: '更新C++第三阶段实战', date: '2025-8-6', link: '/C++/3.C++进阶课程/第6节实战' }
 ]"/>

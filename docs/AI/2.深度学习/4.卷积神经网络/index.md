@@ -394,17 +394,25 @@ E --> F
 一个完整的CNN就像一座工厂的流水线：
 
 ```mermaid
-graph LR
-A[原始图像] --> B[卷积层1<br>特征检测]
-B --> C[激活函数<br>引入非线性]
-C --> D[池化层1<br>降维摘要]
-D --> E[卷积层2<br>更复杂特征]
-E --> F[激活函数]
-F --> G[池化层2]
-G --> H[...<br>重复多次]
-H --> I[展开]
-I --> J[全连接层<br>组合特征]
-J --> K[输出层<br>分类结果]
+flowchart TD
+
+    TS["开始测试"] --> MODE["设置model.eval()<br/>关闭梯度"]
+
+    MODE --> B1["从test_loader取batch(x,y)"]
+
+    B1 --> FWD["前向传播<br/>logits = model(x)"]
+
+    FWD --> PRED["预测类别<br/>pred = argmax(logits)"]
+
+    PRED --> COUNT["累计正确样本数和总样本数"]
+
+    COUNT --> TJ{"是否还有batch?"}
+
+    TJ -->|是| B1
+
+    TJ -->|否| ACCU["计算整体测试Acc<br/>correct/total"]
+
+    ACCU --> END["输出准确率与可视化样本"]
 ```
 
 ### 各组成部分的详细作用：
