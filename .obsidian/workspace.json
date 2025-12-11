@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/AI/3.NPL/index.md",
+                "file": "docs/C++/4.C++研修阶段/第1节数据库/4.数据库C++API接口.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "4.数据库C++API接口"
             }
           }
         ]
@@ -172,8 +172,8 @@
   },
   "active": "e3cbe3d641c71086",
   "lastOpenFiles": [
-    "docs/AI/index.md",
     "docs/AI/3.NPL/index.md",
+    "docs/AI/index.md",
     "docs/AI/3.NPL/02.NLP模型基础/报告.md",
     "docs/C++/4.C++研修阶段/第1节数据库/4.数据库C++API接口.md",
     "docs/C++/4.C++研修阶段/第1节数据库/0.数据库连接.md",
