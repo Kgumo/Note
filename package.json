@@ -2,7 +2,8 @@
   "scripts": {
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:preview": "vitepress preview",
+    "fix:knowledge-graph": "node tools/fix-knowledge-graph.mjs"
   },
   "dependencies": {
     "@vueuse/core": "^13.6.0",

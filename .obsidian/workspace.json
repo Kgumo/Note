@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "cb5efb8c7d9a72a0",
+        "id": "ee6dc0f457716816",
         "type": "tabs",
         "children": [
           {
-            "id": "e3cbe3d641c71086",
+            "id": "21ecfc40c1fbb3c4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/C++/4.C++研修阶段/第1节数据库/4.数据库C++API接口.md",
+                "file": "docs/AI/2.深度学习/0.简介/index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "4.数据库C++API接口"
+              "title": "index"
             }
           }
         ]
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -53,7 +55,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "lam",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -78,7 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 232.50260543823242
   },
   "right": {
     "id": "6e3d8257e891fb56",
@@ -94,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/AI/1.机器学习/10.深度学习基础/index.md",
+                "file": "docs/AI/3.NPL/12.NLP前沿/基于疫情谣言多源数据的事实性判别与社会情绪观察：一个可复现的实证分析.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +106,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "index 的反向链接列表"
+              "title": "基于疫情谣言多源数据的事实性判别与社会情绪观察：一个可复现的实证分析 的反向链接列表"
             }
           },
           {
@@ -160,7 +162,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "bases:创建新数据库": false,
+      "bases:新建数据库": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
@@ -170,53 +172,53 @@
       "obsidian42-brat:BRAT": false
     }
   },
-  "active": "e3cbe3d641c71086",
+  "active": "21ecfc40c1fbb3c4",
   "lastOpenFiles": [
-    "docs/AI/3.NPL/index.md",
-    "docs/AI/index.md",
-    "docs/AI/3.NPL/02.NLP模型基础/报告.md",
-    "docs/C++/4.C++研修阶段/第1节数据库/4.数据库C++API接口.md",
-    "docs/C++/4.C++研修阶段/第1节数据库/0.数据库连接.md",
-    "docs/public/images/20251115224100.png",
-    "docs/public/images/20251114225558.png",
-    "docs/public/images/20251211202135.png",
-    "docs/public/images/20251211202122.png",
-    "docs/public/images/20251211201850.png",
-    "docs/public/images/20251211201219.png",
-    "docs/public/images/20251211172056.png",
-    "docs/public/images/20251211171826.png",
-    "docs/public/images/20251211171327.png",
-    "docs/public/images/20251211170647.png",
-    "docs/AI/3.NPL/02.NLP模型基础/index.md",
-    "docs/AI/3.NPL/03.seq2seq与机器翻译/index.md",
+    "dist/build/2.实战/CNN_CIFAR-10/1.推理/3.CMakeLists.html",
+    "dist/build/2.实战/CNN_CIFAR-10/1.推理/4.build.html",
+    "dist/build/2.实战/CNN_CIFAR-10/1.推理/2.main.html",
+    "dist/build/2.实战/CNN_CIFAR-10/1.推理/0.准备.html",
+    "dist/build/2.实战/CNN_CIFAR-10/1.推理/1.CNN_CIFAR-10数据读取器的代码设计和实现思路.html",
+    "dist/build/2.实战/CNN_CIFAR-10/1.推理",
+    "dist/build/LNNS/阶段B调试.html",
+    "dist/build/LNNS/未命名.html",
+    "dist/build/LNNS/未命名 2.html",
+    "dist/build/LNNS/基于深度研究报告和 v4 safe candidate，专注提升 tumor和LN Dice.html",
+    "dist/build/LNNS/未命名 1.html",
+    "dist/assets/TrainingofWeightedMajorityAlgorithm.C45dqNPq.png",
+    "docs/Postgraduate/802/2.线性表.md",
+    "docs/Postgraduate/802/2.题目.md",
     "docs/Internship/index.md",
-    "docs/C++/4.C++研修阶段/第1节数据库/index.md",
-    "docs/AI/2.深度学习/index.md",
-    "docs/AI/3.NPL/01.NLP简介/index.md",
-    "docs/AI/2.深度学习/9.深度生产式模型/报告.md",
-    "docs/resources.md",
-    "附录.md",
-    "未命名.md",
-    "docs/AI/1.机器学习/01.机器学习基础/index.md",
-    "docs/AI/1.机器学习/02.机器学习实验方法与原则/index.md",
-    "docs/AI/1.机器学习/04.回归分析/index.md",
-    "docs/AI/1.机器学习/04.回归分析/Exp2：基于回归分析的大学综合得分预测.md",
-    "docs/AI/1.机器学习/04.回归分析/线性回归里面的相关系数和决定系数.md",
-    "docs/AI/1.机器学习/03.决策树/Test_鸢尾花分类.md",
-    "docs/AI/1.机器学习/03.决策树/index.md",
-    "docs/AI/1.机器学习/03.决策树/叶子节点概率预测.md",
-    "docs/AI/1.机器学习/03.决策树/随机森林与决策树的关系.md",
-    "docs/AI/1.机器学习/03.决策树/决策树信息增益详解与实例.md",
-    "docs/AI/1.机器学习/03.决策树/决策树里随机数的作用.md",
-    "docs/AI/3.NPL/03.seq2seq与机器翻译",
-    "docs/AI/3.NPL/01.NLP简介",
-    "docs/AI/3.NPL/02.NLP模型基础",
-    "docs/Postgraduate/English/大杂烩/英语词汇整合",
-    "docs/Postgraduate/English/大杂烩",
-    "docs/Postgraduate/English",
-    "docs/public/images/hw.html",
-    "docs/public/images/hw_files",
-    "docs/public/hw.html",
-    "docs/public/hw_files"
+    "docs/public/images/liwenliang.png",
+    "class_distribution_bar.png",
+    "docs/Postgraduate/802/1.答案解析.md",
+    "docs/Postgraduate/802/1.题目（基础.md",
+    "docs/Postgraduate/802/1.绪论.md",
+    "docs/Postgraduate/802/初试实操提示词.md",
+    "docs/Postgraduate/802/章节代码复现陪练提示词.md",
+    "docs/Postgraduate/802/重邮802高效随堂伴学提示词.md",
+    "docs/build/LNNS/两阶段CT微小淋巴结分割中Stage-A候选向Stage-B全体积结果转化失败的证据审计与可证伪路线.md",
+    "docs/Postgraduate/English/大杂烩/阅读/day_2.md",
+    "docs/build/LNNS/stageA-stageB.md",
+    "docs/Postgraduate/802/绪论笔记.md",
+    "docs/build/LNNS/未命名 2.md",
+    "docs/build/LNNS/stageA_manuscript_section_bilingual.md",
+    "docs/build/LNNS/stageA报告.md",
+    "docs/build/LNNS/未命名.md",
+    "docs/build/LNNS/未命名 1.md",
+    "docs/build/LNNS/stageA.md",
+    "docs/build/LNNS/未命名 4.md",
+    "docs/build/LNNS/计算机组成原理_讲解版_速记大题NOT指令.md",
+    "docs/build/LNNS/计算机组成原理_对比补充版_LaTeX公式.md",
+    "docs/build/LNNS/计算机组成原理_按参考资料精简简答题版.md",
+    "docs/build/LNNS/计算机网络考前解析版_含计算题校正版.md",
+    "docs/build/LNNS/软件工程简答题极简速记版.md",
+    "Pasted image 20260608235044.png",
+    "Pasted image 20260608235043.png",
+    "Pasted image 20260606194515.png",
+    "Pasted image 20260606194505.png",
+    "Pasted image 20260604152630.png",
+    "Pasted image 20260604152617.png",
+    "Pasted image 20260604152532.png"
   ]
 }

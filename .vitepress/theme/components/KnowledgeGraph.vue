@@ -62,7 +62,6 @@ export default {
         { id: "knn", name: "K近邻(KNN)", group: "algorithm", level: 4 },
         { id: "kd-tree", name: "KD-Tree", group: "algorithm", level: 5 }, // 添加缺失节点
         { id: "kmeans", name: "K-Means聚类", group: "algorithm", level: 4 },
-        { id: "kmeans", name: "K-Means聚类", group: "algorithm", level: 4 },
         { id: "kmedoids", name: "K-Medoids聚类", group: "algorithm", level: 4 },
         { id: "hierarchical-clust", name: "层次聚类", group: "algorithm", level: 4 },
         { id: "ensemble", name: "集成学习", group: "method", level: 3 },
@@ -488,8 +487,19 @@ export default {
     function cleanup() {
       if (simulation.value) {
         simulation.value.stop();
+        simulation.value = null;
       }
+
       window.removeEventListener('resize', handleResize);
+
+      if (graphContainer.value) {
+        d3.select(graphContainer.value).selectAll('svg').remove();
+      }
+
+      svg.value = null;
+      link.value = null;
+      node.value = null;
+      zoom.value = null;
     }
 
     function handleResize() {

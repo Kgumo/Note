@@ -5,7 +5,7 @@
 **这是我学校25届毕业生的简历**
 
 
-![](public/images/liwenliang.png)
+![](public/images/liwenliang.webp)
 
 先思考
 

@@ -1,5 +1,5 @@
 ## 为什么需要深度学习？
-![](public/images/DeepLearning.png)
+![](public/images/DeepLearning.webp)
 **理论解释：**
 传统机器学习方法（如线性回归、SVM）面临两大瓶颈：
 1. **特征工程依赖**  

@@ -1,5 +1,4 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import { withBase } from 'vitepress'
 
 const props = defineProps({
@@ -7,57 +6,29 @@ const props = defineProps({
     type: Array,
     required: true,
     default: () => []
-  },
-  loadingDelay: {
-    type: Number,
-    default: 800
   }
 })
 
-const isLoading = ref(true)
-const randomAngles = props.posts.map(() => 
-  Math.random() * 10 - 5 // -5° 到 +5° 的随机倾斜
-)
-
-onMounted(() => {
-  setTimeout(() => {
-    isLoading.value = false
-  }, props.loadingDelay)
-})
-
-// 修正的路径规范化函数
 function normalizePath(filePath) {
-  if (!filePath) return '/';
-  
-  // 移除可能的绝对路径前缀
+  if (!filePath) return withBase('/')
+
   let cleanPath = filePath
-    .replace(/^.*[\\/]Note[\\/]/, '') // 移除项目路径前缀
-    .replace(/\\/g, '/') // 统一为斜杠
-    .replace(/\.md$/i, ''); // 移除文件扩展名
-  
-  // 确保路径以斜杠开头
-  if (!cleanPath.startsWith('/')) cleanPath = '/' + cleanPath;
-  
-  // 处理特殊情况
-  if (cleanPath.endsWith('/index')) cleanPath = cleanPath.slice(0, -6);
-  if (cleanPath === '') cleanPath = '/';
-  
-  // 使用 Vitepress 的 withBase 处理基础路径
-  return withBase(cleanPath);
+    .replace(/^.*[\\/]Note[\\/]/, '')
+    .replace(/\\/g, '/')
+    .replace(/\.md$/i, '')
+
+  if (!cleanPath.startsWith('/')) cleanPath = '/' + cleanPath
+  if (cleanPath.endsWith('/index')) cleanPath = cleanPath.slice(0, -6)
+  if (!cleanPath) cleanPath = '/'
+
+  return withBase(cleanPath)
 }
 
-// 使用完整页面导航
-function handleLinkClick(event, path) {
-  event.preventDefault();
-  const targetPath = normalizePath(path);
-  
-  // 添加调试信息
-  console.log(`导航到: ${targetPath}`);
-  
-  // 使用完整页面跳转
-  window.location.href = targetPath;
+function cardAngle(index) {
+  return ((index * 7) % 11) - 5
 }
 </script>
+
 <template>
   <section class="recent-updates-3d">
     <h2 class="section-title">
@@ -66,22 +37,12 @@ function handleLinkClick(event, path) {
       <span class="divider"></span>
     </h2>
 
-    <!-- 骨架屏 -->
-    <div v-if="isLoading" class="skeleton-grid">
-      <div v-for="i in 6" :key="i" class="skeleton-card">
-        <div class="skeleton-line lg"></div>
-        <div class="skeleton-line md"></div>
-        <div class="skeleton-line sm"></div>
-      </div>
-    </div>
-
-    <!-- 3D卡片内容 -->
-    <div v-else class="posts-3d-grid">
-      <article 
-        v-for="(post, index) in posts" 
+    <div class="posts-3d-grid">
+      <article
+        v-for="(post, index) in props.posts"
         :key="post.link"
         :style="{
-          '--rotate-angle': `${randomAngles[index]}deg`,
+          '--rotate-angle': `${cardAngle(index)}deg`,
           '--hue-rotate': `${index * 12}deg`
         }"
         class="post-3d-card"
@@ -93,13 +54,9 @@ function handleLinkClick(event, path) {
             <div class="post-badge">New</div>
           </div>
           <div class="card-back">
-            <a 
-              :href="normalizePath(post.link)" 
-              class="card-link"
-              @click="handleLinkClick($event, post.link)"
-            >
+            <a :href="normalizePath(post.link)" class="card-link">
               <div class="link-content">
-                <svg class="link-icon" viewBox="0 0 24 24">
+                <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
                   <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
                 </svg>
@@ -113,7 +70,6 @@ function handleLinkClick(event, path) {
     </div>
   </section>
 </template>
-
 
 <style scoped>
 .recent-updates-3d {
@@ -142,59 +98,9 @@ function handleLinkClick(event, path) {
   flex-grow: 1;
   height: 2px;
   margin-left: 25px;
-  background: linear-gradient(
-    90deg,
-    var(--vp-c-brand),
-    transparent 80%
-  );
+  background: linear-gradient(90deg, var(--vp-c-brand), transparent 80%);
 }
 
-/* 骨架屏样式 */
-.skeleton-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.skeleton-card {
-  height: 220px;
-  background: var(--vp-c-bg-soft);
-  border-radius: 12px;
-  padding: 1.5rem;
-  overflow: hidden;
-  position: relative;
-}
-
-.skeleton-line {
-  height: 16px;
-  background: var(--vp-c-bg-soft-down);
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.skeleton-line::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(var(--vp-c-brand-rgb), 0.1),
-    transparent
-  );
-  animation: shimmer 1.5s infinite;
-}
-
-.skeleton-line.lg { width: 80%; }
-.skeleton-line.md { width: 60%; }
-.skeleton-line.sm { width: 40%; }
-
-/* 3D卡片容器 */
 .posts-3d-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -241,56 +147,32 @@ function handleLinkClick(event, path) {
 }
 
 .card-front {
-  background: linear-gradient(
-    135deg,
-    var(--vp-c-bg-soft-up),
-    var(--vp-c-bg-soft)
-  );
+  background: linear-gradient(135deg, var(--vp-c-bg-soft-up), var(--vp-c-bg-soft));
   justify-content: space-between;
   position: relative;
-  padding: 2rem; /* 保持内边距 */
+  padding: 2rem;
 }
 
-/* 添加卡片内部渐变效果 */
 .card-front::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(0, 0, 0, 0.1)
-  );
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
   border-radius: inherit;
   z-index: 1;
 }
 
-/* 修复：卡片背面改为绝对定位 */
 .card-back {
-  background: linear-gradient(
-    135deg,
-    var(--vp-c-brand),
-    var(--vp-c-brand-dark)
-  );
+  background: linear-gradient(135deg, var(--vp-c-brand), var(--vp-c-brand-dark));
   transform: rotateY(180deg);
   color: white;
-  
-  /* 修复定位 */
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex; /* 添加flex布局 */
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中 */
-  z-index: 2; /* 确保在炫光层之上 */
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
 }
 
-/* 确保链接覆盖整个卡片背面 */
 .card-link {
   display: flex;
   align-items: center;
@@ -299,11 +181,10 @@ function handleLinkClick(event, path) {
   height: 100%;
   color: inherit;
   text-decoration: none;
-  z-index: 3; /* 高于炫光层 */
-  position: relative; /* 添加相对定位 */
+  z-index: 3;
+  position: relative;
 }
 
-/* 添加链接内容容器 */
 .link-content {
   display: flex;
   flex-direction: column;
@@ -358,27 +239,19 @@ function handleLinkClick(event, path) {
 
 .card-glare {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    circle at 70% 30%,
-    rgba(255, 255, 255, 0.2),
-    transparent 50%
-  );
+  background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2), transparent 50%);
   opacity: 0;
   transition: opacity 0.3s;
-  z-index: 1; /* 低于卡片内容 */
-  pointer-events: none; /* 关键：禁止炫光层接收鼠标事件 */
+  z-index: 1;
+  pointer-events: none;
 }
 
 .post-3d-card:hover .card-glare {
   opacity: 1;
 }
 
-/* 动画定义 */
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -390,41 +263,12 @@ function handleLinkClick(event, path) {
   100% { transform: scale(1); }
 }
 
-@keyframes shimmer {
-  100% {
-    left: 100%;
-  }
-}
-
-/* 响应式调整 */
 @media (max-width: 768px) {
-  .posts-3d-grid,
-  .skeleton-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .post-3d-card {
-    height: 200px;
-  }
-  
-  .section-title {
-    font-size: 1.6rem;
-  }
-  
-  /* 移动端链接文字大小调整 */
-  .link-content {
-    font-size: 1rem;
-    padding: 1rem;
-  }
-  
-  .link-icon {
-    width: 36px;
-    height: 36px;
-  }
-  
-  /* 修复移动端卡片背面显示 */
-  .card-back {
-    padding: 1rem;
-  }
+  .posts-3d-grid { grid-template-columns: 1fr; }
+  .post-3d-card { height: 200px; }
+  .section-title { font-size: 1.6rem; }
+  .link-content { font-size: 1rem; padding: 1rem; }
+  .link-icon { width: 36px; height: 36px; }
+  .card-back { padding: 1rem; }
 }
 </style>

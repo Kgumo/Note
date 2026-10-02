@@ -1193,6 +1193,6 @@ flowchart TD
 
     G --> I[部署模型]
 ```
-整篇文章参考![深度学习](public/images/DS_book.png)
+整篇文章参考![深度学习](public/images/DS_book.webp)
 只链接是其中一个作者的书籍链接)(有会可能失效)
 _[伊恩·古德费洛 (Ian Goodfellow)](https://zh.z-lib.by/author/%E4%BC%8A%E6%81%A9%C2%B7%E5%8F%A4%E5%BE%B7%E8%B4%B9%E6%B4%9B%20%28Ian%20Goodfellow%29 "找到作者的所有书籍")_
