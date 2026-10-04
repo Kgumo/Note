@@ -6,6 +6,7 @@ import { createRequire } from 'module'
 
 import { enhanceMarkdownImages } from './utils/performance-images.mjs'
 import { installMediaRenderer } from './utils/media-renderer.mjs'
+import { installObsidianCompat } from './utils/obsidian-compat.mjs'
 const require = createRequire(import.meta.url)
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -157,6 +158,11 @@ export default defineConfig({
       qmake: 'makefile'
     },
     config: async (md) => {
+      // V29_OBSIDIAN_COMPAT
+      installObsidianCompat(md, {
+        docsDir: path.resolve(__dirname, '../docs')
+      })
+
       const { default: katex } = await import('markdown-it-katex')
       md.use(katex)
 

@@ -13,3 +13,4 @@ docs/public/_media/
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 .vitepress/cache/build-graph.generated.mjs
+.v29-backup/

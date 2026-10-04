@@ -5,6 +5,7 @@ import crypto from 'node:crypto'
 import { pathToFileURL } from 'node:url'
 import MarkdownIt from 'markdown-it'
 import sharp from 'sharp'
+import { installObsidianCompat } from '../.vitepress/utils/obsidian-compat.mjs'
 
 const root = process.cwd()
 const docsDir = path.join(root, 'docs')
@@ -26,6 +27,10 @@ const mirroredDir =
 
 const md = new MarkdownIt({
   html: true
+})
+
+installObsidianCompat(md, {
+  docsDir
 })
 
 const IMAGE_EXTENSIONS = new Set([
@@ -190,11 +195,20 @@ async function scanMarkdown() {
 
   const localRefs = new Map()
   const externalRefs = new Map()
-  const unsupportedWikiEmbeds = []
+  const obsidian = {
+    resolvedImages: [],
+    unresolvedImages: [],
+    resolvedLinks: [],
+    unresolvedLinks: [],
+    unsupportedEmbeds: []
+  }
 
   for (const file of files) {
     const source = await fs.readFile(file, 'utf8')
-    const env = {}
+    const env = {
+      path: file
+    }
+
     const tokens = md.parse(source, env)
     const images = collectImageTokens(tokens)
 
@@ -216,18 +230,30 @@ async function scanMarkdown() {
         continue
       }
 
-      const resolved = resolveLocalSource(src, file)
+      const resolved =
+        resolveLocalSource(
+          src,
+          file
+        )
+
       if (!resolved) continue
 
-      const key = path.resolve(resolved)
-      let item = localRefs.get(key)
+      const key =
+        path.resolve(resolved)
+
+      let item =
+        localRefs.get(key)
 
       if (!item) {
         item = {
           file: key,
           refs: []
         }
-        localRefs.set(key, item)
+
+        localRefs.set(
+          key,
+          item
+        )
       }
 
       item.refs.push({
@@ -237,15 +263,22 @@ async function scanMarkdown() {
       })
     }
 
-    // Report Obsidian wiki embeds because vanilla VitePress does not render
-    // them as Markdown images without an additional plugin.
+    const compat =
+      env.__obsidianCompat || {}
+
     for (
-      const match of source.matchAll(/!\[\[([^\]]+)\]\]/g)
+      const key
+      of Object.keys(obsidian)
     ) {
-      unsupportedWikiEmbeds.push({
-        markdownFile: file,
-        target: match[1]
-      })
+      for (
+        const value
+        of compat[key] || []
+      ) {
+        obsidian[key].push({
+          markdownFile: file,
+          value
+        })
+      }
     }
   }
 
@@ -253,7 +286,7 @@ async function scanMarkdown() {
     markdownFiles: files,
     localRefs,
     externalRefs,
-    unsupportedWikiEmbeds
+    obsidian
   }
 }
 
@@ -594,13 +627,17 @@ async function audit() {
   const scan = await scanMarkdown()
 
   const local = []
-  let missing = 0
+  const missingItems = []
 
-  for (const item of scan.localRefs.values()) {
-    const metadata = await fileMetadata(item.file)
+  for (
+    const item
+    of scan.localRefs.values()
+  ) {
+    const metadata =
+      await fileMetadata(item.file)
 
     if (!metadata) {
-      missing += 1
+      missingItems.push(item)
       continue
     }
 
@@ -614,13 +651,19 @@ async function audit() {
     })
   }
 
-  local.sort((a, b) => b.bytes - a.bytes)
+  local.sort(
+    (a, b) => b.bytes - a.bytes
+  )
 
   const domains = new Map()
 
-  for (const [url, refs] of scan.externalRefs) {
+  for (
+    const [url, refs]
+    of scan.externalRefs
+  ) {
     try {
-      const host = new URL(url).hostname
+      const host =
+        new URL(url).hostname
 
       domains.set(
         host,
@@ -634,15 +677,20 @@ async function audit() {
 
   const over1Mb =
     local.filter(
-      (item) => item.bytes >= 1024 ** 2
+      (item) =>
+        item.bytes >= 1024 ** 2
     ).length
 
   const over500Kb =
     local.filter(
-      (item) => item.bytes >= 500 * 1024
+      (item) =>
+        item.bytes >= 500 * 1024
     ).length
 
-  console.log('\n=== Media audit ===\n')
+  console.log(
+    '\n=== Media audit ===\n'
+  )
+
   console.log(
     `Markdown files: ${scan.markdownFiles.length}`
   )
@@ -653,20 +701,39 @@ async function audit() {
     `External image URLs: ${scan.externalRefs.size}`
   )
   console.log(
-    `Missing/unsupported local images: ${missing}`
-  )
-  console.log(
-    `Obsidian wiki embeds detected: ${scan.unsupportedWikiEmbeds.length}`
+    `Missing/unsupported local images: ${missingItems.length}`
   )
 
-  console.log('\nExternal image domains:')
+  console.log('\nObsidian compatibility:')
+  console.log(
+    `  wiki images resolved: ${scan.obsidian.resolvedImages.length}`
+  )
+  console.log(
+    `  wiki images unresolved: ${scan.obsidian.unresolvedImages.length}`
+  )
+  console.log(
+    `  wiki links resolved: ${scan.obsidian.resolvedLinks.length}`
+  )
+  console.log(
+    `  wiki links unresolved: ${scan.obsidian.unresolvedLinks.length}`
+  )
+  console.log(
+    `  unsupported non-image embeds: ${scan.obsidian.unsupportedEmbeds.length}`
+  )
+
+  console.log(
+    '\nExternal image domains:'
+  )
+
   if (!domains.size) {
     console.log('  none')
   } else {
     for (
       const [host, count]
       of [...domains.entries()]
-        .sort((a, b) => b[1] - a[1])
+        .sort(
+          (a, b) => b[1] - a[1]
+        )
     ) {
       const mirrored =
         config.mirrorDomains.includes(host)
@@ -679,11 +746,78 @@ async function audit() {
     }
   }
 
+  if (missingItems.length) {
+    console.log(
+      '\nMissing/unsupported local references:'
+    )
+
+    for (
+      const item
+      of missingItems.slice(0, 20)
+    ) {
+      const firstRef =
+        item.refs?.[0]
+
+      console.log(
+        `  ${repoRelative(item.file)}`
+      )
+
+      if (firstRef) {
+        console.log(
+          `    from ${repoRelative(firstRef.markdownFile)} -> ${firstRef.src}`
+        )
+      }
+    }
+  }
+
+  if (
+    scan.obsidian.unresolvedImages.length
+  ) {
+    console.log(
+      '\nUnresolved Obsidian image embeds:'
+    )
+
+    for (
+      const item
+      of scan.obsidian.unresolvedImages.slice(
+        0,
+        20
+      )
+    ) {
+      console.log(
+        `  ${repoRelative(item.markdownFile)} -> ![[${item.value}]]`
+      )
+    }
+  }
+
+  if (
+    scan.obsidian.unresolvedLinks.length
+  ) {
+    console.log(
+      '\nUnresolved Obsidian wiki links:'
+    )
+
+    for (
+      const item
+      of scan.obsidian.unresolvedLinks.slice(
+        0,
+        20
+      )
+    ) {
+      console.log(
+        `  ${repoRelative(item.markdownFile)} -> [[${item.value}]]`
+      )
+    }
+  }
+
   console.log(
     '\nLargest REFERENCED local images:'
   )
 
-  for (const item of local.slice(0, 30)) {
+  for (
+    const item
+    of local.slice(0, 30)
+  ) {
     const dimensions =
       item.width && item.height
         ? `${item.width}x${item.height}`
@@ -696,19 +830,19 @@ async function audit() {
     )
   }
 
-  console.log('\nReferenced image thresholds:')
-  console.log(`  >= 1 MB:   ${over1Mb}`)
-  console.log(`  >= 500 KB: ${over500Kb}`)
+  console.log(
+    '\nReferenced image thresholds:'
+  )
+  console.log(
+    `  >= 1 MB:   ${over1Mb}`
+  )
+  console.log(
+    `  >= 500 KB: ${over500Kb}`
+  )
 
-  if (scan.unsupportedWikiEmbeds.length) {
-    console.log(
-      '\nNote: ![[...]] image embeds are detected but are not ' +
-      'rendered by vanilla VitePress. The pipeline reports them ' +
-      'instead of silently modifying Obsidian syntax.'
-    )
-  }
-
-  console.log('\n=== end media audit ===\n')
+  console.log(
+    '\n=== end media audit ===\n'
+  )
 }
 
 function extensionFromContentType(contentType = '') {
