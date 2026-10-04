@@ -11,14 +11,12 @@
             "id": "21ecfc40c1fbb3c4",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "docs/AI/2.深度学习/0.简介/index.md",
-                "mode": "source",
-                "source": false
+                "file": "error_cases_analysis.png"
               },
-              "icon": "lucide-file",
-              "title": "index"
+              "icon": "lucide-image",
+              "title": "error_cases_analysis"
             }
           }
         ]
@@ -174,23 +172,35 @@
   },
   "active": "21ecfc40c1fbb3c4",
   "lastOpenFiles": [
-    "dist/build/2.实战/CNN_CIFAR-10/1.推理/3.CMakeLists.html",
+    "dist/index.html",
+    "dist/我们只是通过无数的思维模型在给世界建模.html",
+    "dist/resources.html",
+    "dist/knowledge-graph.html",
+    "dist/markdown-examples.html",
     "dist/build/2.实战/CNN_CIFAR-10/1.推理/4.build.html",
     "dist/build/2.实战/CNN_CIFAR-10/1.推理/2.main.html",
-    "dist/build/2.实战/CNN_CIFAR-10/1.推理/0.准备.html",
+    "dist/build/2.实战/CNN_CIFAR-10/1.推理/3.CMakeLists.html",
     "dist/build/2.实战/CNN_CIFAR-10/1.推理/1.CNN_CIFAR-10数据读取器的代码设计和实现思路.html",
+    "dist/build/2.实战/CNN_CIFAR-10/1.推理/0.准备.html",
     "dist/build/2.实战/CNN_CIFAR-10/1.推理",
-    "dist/build/LNNS/阶段B调试.html",
-    "dist/build/LNNS/未命名.html",
-    "dist/build/LNNS/未命名 2.html",
-    "dist/build/LNNS/基于深度研究报告和 v4 safe candidate，专注提升 tumor和LN Dice.html",
-    "dist/build/LNNS/未命名 1.html",
-    "dist/assets/TrainingofWeightedMajorityAlgorithm.C45dqNPq.png",
+    "dist/assets/3b8f86b82ccbcffb76.CPv7rw8t.png",
+    "dist/assets/502483c82e024b2e9a.DBcAgH7u.png",
+    "dist/assets/f81048f2f9415de2e4.rIQ-Kfi7.png",
+    "dist/assets/d6473885551d60f7f8.BslymX3h.png",
+    "dist/assets/340946c4b155b90181.C4KVrYlW.png",
+    "dist/assets/a759e4a458c7bed0f4.DBBGLnxt.png",
+    "dist/assets/d3c8e614a6f70821b0.Ck-Zxql-.png",
+    "dist/assets/170cda65869ab82332.CO08_-zR.png",
+    "dist/assets/1053cd5e813a7183f0.quQI6v6B.png",
+    "dist/assets/0ce07ced89d6ddc6b5.CIPYA3Ci.png",
+    "OPTIMIZATION_NOTES.md",
+    "未命名 2.md",
+    "未命名 1.md",
+    "未命名.md",
+    "docs/AI/2.深度学习/0.简介/index.md",
     "docs/Postgraduate/802/2.线性表.md",
     "docs/Postgraduate/802/2.题目.md",
     "docs/Internship/index.md",
-    "docs/public/images/liwenliang.png",
-    "class_distribution_bar.png",
     "docs/Postgraduate/802/1.答案解析.md",
     "docs/Postgraduate/802/1.题目（基础.md",
     "docs/Postgraduate/802/1.绪论.md",
@@ -207,18 +217,6 @@
     "docs/build/LNNS/未命名.md",
     "docs/build/LNNS/未命名 1.md",
     "docs/build/LNNS/stageA.md",
-    "docs/build/LNNS/未命名 4.md",
-    "docs/build/LNNS/计算机组成原理_讲解版_速记大题NOT指令.md",
-    "docs/build/LNNS/计算机组成原理_对比补充版_LaTeX公式.md",
-    "docs/build/LNNS/计算机组成原理_按参考资料精简简答题版.md",
-    "docs/build/LNNS/计算机网络考前解析版_含计算题校正版.md",
-    "docs/build/LNNS/软件工程简答题极简速记版.md",
-    "Pasted image 20260608235044.png",
-    "Pasted image 20260608235043.png",
-    "Pasted image 20260606194515.png",
-    "Pasted image 20260606194505.png",
-    "Pasted image 20260604152630.png",
-    "Pasted image 20260604152617.png",
-    "Pasted image 20260604152532.png"
+    "docs/build/LNNS/未命名 4.md"
   ]
 }

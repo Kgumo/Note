@@ -14,21 +14,21 @@ jupyter notebook
 
 2. 十几秒内，会自动打开一个网页（此终端不要关闭）
 3. 如果你在桌面启动的终端，此时网页上的目录就是桌面的目录
-4. 如何在想要的地方启动终端？可以在该文件夹的搜索框内输入cmd![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601090842.XRlL5uhh.png)
+4. 如何在想要的地方启动终端？可以在该文件夹的搜索框内输入cmd![](../../../assets/mirrored/obsidiannote.netlify.app/6644ef04fcec266ea7.png)
 5. 在这个终端页面输入jupyter notebook,此时会以此目录打开网页
 6. 另外建议将Chrome设为默认浏览器
 
 ## 界面介绍
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601091831.BVmUAX_B.png)在浏览器页面 选择右侧的NEW，新建一个Notebook文件
+![](../../../assets/mirrored/obsidiannote.netlify.app/5b9e71ee72a35c5c73.png)在浏览器页面 选择右侧的NEW，新建一个Notebook文件
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601091602.CcZdMWIz.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/118e9a9ba1112765dc.png)
 
 在光标闪烁的位置输入代码 按下
 
 > ctrl enter
 
-就会执行代码![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601091852.D3uerdG-.png)
+就会执行代码![](../../../assets/mirrored/obsidiannote.netlify.app/097489bd4979d19c89.png)
 
 ### 笔记的单元格
 
@@ -48,13 +48,13 @@ jupyter notebook
 3. 剪切单元格（单击x就剪切了，选中一个单元格位置，再单击v，会将剪切的粘到当前单元格的下方）
 4. 撤销操作（任意位置单击z键）
 
-有两种以上的模式![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601094420.D898xh3O.png)
+有两种以上的模式![](../../../assets/mirrored/obsidiannote.netlify.app/ad012169bc2c263c66.png)
 
 1. Code模式就是python能运行的代码
-2. Markdown跟做笔记一样，主要是写一些说明（写完之后记得按Ctrl enter，文本才会进入预览模式）![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601094941.CnV8TdRu.png)
+2. Markdown跟做笔记一样，主要是写一些说明（写完之后记得按Ctrl enter，文本才会进入预览模式）![](../../../assets/mirrored/obsidiannote.netlify.app/7a10ff87ccf0b17521.png)
 
 不会Markdown的可以看这个网站，5分钟学会，能用一辈子 [基本语法 | MARKDOWN 中文](https://www.markdown.cn/docs/tutorial-basics/basic-syntax)
 
 选中时按y进入code模式 按m进入markdown模式
 
-想给当前这个notebook改名的话可以这样操作![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601095306.DDUN40Xo.png)
+想给当前这个notebook改名的话可以这样操作![](../../../assets/mirrored/obsidiannote.netlify.app/d161b5f404ec18d97b.png)

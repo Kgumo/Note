@@ -36,7 +36,7 @@ pip --version
 
 如果能正常输出版本号，则配置成功。
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250527192222.DvIWs6EK.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/9ad8bbfb3875419453.png)
 
 ### Pycharm 编译器
 

@@ -82,14 +82,14 @@ print(s.iloc[0])
 DataFrame(data=np.random.randint(0,10,size=(3,5)))
 ```
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250602161509.BzvAqxXj.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/889ec8a9cdc6186606.png)
 
 ```python
 df=DataFrame(data=np.random.randint(0,10,size=(3,5)),index=['tom','lucy','jack'],columns=['语文','英语','数学','物理','化学'])
 df
 ```
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250602163806.any0Xdhs.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/b7b65770e7a795ec5d.png)
 
 ```python
 # 显式访问
@@ -102,9 +102,9 @@ df.loc['tom','物理']
 df.loc[['tom','lucy'],'数学']
 ```
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250602163850.BOE3VaSj.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/0abd1936aab4034ae4.png)
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250602163859.CVOoZzXg.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/a7bbe78d2764a81f8f.png)
 
 ## 运算
 
@@ -118,14 +118,14 @@ score=df.loc['tom']
 score
 ```
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250602163959.BNwANtDz.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/305769d10e8493db5f.png)
 
 ```python
 df+score
 # 会自动索引对齐
 ```
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250602164016.Hse6AqjL.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/b308dfbe458f33d128.png)
 
 ### 聚合运算
 
@@ -133,9 +133,9 @@ df+score
 score.sum(),score.mean(),score.var(),score.std()
 ```
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250602164050.C9YFost2.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/c661673e72d1193e3a.png)
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250602164121.bAampB3q.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/dc73942ba434ec577c.png)
 
 #### any与all
 

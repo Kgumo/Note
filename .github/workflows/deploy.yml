@@ -29,9 +29,20 @@ jobs:
           node-version: 20
           cache: npm
 
+
+      - name: Restore generated media cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            docs/public/_media
+            .vitepress/cache/media-manifest.json
+          key: media-${{ runner.os }}-${{ hashFiles('docs/**', 'media.config.mjs', 'tools/media-pipeline.mjs') }}
+          restore-keys: |
+            media-${{ runner.os }}-
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      # Media output is verified by docs:build before the Pages artifact is uploaded.
       - name: Build with VitePress
         run: npm run docs:build
         env:

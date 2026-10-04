@@ -21,7 +21,7 @@
 import numpy as np
 ```
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601101547.BKb_gtvO.png)numpy太长了，我们导入时将它 重命名 np（牛皮）
+![](../../../assets/mirrored/obsidiannote.netlify.app/569f796984cfba661e.png)numpy太长了，我们导入时将它 重命名 np（牛皮）
 
 查看当前np版本(注意这里是双下划线)
 
@@ -63,7 +63,7 @@ np.ones(shape=(3,2))
 
 忘记怎么用了怎么办
 
-Shift Tab可以查看当前方法的说明文档![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601103648.BBO6lFXZ.png)
+Shift Tab可以查看当前方法的说明文档![](../../../assets/mirrored/obsidiannote.netlify.app/b9741a0dd584967d78.png)
 
 shape指定形状，比如3行2列
 
@@ -82,7 +82,7 @@ np.random.randint(0,10,size=(2,3))
 
 > size的作用类似于shape
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601104835.DalC8eo1.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/9d6a2ab14a1027b02b.png)
 
 0到1的浮点数数组
 
@@ -90,7 +90,7 @@ np.random.randint(0,10,size=(2,3))
 np.random.random(size=(3,4))
 ```
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601104822.-zPAR61M.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/cf787341cfad334a2b.png)
 
 等差数列 起始，终止，取多少个数
 
@@ -110,13 +110,13 @@ np.arange(0,10,1)
 
 得多练习，精准定位的能力
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601110131.BCAYnZXj.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/114a814da0481bebe2.png)
 
 ```python
 array[你想访问到的数字]
 ```
 
-![](https://obsidiannote.netlify.app/assets/Pasted%20image%2020250601110335.DOPAEPBI.png)
+![](../../../assets/mirrored/obsidiannote.netlify.app/e47d069e576c345fce.png)
 
 Numpy数组的优势(相比python原生的数组来说) 可以用列表当成index访问
 

@@ -192,7 +192,12 @@ features:
 <div class="custom-hero-title"></div>
 
 <script setup>
-import { onMounted } from 'vue'
+// V25_HOME_RUNTIME_CLEANUP
+import { onBeforeUnmount, onMounted } from 'vue'
+
+let intervalId = null
+let timeoutId = null
+const createdParticles = []
 
 onMounted(() => {
   const taglines = [
@@ -202,53 +207,81 @@ onMounted(() => {
     "技术是解决问题的艺术",
     "吾魂兮无求乎永生 竭尽兮人事之所能"
   ]
-  
+
   let current = 0
   const el = document.querySelector('.VPHero .tagline')
-  
+
   const changeTagline = () => {
+    if (!el) return
+
     current = (current + 1) % taglines.length
     el.style.opacity = 0
-    setTimeout(() => {
+
+    if (timeoutId) {
+      window.clearTimeout(timeoutId)
+    }
+
+    timeoutId = window.setTimeout(() => {
+      if (!el.isConnected) return
       el.textContent = taglines[current]
       el.style.opacity = 1
     }, 500)
   }
-  
+
   changeTagline()
-  setInterval(changeTagline, 5000)
-  
-  // 添加功能卡片的粒子效果
+  intervalId = window.setInterval(changeTagline, 5000)
+
   const features = document.querySelectorAll('.VPFeature')
-  
-  features.forEach(feature => {
+
+  features.forEach((feature) => {
+    if (feature.querySelector(':scope > .particles')) return
+
     const particlesContainer = document.createElement('div')
     particlesContainer.className = 'particles'
     feature.appendChild(particlesContainer)
-    
-    // 创建粒子
+    createdParticles.push(particlesContainer)
+
     for (let i = 0; i < 15; i++) {
       const particle = document.createElement('div')
       particle.className = 'particle'
-      
-      // 随机位置和大小
+
       const size = Math.random() * 10 + 5
       particle.style.width = `${size}px`
       particle.style.height = `${size}px`
       particle.style.left = `${Math.random() * 100}%`
       particle.style.top = `${Math.random() * 100}%`
-      
-      // 随机颜色
+
       const hue = 240 + Math.random() * 60
-      particle.style.background = `hsla(${hue}, 80%, 70%, ${0.2 + Math.random() * 0.3})`
-      
-      // 随机动画延迟
-      particle.style.animationDelay = `${Math.random() * 5}s`
-      particle.style.animationDuration = `${10 + Math.random() * 20}s`
-      
+      particle.style.background =
+        `hsla(${hue}, 80%, 70%, ${0.2 + Math.random() * 0.3})`
+
+      particle.style.animationDelay =
+        `${Math.random() * 5}s`
+
+      particle.style.animationDuration =
+        `${10 + Math.random() * 20}s`
+
       particlesContainer.appendChild(particle)
     }
   })
+})
+
+onBeforeUnmount(() => {
+  if (intervalId) {
+    window.clearInterval(intervalId)
+    intervalId = null
+  }
+
+  if (timeoutId) {
+    window.clearTimeout(timeoutId)
+    timeoutId = null
+  }
+
+  for (const element of createdParticles) {
+    element.remove()
+  }
+
+  createdParticles.length = 0
 })
 </script>
 

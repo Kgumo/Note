@@ -4,6 +4,8 @@ import path from 'node:path'
 import fs from 'fs'
 import { createRequire } from 'module'
 
+import { enhanceMarkdownImages } from './utils/performance-images.mjs'
+import { installMediaRenderer } from './utils/media-renderer.mjs'
 const require = createRequire(import.meta.url)
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -48,6 +50,8 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', href: `${siteBase}head.svg` }],
+    // V25_HERO_PRELOAD
+    ['link', { rel: 'preload', as: 'image', href: `${siteBase}logo.svg`, type: 'image/svg+xml' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
     ['link', {
@@ -141,6 +145,9 @@ export default defineConfig({
   markdown: {
     lineNumbers: true,
 
+    languageAlias: {
+      qmake: 'makefile'
+    },
     config: async (md) => {
       const { default: katex } = await import('markdown-it-katex')
       md.use(katex)
@@ -229,7 +236,24 @@ export default defineConfig({
 
         return defaultImageRule(tokens, idx, options, env, self)
       }
-    }
+
+      // V25_IMAGE_PERFORMANCE
+      enhanceMarkdownImages(md, {
+        docsDir: path.resolve(__dirname, '../docs')
+      })
+    
+
+      // V26_MEDIA_RENDERER
+      // Installed last so it wraps the existing V2/V2.5 image renderer
+      // instead of depending on its exact source layout.
+      installMediaRenderer(md, {
+        rootDir: path.resolve(__dirname, '..'),
+        docsDir: path.resolve(__dirname, '../docs'),
+        manifestFile: path.resolve(__dirname, './cache/media-manifest.json'),
+        siteBase,
+        eagerImageMaxLine: 28
+      })
+}
   },
 
   vite: {
