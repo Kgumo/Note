@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { withBase } from 'vitepress'
 
 const stack = [
@@ -819,3 +819,169 @@ const links = [
   }
 }
 </style>
+
+<!-- MOBILE_INTEGRATION_V291_START -->
+<style scoped>
+@media (max-width: 720px) {
+  /*
+   * Mobile hierarchy:
+   * 1) stack-map = horizontal swipe row
+   * 2) lower-grid = horizontal swipe row containing Delivery + Projects
+   * 3) content inside each panel remains vertical and wraps normally
+   */
+
+  .integration-section {
+    overflow: hidden;
+  }
+
+  .integration-shell {
+    min-width: 0;
+  }
+
+  .stack-map {
+    display: grid !important;
+    grid-template-columns: none !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: calc(100% - 18px) !important;
+    gap: 0.65rem !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding-bottom: 0.65rem !important;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .stack-map::-webkit-scrollbar,
+  .lower-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .stack-card,
+  .stack-output {
+    grid-column: auto !important;
+    min-width: 0 !important;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /*
+   * Delivery Pipeline and Project Snapshots are peers.
+   * Swipe between the two panels instead of allowing the page itself
+   * to overflow horizontally.
+   */
+  .lower-grid {
+    display: grid !important;
+    grid-template-columns: none !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: calc(100% - 18px) !important;
+    align-items: start !important;
+    gap: 0.65rem !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding-bottom: 0.65rem !important;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pipeline-panel,
+  .projects-panel {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 1rem !important;
+    overflow: hidden !important;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /*
+   * The desktop Pipeline row uses multiple columns.
+   * On a narrow phone the right-hand technology string was forcing
+   * the row wider than the panel. Collapse it to a compact vertical block.
+   */
+  .pipeline-list {
+    min-width: 0 !important;
+  }
+
+  .pipeline-list li {
+    grid-template-columns: 30px minmax(0, 1fr) !important;
+    gap: 0.6rem !important;
+    min-width: 0 !important;
+    padding: 0.85rem 0 !important;
+  }
+
+  .pipeline-index,
+  .pipeline-copy {
+    min-width: 0 !important;
+  }
+
+  .pipeline-title-row {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    flex-direction: column !important;
+    gap: 0.2rem !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .pipeline-title-row h4,
+  .pipeline-title-row span,
+  .pipeline-copy p {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+    text-align: left !important;
+  }
+
+  .pipeline-title-row span {
+    display: block !important;
+    margin-top: 0 !important;
+    line-height: 1.5 !important;
+  }
+
+  .pipeline-copy p {
+    line-height: 1.58 !important;
+  }
+
+  /*
+   * Do not create a nested horizontal swipe inside Project Snapshots.
+   * The parent lower-grid already owns the horizontal gesture.
+   */
+  .project-list {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-auto-flow: row !important;
+    gap: 0.65rem !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  .project-card {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .project-card p,
+  .project-topline,
+  .project-tags {
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+  }
+}
+</style>
+<!-- MOBILE_INTEGRATION_V291_END -->
+
