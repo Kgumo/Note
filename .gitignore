@@ -8,3 +8,7 @@ docs/.vitepress/cache/
 docs/public/_media/
 .v26-backup/
 .v25-backup/
+
+.obsidian/plugins/obsidian-git/data.json
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
