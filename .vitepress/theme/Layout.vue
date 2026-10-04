@@ -1,7 +1,11 @@
 <template>
   <VPContent>
     <template #layout-top>
-      <button class="sidebar-toggle" @click="toggleSidebar" :aria-label="isSidebarOpen ? '隐藏侧边栏' : '显示侧边栏'">
+      <button
+        class="sidebar-toggle"
+        @click="toggleSidebar"
+        :aria-label="isSidebarOpen ? '隐藏侧边栏' : '显示侧边栏'"
+      >
         <svg v-if="isSidebarOpen" class="toggle-icon" viewBox="0 0 24 24">
           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
         </svg>
@@ -10,54 +14,62 @@
         </svg>
       </button>
     </template>
+
     <template #layout-bottom>
+      <MermaidRuntime />
+
       <div class="vp-bg-elements">
         <div class="vp-floating-element vp-element-1"></div>
         <div class="vp-floating-element vp-element-2"></div>
         <div class="vp-floating-element vp-element-3"></div>
       </div>
+
       <div class="vp-grid-overlay"></div>
-      <div v-if="isSidebarOpen" class="vp-sidebar-mask" @click="toggleSidebar"></div>
+
+      <div
+        v-if="isSidebarOpen"
+        class="vp-sidebar-mask"
+        @click="toggleSidebar"
+      ></div>
     </template>
   </VPContent>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import DefaultTheme from 'vitepress/theme';
+import { ref, onMounted } from 'vue'
+import DefaultTheme from 'vitepress/theme'
+import MermaidRuntime from './components/MermaidRuntime.vue'
 
 export default {
   name: 'CustomLayout',
-  
+
+  components: {
+    VPContent: DefaultTheme.Layout,
+    MermaidRuntime
+  },
+
   setup() {
-    const isSidebarOpen = ref(false);
-    
-    const toggleSidebar = () => {
-      isSidebarOpen.value = !isSidebarOpen.value;
-      updateBodyClass();
-    };
-    
+    const isSidebarOpen = ref(false)
+
     const updateBodyClass = () => {
-      if (typeof document === 'undefined') return;
-      document.body.classList.toggle('sidebar-open', isSidebarOpen.value);
-      document.body.classList.toggle('sidebar-closed', !isSidebarOpen.value);
-    };
-    
-    onMounted(() => {
-      updateBodyClass();
-      
-    });
-    
+      if (typeof document === 'undefined') return
+      document.body.classList.toggle('sidebar-open', isSidebarOpen.value)
+      document.body.classList.toggle('sidebar-closed', !isSidebarOpen.value)
+    }
+
+    const toggleSidebar = () => {
+      isSidebarOpen.value = !isSidebarOpen.value
+      updateBodyClass()
+    }
+
+    onMounted(updateBodyClass)
+
     return {
       isSidebarOpen,
       toggleSidebar
-    };
-  },
-  
-  components: {
-    VPContent: DefaultTheme.Layout
+    }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -101,19 +113,16 @@ export default {
     width: 40px;
     height: 40px;
   }
-  
+
   .toggle-icon {
     width: 22px;
     height: 22px;
   }
-  
+
   .vp-sidebar-mask {
     display: block;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
     backdrop-filter: blur(4px);

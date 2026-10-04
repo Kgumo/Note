@@ -1,50 +1,47 @@
-import { defineConfig } from 'vitepress';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
-import fs from 'fs';
-import { withMermaid } from 'vitepress-plugin-mermaid';
-import { createRequire } from 'module';
-import pkgConfig from 'vite-plugin-package-config';
-import optimizePersist from 'vite-plugin-optimize-persist';
+import { defineConfig } from 'vitepress'
+import { fileURLToPath } from 'node:url'
+import path from 'node:path'
+import fs from 'fs'
+import { createRequire } from 'module'
 
-const require = createRequire(import.meta.url);
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const ROOT_PATH = __dirname;
+const require = createRequire(import.meta.url)
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const ROOT_PATH = __dirname
 
 function normalizeBase(value = '/') {
-  let base = value.trim() || '/';
-  if (!base.startsWith('/')) base = `/${base}`;
-  if (!base.endsWith('/')) base = `${base}/`;
-  return base.replace(/\/{2,}/g, '/');
+  let base = value.trim() || '/'
+  if (!base.startsWith('/')) base = `/${base}`
+  if (!base.endsWith('/')) base = `${base}/`
+  return base.replace(/\/{2,}/g, '/')
 }
 
 // gukmo.cn uses a custom domain, so production defaults to '/'.
 // Use VITEPRESS_BASE=/Note/ only when previewing under the GitHub project path.
-const siteBase = normalizeBase(process.env.VITEPRESS_BASE || '/');
+const siteBase = normalizeBase(process.env.VITEPRESS_BASE || '/')
 
-let set_sidebar;
+let set_sidebar
 try {
-  const utilsPath = path.resolve(ROOT_PATH, 'utils/auto_sidebar.cjs');
+  const utilsPath = path.resolve(ROOT_PATH, 'utils/auto_sidebar.cjs')
 
   if (!fs.existsSync(utilsPath)) {
-    throw new Error(`文件不存在: ${utilsPath}`);
+    throw new Error(`文件不存在: ${utilsPath}`)
   }
 
-  const sidebarModule = require(utilsPath);
-  set_sidebar = sidebarModule.set_sidebar;
+  const sidebarModule = require(utilsPath)
+  set_sidebar = sidebarModule.set_sidebar
 } catch (error) {
-  console.error('无法导入侧边栏模块:', error);
-  set_sidebar = () => [];
+  console.error('无法导入侧边栏模块:', error)
+  set_sidebar = () => []
 }
 
-const configPath = path.resolve(__dirname, './utils/sidebar-config.json');
-const cppSidebar = set_sidebar('C++', configPath);
-const aiSidebar = set_sidebar('AI', configPath);
-const PostgraduateSidebar = set_sidebar('Postgraduate', configPath);
-const InternshipSidebar = set_sidebar('Internship', configPath);
+const configPath = path.resolve(__dirname, './utils/sidebar-config.json')
+const cppSidebar = set_sidebar('C++', configPath)
+const aiSidebar = set_sidebar('AI', configPath)
+const PostgraduateSidebar = set_sidebar('Postgraduate', configPath)
+const InternshipSidebar = set_sidebar('Internship', configPath)
 
-export default withMermaid(defineConfig({
+export default defineConfig({
   title: '额滴笔记',
   description: '个人技术知识库 - C++ | Qt | AI',
   base: siteBase,
@@ -63,24 +60,13 @@ export default withMermaid(defineConfig({
   lastUpdated: true,
   appearance: 'dark',
 
-  mermaid: {
-    theme: 'dark',
-    securityLevel: 'loose',
-    fontFamily: "'Noto Serif SC', sans-serif",
-    fontSize: 16,
-    htmlLabels: true,
-    flowchart: {
-      nodeSpacing: 50,
-      rankSpacing: 50
-    }
-  },
-
   themeConfig: {
     outlineTitle: '📚 本文目录',
     outline: [2, 6],
     smoothScroll: true,
 
     logo: '/whead.png',
+
     nav: [
       {
         text: '🏠 首页',
@@ -154,88 +140,127 @@ export default withMermaid(defineConfig({
 
   markdown: {
     lineNumbers: true,
+
     config: async (md) => {
-      const { default: katex } = await import('markdown-it-katex');
-      md.use(katex);
+      const { default: katex } = await import('markdown-it-katex')
+      md.use(katex)
 
       md.core.ruler.push('clean-attributes', (state) => {
         state.tokens.forEach((token) => {
           if (token.attrs) {
             token.attrs = token.attrs.filter(([name]) => {
-              return typeof name === 'string' && !/^\d+$/.test(name);
-            });
+              return typeof name === 'string' && !/^\d+$/.test(name)
+            })
           }
-        });
-      });
+        })
+      })
 
-      const defaultImageRule = md.renderer.rules.image || ((tokens, idx, options, env, self) => {
-        return self.renderToken(tokens, idx, options);
-      });
+      // Mermaid is emitted as lightweight HTML during build.
+      // The browser imports mermaid only when a diagram approaches the viewport.
+      const defaultFence = md.renderer.rules.fence
+
+      md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+        const token = tokens[idx]
+        const language = token.info.trim().split(/\s+/)[0]
+
+        if (language === 'mermaid') {
+          const source = md.utils.escapeHtml(token.content)
+
+          return [
+            '<div class="mermaid-diagram" data-mermaid-state="idle" role="img" aria-label="Mermaid diagram">',
+            `<template class="mermaid-diagram__source">${source}</template>`,
+            '<div class="mermaid-diagram__placeholder">Diagram</div>',
+            '</div>'
+          ].join('')
+        }
+
+        if (defaultFence) {
+          return defaultFence(tokens, idx, options, env, self)
+        }
+
+        return self.renderToken(tokens, idx, options)
+      }
+
+      const defaultImageRule =
+        md.renderer.rules.image ||
+        ((tokens, idx, options, env, self) => self.renderToken(tokens, idx, options))
 
       md.renderer.rules.image = (tokens, idx, options, env, self) => {
-        const token = tokens[idx];
-        const srcIndex = token.attrIndex('src');
+        const token = tokens[idx]
+        const srcIndex = token.attrIndex('src')
 
-        // Keep legacy Obsidian-friendly "public/..." links working,
-        // but do not rewrite normal relative Markdown image paths.
         if (srcIndex >= 0) {
-  const src = token.attrs[srcIndex][1]
+          const src = token.attrs[srcIndex][1]
 
-  if (src) {
-    // Obsidian 写法：
-    // ![](images/xxx.png)
-    // ![](./images/xxx.png)
-    //
-    // 实际图片位于 docs/public/images/
-    if (
-      src.startsWith('images/') ||
-      src.startsWith('./images/')
-    ) {
-      const relative = src
-        .replace(/^\.\//, '')
-        .replace(/^\/+/, '')
+          if (src) {
+            // Obsidian-friendly:
+            // ![](images/xxx.png)
+            // ![](./images/xxx.png)
+            if (src.startsWith('images/') || src.startsWith('./images/')) {
+              const relative = src
+                .replace(/^\.\//, '')
+                .replace(/^\/+/, '')
 
-      token.attrs[srcIndex][1] = `${siteBase}${relative}`
-    }
+              token.attrs[srcIndex][1] = `${siteBase}${relative}`
+            }
+            // Legacy:
+            // ![](public/images/xxx.png)
+            else if (src.startsWith('public/') || src.startsWith('./public/')) {
+              const relative = src
+                .replace(/^\.\//, '')
+                .replace(/^public\//, '')
+                .replace(/^\/+/, '')
 
-    // 兼容历史写法：
-    // ![](public/images/xxx.png)
-    else if (
-      src.startsWith('public/') ||
-      src.startsWith('./public/')
-    ) {
-      const relative = src
-        .replace(/^\.\//, '')
-        .replace(/^public\//, '')
-        .replace(/^\/+/, '')
+              token.attrs[srcIndex][1] = `${siteBase}${relative}`
+            }
+          }
+        }
 
-      token.attrs[srcIndex][1] = `${siteBase}${relative}`
-    }
-  }
-}
-
-        token.attrSet('loading', 'lazy');
-        token.attrSet('decoding', 'async');
+        token.attrSet('loading', 'lazy')
+        token.attrSet('decoding', 'async')
 
         if (token.attrs) {
           token.attrs = token.attrs.filter((attr) =>
-            Array.isArray(attr) && attr.length === 2 && typeof attr[0] === 'string'
-          );
+            Array.isArray(attr) &&
+            attr.length === 2 &&
+            typeof attr[0] === 'string'
+          )
         }
 
-        return defaultImageRule(tokens, idx, options, env, self);
-      };
+        return defaultImageRule(tokens, idx, options, env, self)
+      }
     }
   },
 
   vite: {
-    plugins: [
-      pkgConfig.default(),
-      optimizePersist.default()
-    ],
     build: {
-      rollupOptions: {}
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (!id.includes('node_modules')) return
+
+            const normalized = id.replace(/\\/g, '/')
+
+            if (/\/node_modules\/(?:d3|d3-[^/]+)\//.test(normalized)) {
+              return 'vendor-d3'
+            }
+
+            if (normalized.includes('/node_modules/element-plus/')) {
+              return 'vendor-element-plus'
+            }
+
+            if (normalized.includes('/node_modules/katex/')) {
+              return 'vendor-katex'
+            }
+
+            if (normalized.includes('/node_modules/langium/')) {
+              return 'vendor-langium'
+            }
+          }
+        }
+      }
     },
+
     resolve: {
       alias: {
         'langium/lib/utils/cancellation': 'cancellation-shim',
@@ -245,6 +270,7 @@ export default withMermaid(defineConfig({
         '@theme': path.resolve(__dirname, './theme')
       }
     },
+
     server: {
       fs: {
         allow: [
@@ -254,18 +280,12 @@ export default withMermaid(defineConfig({
         deny: ['node_modules', '.git']
       }
     },
+
+    // Do not eagerly prebundle heavy libraries just for opening the dev homepage.
+    // D3 / Mermaid will be optimized only when their pages/features are actually used.
     optimizeDeps: {
-      include: [
-        'langium',
-        'markdown-it',
-        'element-plus',
-        '@vueuse/core',
-        'd3'
-      ],
-      exclude: [
-        'vitepress-plugin-mermaid',
-        'vitepress'
-      ],
+      include: ['markdown-it'],
+      exclude: ['vitepress'],
       esbuildOptions: {
         target: 'esnext'
       }
@@ -275,4 +295,4 @@ export default withMermaid(defineConfig({
   tempDir: './.vitepress/.temp',
   srcDir: './docs',
   outDir: './dist'
-}));
+})
