@@ -28,8 +28,8 @@ features:
     link: /AI/
     linkText: "探索技术 →"
   - icon: 🧩
-    title: "知识图谱"
-    details: "连接 C++ / Qt / AI / ONNX 与综合技术实践"
+    title: "知识图谱(已更新机器学习)"
+    details: "构建结构化知识体系网络"
     link: /knowledge-graph/
     linkText: "查看图谱 →"
 ---

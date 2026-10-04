@@ -1,724 +1,1064 @@
 <template>
-  <div class="knowledge-graph">
-    <div class="graph-controls">
-      <button @click="resetView">重置视图</button>
-      <button @click="togglePhysics">{{ physicsEnabled ? '暂停' : '启动' }}物理模拟</button>
-      <div class="search-box">
-        <input v-model="searchTerm" placeholder="搜索节点..." />
+  <section class="knowledge-graph" aria-label="知识图谱">
+    <header class="graph-toolbar">
+      <div class="graph-intro">
+        <span class="graph-kicker">KNOWLEDGE SYSTEM</span>
+        <strong>知识之间不是目录关系，而是连接关系</strong>
+        <small>
+          综合技术分支会根据 docs/build 自动更新；带链接的节点可直接进入笔记。
+        </small>
       </div>
+
+      <div class="graph-controls">
+        <label class="search-box">
+          <span class="sr-only">搜索知识节点</span>
+          <input
+            v-model.trim="searchTerm"
+            type="search"
+            placeholder="搜索节点..."
+            autocomplete="off"
+          />
+        </label>
+
+        <button type="button" @click="resetView">
+          重置视图
+        </button>
+
+        <button type="button" @click="togglePhysics">
+          {{ physicsEnabled ? '暂停模拟' : '启动模拟' }}
+        </button>
+      </div>
+    </header>
+
+    <div class="graph-meta" aria-hidden="true">
+      <span>{{ nodeCount }} NODES</span>
+      <i></i>
+      <span>{{ linkCount }} LINKS</span>
+      <i></i>
+      <span>BUILD AUTO-SYNC</span>
     </div>
-    <div ref="graphContainer" class="graph-container"></div>
-    <div v-if="loading" class="graph-loading">加载知识图谱中...</div>
-    <div v-else-if="error" class="graph-error">图表加载失败: {{ error }}</div>
-  </div>
+
+    <div
+      ref="graphContainer"
+      class="graph-container"
+    ></div>
+
+    <div
+      v-if="loading"
+      class="graph-status"
+      role="status"
+    >
+      加载知识图谱中...
+    </div>
+
+    <div
+      v-else-if="error"
+      class="graph-status graph-error"
+      role="alert"
+    >
+      图谱加载失败：{{ error }}
+    </div>
+  </section>
 </template>
 
-<script>
-import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
-import * as d3 from 'd3';
+<script setup>
+import {
+  computed,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch
+} from 'vue'
 
-export default {
-  setup() {
-    const graphContainer = ref(null);
-    const physicsEnabled = ref(true);
-    const searchTerm = ref('');
-    const loading = ref(false);
-    const error = ref(null);
+import { withBase } from 'vitepress'
 
-    // 知识图谱数据
-    // 示例知识图谱数据（增强版）
-    const graphData = {
-      nodes: [
-        // 原有节点保持不变...
-        { id: "c++", name: "C++", group: "language", level: 1 },
-        { id: "qt", name: "Qt框架", group: "framework", level: 2 },
-        { id: "stl", name: "STL", group: "library", level: 2 },
-        { id: "ai", name: "人工智能", group: "domain", level: 1 },
-        { id: "ml", name: "机器学习", group: "domain", level: 2 },
-        { id: "dl", name: "深度学习", group: "domain", level: 2 },
-        { id: "cv", name: "计算机视觉", group: "domain", level: 2 },
-        { id: "python", name: "Python", group: "language", level: 2 },
-        { id: "pytorch", name: "PyTorch", group: "framework", level: 3 },
-        { id: "tensorflow", name: "TensorFlow", group: "framework", level: 3 },
-        { id: "interview", name: "面试准备", group: "activity", level: 1 },
-        { id: "leetcode", name: "LeetCode", group: "resource", level: 3 },
-        { id: "system-design", name: "系统设计", group: "topic", level: 2 },
-        { id: "postgraduate", name: "计算机考研", group: "activity", level: 1 },
-        { id: "ds", name: "数据结构", group: "subject", level: 2 },
-        { id: "os", name: "操作系统", group: "subject", level: 2 },
-        { id: "network", name: "计算机网络", group: "subject", level: 2 },
-        { id: "resources", name: "学习资源", group: "resource", level: 1 },
-        { id: "books", name: "推荐书籍", group: "resource", level: 2 },
-        { id: "courses", name: "在线课程", group: "resource", level: 2 },
-        { id: "projects", name: "项目经验", group: "experience", level: 1 },
+import {
+  drag,
+  forceCenter,
+  forceCollide,
+  forceLink,
+  forceManyBody,
+  forceSimulation,
+  scaleOrdinal,
+  select,
+  zoom,
+  zoomIdentity
+} from 'd3'
 
-        // ===== 新增机器学习方法节点 =====
-        { id: "supervised", name: "监督学习", group: "method", level: 3 },
-        { id: "unsupervised", name: "无监督学习", group: "method", level: 3 },
-        { id: "decision-tree", name: "决策树", group: "algorithm", level: 4 },
-        { id: "linear-reg", name: "线性回归", group: "algorithm", level: 4 },
-        { id: "bayesian", name: "贝叶斯学习", group: "algorithm", level: 4 },
-        { id: "svm", name: "支持向量机(SVM)", group: "algorithm", level: 4 },
-        { id: "knn", name: "K近邻(KNN)", group: "algorithm", level: 4 },
-        { id: "kd-tree", name: "KD-Tree", group: "algorithm", level: 5 }, // 添加缺失节点
-        { id: "kmeans", name: "K-Means聚类", group: "algorithm", level: 4 },
-        { id: "kmedoids", name: "K-Medoids聚类", group: "algorithm", level: 4 },
-        { id: "hierarchical-clust", name: "层次聚类", group: "algorithm", level: 4 },
-        { id: "ensemble", name: "集成学习", group: "method", level: 3 },
-        { id: "weighted-majority", name: "加权多数算法", group: "algorithm", level: 4 },
-        { id: "bagging", name: "Bagging", group: "algorithm", level: 4 },
-        { id: "boosting", name: "Boosting", group: "algorithm", level: 4 },
-        { id: "deep-learning", name: "深度学习", group: "method", level: 3 },
-        { id: "mlp", name: "多层感知机(MLP)", group: "model", level: 4 },
-        { id: "cnn", name: "卷积神经网络(CNN)", group: "model", level: 4 },
-        { id: "rnn", name: "循环神经网络(RNN)", group: "model", level: 4 },
-        { id: "lstm", name: "长短期记忆(LSTM)", group: "model", level: 5 },
-        { id: "gru", name: "门控循环单元(GRU)", group: "model", level: 5 },
-        { id: "kernel-methods", name: "核方法", group: "technique", level: 4 },
+import {
+  baseLinks,
+  baseNodes
+} from '../data/knowledgeGraphBase.js'
 
-        // ===== 新增实验相关节点 =====
-        { id: "overfitting", name: "过拟合问题", group: "problem", level: 3 },
-        { id: "cross-validation", name: "交叉验证", group: "technique", level: 4 },
-        { id: "bootstrap-sampling", name: "Bootstrap采样", group: "technique", level: 4 },
-        { id: "gwap-data", name: "GWAP数据收集", group: "technique", level: 3 },
-        { id: "output-agreement", name: "输出一致游戏", group: "game", level: 4 },
-        { id: "inversion-problem", name: "反演问题游戏", group: "game", level: 4 },
-        { id: "input-agreement", name: "输入一致游戏", group: "game", level: 4 },
-        { id: "exp-guidelines", name: "实验准则", group: "principle", level: 3 },
+import {
+  buildLinks,
+  buildNodes
+} from '../../cache/build-graph.generated.mjs'
 
-        // ===== 新增理论分析节点 =====
-        { id: "inductive-learning", name: "归纳学习假设", group: "theory", level: 3 },
-        { id: "bayesian-stats", name: "贝叶斯统计", group: "theory", level: 4 },
-        { id: "map", name: "极大后验假设(MAP)", group: "concept", level: 4 },
-        { id: "mdl", name: "最小描述长度(MDL)", group: "principle", level: 4 },
-        { id: "ml-estimation", name: "极大似然估计(ML)", group: "concept", level: 4 },
-        { id: "hyp-space", name: "假设空间(H)", group: "concept", level: 4 },
-        { id: "instance-space", name: "实例空间(X)", group: "concept", level: 4 },
-        { id: "training-set", name: "训练集(D)", group: "concept", level: 4 },
-        { id: "target-concept", name: "目标概念(C)", group: "concept", level: 4 }
-      ],
-      links: [
-        // 原有链接保持不变...
-        { source: "c++", target: "qt", value: 8 },
-        { source: "ai", target: "ml", value: 10 },
-        { source: "ai", target: "dl", value: 10 },
-        { source: "ai", target: "cv", value: 8 },
-        { source: "ml", target: "python", value: 8 },
-        { source: "dl", target: "pytorch", value: 9 },
-        { source: "dl", target: "tensorflow", value: 9 },
-        { source: "interview", target: "leetcode", value: 10 },
-        { source: "interview", target: "system-design", value: 9 },
-        { source: "interview", target: "c++", value: 8 },
-        { source: "postgraduate", target: "ds", value: 10 },
-        { source: "postgraduate", target: "os", value: 10 },
-        { source: "postgraduate", target: "network", value: 9 },
-        { source: "resources", target: "books", value: 10 },
-        { source: "resources", target: "courses", value: 10 },
-        { source: "resources", target: "leetcode", value: 8 },
-        { source: "projects", target: "c++", value: 9 },
-        { source: "projects", target: "qt", value: 8 },
-        { source: "projects", target: "ai", value: 7 },
-        { source: "ml", target: "projects", value: 7 },
-        { source: "dl", target: "projects", value: 7 },
-        { source: "postgraduate", target: "interview", value: 8 },
+const graphContainer = ref(null)
+const physicsEnabled = ref(true)
+const searchTerm = ref('')
+const loading = ref(false)
+const error = ref(null)
 
-        // ===== 新增机器学习方法链接 =====
-        { source: "ml", target: "supervised", value: 10 },
-        { source: "ml", target: "unsupervised", value: 9 },
-        { source: "ml", target: "ensemble", value: 8 },
-        { source: "ml", target: "deep-learning", value: 10 },
-        { source: "supervised", target: "decision-tree", value: 9 },
-        { source: "supervised", target: "linear-reg", value: 9 },
-        { source: "supervised", target: "bayesian", value: 9 },
-        { source: "supervised", target: "svm", value: 9 },
-        { source: "supervised", target: "knn", value: 8 },
-        { source: "unsupervised", target: "kmeans", value: 9 },
-        { source: "unsupervised", target: "kmedoids", value: 8 },
-        { source: "unsupervised", target: "hierarchical-clust", value: 8 },
-        { source: "ensemble", target: "weighted-majority", value: 9 },
-        { source: "ensemble", target: "bagging", value: 9 },
-        { source: "ensemble", target: "boosting", value: 9 },
-        { source: "deep-learning", target: "mlp", value: 9 },
-        { source: "deep-learning", target: "cnn", value: 9 },
-        { source: "deep-learning", target: "rnn", value: 9 },
-        { source: "rnn", target: "lstm", value: 8 },
-        { source: "rnn", target: "gru", value: 8 },
-        { source: "svm", target: "kernel-methods", value: 9 },
-        { source: "python", target: "svm", value: 8 },
-        { source: "python", target: "knn", value: 8 },
+let simulation = null
+let svgSelection = null
+let rootGroup = null
+let linkSelection = null
+let nodeSelection = null
+let labelSelection = null
+let zoomBehavior = null
+let resizeObserver = null
+let resizeFrame = 0
 
-        // ===== 新增实验相关链接 =====
-        { source: "ml", target: "overfitting", value: 9 },
-        { source: "ml", target: "gwap-data", value: 7 },
-        { source: "ml", target: "exp-guidelines", value: 9 },
-        { source: "overfitting", target: "cross-validation", value: 9 },
-        { source: "overfitting", target: "bootstrap-sampling", value: 8 },
-        { source: "overfitting", target: "hyp-space", value: 9 },
-        { source: "gwap-data", target: "output-agreement", value: 8 },
-        { source: "gwap-data", target: "inversion-problem", value: 8 },
-        { source: "gwap-data", target: "input-agreement", value: 8 },
-        { source: "exp-guidelines", target: "cross-validation", value: 9 },
+function uniqueNodes(nodes) {
+  const map = new Map()
 
-        // ===== 新增理论分析链接 =====
-        { source: "ml", target: "inductive-learning", value: 10 },
-        { source: "ml", target: "bayesian-stats", value: 9 },
-        { source: "inductive-learning", target: "hyp-space", value: 9 },
-        { source: "inductive-learning", target: "instance-space", value: 9 },
-        { source: "inductive-learning", target: "training-set", value: 9 },
-        { source: "inductive-learning", target: "target-concept", value: 9 },
-        { source: "bayesian-stats", target: "map", value: 10 },
-        { source: "bayesian-stats", target: "ml-estimation", value: 9 },
-        { source: "bayesian-stats", target: "mdl", value: 9 },
-        { source: "bayesian", target: "map", value: 10 },
-        { source: "bayesian", target: "ml-estimation", value: 9 },
-        { source: "bayesian", target: "mdl", value: 8 },
-
-        // ===== 跨领域连接 =====
-        { source: "decision-tree", target: "hyp-space", value: 8 },
-        { source: "linear-reg", target: "ml-estimation", value: 9 },
-        { source: "mdl", target: "overfitting", value: 9 },
-        { source: "knn", target: "kd-tree", value: 8 },
-        { source: "deep-learning", target: "overfitting", value: 8 },
-        { source: "projects", target: "cross-validation", value: 8 }
-      ]
-    };
-
-    // 所有 D3 相关变量
-    const simulation = ref(null);
-    const svg = ref(null);
-    const link = ref(null);
-    const node = ref(null);
-    const zoom = ref(null);
-
-    onMounted(() => {
-      initGraph();
-    });
-
-    onBeforeUnmount(() => {
-      cleanup();
-    });
-
-    function initGraph() {
-      // 确保在初始化前先清理
-      cleanup();
-      
-      if (!graphContainer.value) return;
-
-      loading.value = true;
-      error.value = null;
-
-      try {
-        const container = graphContainer.value;
-        const width = container.clientWidth;
-        const height = Math.max(600, window.innerHeight * 0.8);
-
-        // 清除现有SVG内容
-        d3.select(container).selectAll("svg").remove();
-
-        // 颜色映射
-        const colorScale = d3.scaleOrdinal()
-          .domain([
-            "language", "framework", "library", "domain",
-            "activity", "resource", "topic", "subject", "experience",
-            "method", "algorithm", "model", "technique",
-            "problem", "theory", "concept", "principle", "game"
-          ])
-          .range([
-            "#4e79a7", "#f28e2c", "#e15759", "#76b7b2",
-            "#59a14f", "#edc949", "#af7aa1", "#ff9da7", "#9c755f",
-            // 新增机器学习相关颜色
-            "#17becf", "#bcbd22", "#8c564b", "#9467bd",
-            "#d62728", "#2ca02c", "#1f77b4", "#ff7f0e", "#7f7f7f"
-          ]);
-
-        // 创建SVG容器
-        const svgEl = d3.select(container)
-          .append("svg")
-          .attr("xmlns", "http://www.w3.org/2000/svg")
-          .attr("width", width)
-          .attr("height", height)
-          .call(zoom.value = d3.zoom().on("zoom", zoomed))
-          .append("g");
-
-        svg.value = svgEl;
-
-        // 创建力导向图模拟
-        simulation.value = d3.forceSimulation(graphData.nodes)
-          .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(d => 100 - d.value * 5))
-          .force("charge", d3.forceManyBody().strength(-300))
-          .force("center", d3.forceCenter(width / 2, height / 2))
-          .force("collision", d3.forceCollide().radius(d => getNodeRadius(d.level) + 5));
-
-        // 创建连线
-        link.value = svgEl.append("g")
-          .attr("class", "links")
-          .selectAll("line")
-          .data(graphData.links)
-          .enter().append("line")
-          .attr("stroke", "#999")
-          .attr("stroke-opacity", 0.6)
-          .attr("stroke-width", d => Math.sqrt(d.value))
-          .attr("stroke-dasharray", d => d.value > 8 ? "0" : "5,5");
-
-        // 创建节点
-        node.value = svgEl.append("g")
-          .attr("class", "nodes")
-          .selectAll("circle")
-          .data(graphData.nodes)
-          .enter().append("circle")
-          .attr("r", d => getNodeRadius(d.level))
-          .attr("fill", d => colorScale(d.group))
-          .attr("stroke", "#fff")
-          .attr("stroke-width", 1.5)
-          .attr("data-id", d => d.id)
-          .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended))
-          .on("click", nodeClicked);
-
-        // 添加节点标签
-        const labels = svgEl.append("g")
-          .attr("class", "labels")
-          .selectAll("text")
-          .data(graphData.nodes)
-          .enter().append("text")
-          .text(d => d.name)
-          .attr("font-size", d => getFontSize(d.level))
-          .attr("dx", d => getNodeRadius(d.level) + 5)
-          .attr("dy", "0.35em")
-          .attr("fill", "#333")
-          .attr("pointer-events", "none")
-          .attr("font-weight", "600") // 增加字体粗细
-          .attr("paint-order", "stroke") // 添加文字描边效果
-          .attr("stroke", "rgba(255, 255, 255, 0.8)") // 白色描边
-          .attr("stroke-width", "3px") // 描边宽度
-          .attr("stroke-linecap", "round") // 平滑描边
-          .attr("stroke-linejoin", "round"); // 平滑描边
-
-        // 添加悬停效果
-        node.value.on("mouseover", function (event, d) {
-          d3.select(this).attr("stroke", "#000").attr("stroke-width", 2);
-          highlightConnected(d);
-        }).on("mouseout", function (event, d) {
-          d3.select(this).attr("stroke", "#fff").attr("stroke-width", 1.5);
-          resetHighlight();
-        });
-
-        // 更新模拟
-        simulation.value.on("tick", () => {
-          link.value
-            .attr("x1", d => d.source.x)
-            .attr("y1", d => d.source.y)
-            .attr("x2", d => d.target.x)
-            .attr("y2", d => d.target.y);
-
-          node.value
-            .attr("cx", d => d.x)
-            .attr("cy", d => d.y);
-
-          labels
-            .attr("x", d => d.x)
-            .attr("y", d => d.y);
-        });
-
-        // 添加窗口大小变化监听
-        window.addEventListener('resize', handleResize);
-      } catch (e) {
-        console.error('知识图谱初始化失败:', e);
-        error.value = '图表初始化失败';
-      } finally {
-        loading.value = false;
-      }
+  for (const node of nodes) {
+    if (!map.has(node.id)) {
+      map.set(node.id, node)
     }
-
-    function cleanup() {
-      if (simulation.value) {
-        simulation.value.stop();
-        simulation.value = null;
-      }
-      
-      // 清除所有事件监听器
-      window.removeEventListener('resize', handleResize);
-      
-      // 清除SVG内容
-      if (graphContainer.value) {
-        d3.select(graphContainer.value).selectAll("*").remove();
-      }
-      
-      // 确保所有D3相关引用都被清除
-      svg.value = null;
-      link.value = null;
-      node.value = null;
-      zoom.value = null;
-    }
-
-    function initGraph() {
-      // 确保在初始化前先清理
-      cleanup();
-
-      if (!graphContainer.value) return;
-
-      loading.value = true;
-      error.value = null;
-
-      try {
-        const container = graphContainer.value;
-        const width = container.clientWidth;
-        const height = Math.max(600, window.innerHeight * 0.8);
-
-        // 颜色映射
-        const colorScale = d3.scaleOrdinal()
-          .domain([
-            "language", "framework", "library", "domain",
-            "activity", "resource", "topic", "subject", "experience",
-            "method", "algorithm", "model", "technique",
-            "problem", "theory", "concept", "principle", "game"
-          ])
-          .range([
-            "#4e79a7", "#f28e2c", "#e15759", "#76b7b2",
-            "#59a14f", "#edc949", "#af7aa1", "#ff9da7", "#9c755f",
-            // 新增机器学习相关颜色
-            "#17becf", "#bcbd22", "#8c564b", "#9467bd",
-            "#d62728", "#2ca02c", "#1f77b4", "#ff7f0e", "#7f7f7f"
-          ]);
-
-        // 创建SVG容器
-        const svgEl = d3.select(container)
-          .append("svg")
-          .attr("xmlns", "http://www.w3.org/2000/svg")
-          .attr("width", width)
-          .attr("height", height)
-          .call(zoom.value = d3.zoom().on("zoom", zoomed))
-          .append("g");
-
-        svg.value = svgEl;
-
-        // 创建力导向图模拟
-        simulation.value = d3.forceSimulation(graphData.nodes)
-          .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(d => 100 - d.value * 5))
-          .force("charge", d3.forceManyBody().strength(-300))
-          .force("center", d3.forceCenter(width / 2, height / 2))
-          .force("collision", d3.forceCollide().radius(d => getNodeRadius(d.level) + 5));
-
-        // 创建连线
-        link.value = svgEl.append("g")
-          .attr("class", "links")
-          .selectAll("line")
-          .data(graphData.links)
-          .enter().append("line")
-          .attr("stroke", "#999")
-          .attr("stroke-opacity", 0.6)
-          .attr("stroke-width", d => Math.sqrt(d.value))
-          .attr("stroke-dasharray", d => d.value > 8 ? "0" : "5,5");
-
-        // 创建节点
-        node.value = svgEl.append("g")
-          .attr("class", "nodes")
-          .selectAll("circle")
-          .data(graphData.nodes)
-          .enter().append("circle")
-          .attr("r", d => getNodeRadius(d.level))
-          .attr("fill", d => colorScale(d.group))
-          .attr("stroke", "#fff")
-          .attr("stroke-width", 1.5)
-          .attr("data-id", d => d.id)
-          .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended))
-          .on("click", nodeClicked);
-
-        // 添加节点标签
-        const labels = svgEl.append("g")
-          .attr("class", "labels")
-          .selectAll("text")
-          .data(graphData.nodes)
-          .enter().append("text")
-          .text(d => d.name)
-          .attr("font-size", d => getFontSize(d.level))
-          .attr("dx", d => getNodeRadius(d.level) + 5)
-          .attr("dy", "0.35em")
-          .attr("fill", "#333")
-          .attr("pointer-events", "none")
-          .attr("font-weight", "600") // 增加字体粗细
-          .attr("paint-order", "stroke") // 添加文字描边效果
-          .attr("stroke", "rgba(255, 255, 255, 0.8)") // 白色描边
-          .attr("stroke-width", "3px") // 描边宽度
-          .attr("stroke-linecap", "round") // 平滑描边
-          .attr("stroke-linejoin", "round"); // 平滑描边
-
-        // 添加悬停效果
-        node.value.on("mouseover", function (event, d) {
-          d3.select(this).attr("stroke", "#000").attr("stroke-width", 2);
-          highlightConnected(d);
-        }).on("mouseout", function (event, d) {
-          d3.select(this).attr("stroke", "#fff").attr("stroke-width", 1.5);
-          resetHighlight();
-        });
-
-        // 更新模拟
-        simulation.value.on("tick", () => {
-          link.value
-            .attr("x1", d => d.source.x)
-            .attr("y1", d => d.source.y)
-            .attr("x2", d => d.target.x)
-            .attr("y2", d => d.target.y);
-
-          node.value
-            .attr("cx", d => d.x)
-            .attr("cy", d => d.y);
-
-          labels
-            .attr("x", d => d.x)
-            .attr("y", d => d.y);
-        });
-
-        // 添加窗口大小变化监听
-        window.addEventListener('resize', handleResize);
-      } catch (e) {
-        console.error('知识图谱初始化失败:', e);
-        error.value = '图表初始化失败';
-      } finally {
-        loading.value = false;
-      }
-    }
-
-    function cleanup() {
-      if (simulation.value) {
-        simulation.value.stop();
-        simulation.value = null;
-      }
-
-      window.removeEventListener('resize', handleResize);
-
-      if (graphContainer.value) {
-        d3.select(graphContainer.value).selectAll('svg').remove();
-      }
-
-      svg.value = null;
-      link.value = null;
-      node.value = null;
-      zoom.value = null;
-    }
-
-    function handleResize() {
-      if (graphContainer.value) {
-        initGraph();
-      }
-    }
-
-    function getNodeRadius(level) {
-      return level === 1 ? 20 : level === 2 ? 15 : 10;
-    }
-
-    function getFontSize(level) {
-      return level === 1 ? "14px" : level === 2 ? "12px" : "10px";
-    }
-
-    function highlightConnected(d) {
-      if (!node.value) return;
-
-      // 高亮当前节点
-      node.value.attr("opacity", 0.2);
-      d3.select(`[data-id="${d.id}"]`).attr("opacity", 1);
-
-      // 高亮相连节点
-      const connectedIds = new Set();
-      connectedIds.add(d.id);
-
-      graphData.links.forEach(link => {
-        if (link.source.id === d.id) {
-          connectedIds.add(link.target.id);
-        }
-        if (link.target.id === d.id) {
-          connectedIds.add(link.source.id);
-        }
-      });
-
-      connectedIds.forEach(id => {
-        d3.select(`[data-id="${id}"]`).attr("opacity", 1);
-      });
-
-      // 高亮相关连线
-      if (link.value) {
-        link.value.attr("opacity", l => {
-          return (l.source.id === d.id || l.target.id === d.id) ? 1 : 0.1;
-        });
-      }
-    }
-
-    function resetHighlight() {
-      if (node.value) node.value.attr("opacity", 1);
-      if (link.value) link.value.attr("opacity", 0.6);
-    }
-
-    function nodeClicked(event, d) {
-      console.log(`点击了节点: ${d.name}`);
-      // 实际使用中可添加导航逻辑
-      // this.$router.push(`/path/to/${d.id}`);
-    }
-
-    function dragstarted(event, d) {
-      if (!event.active && simulation.value) simulation.value.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    }
-
-    function dragged(event, d) {
-      d.fx = event.x;
-      d.fy = event.y;
-    }
-
-    function dragended(event, d) {
-      if (!event.active && simulation.value) simulation.value.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
-    }
-
-    function zoomed(event) {
-      if (svg.value) svg.value.attr("transform", event.transform);
-    }
-
-    function resetView() {
-      if (svg.value) {
-        svg.value.transition()
-          .duration(750)
-          .attr("transform", "translate(0,0) scale(1)");
-      }
-    }
-
-    function togglePhysics() {
-      if (!simulation.value) return;
-
-      physicsEnabled.value = !physicsEnabled.value;
-      if (physicsEnabled.value) {
-        simulation.value.alpha(0.3).restart();
-      } else {
-        simulation.value.stop();
-      }
-    }
-
-    // 搜索功能
-    watch(searchTerm, (newTerm) => {
-      if (!node.value) return;
-
-      if (!newTerm) {
-        resetHighlight();
-        return;
-      }
-
-      const term = newTerm.toLowerCase();
-      node.value.attr("opacity", d =>
-        d.name.toLowerCase().includes(term) ? 1 : 0.2
-      );
-    });
-
-    return {
-      graphContainer,
-      physicsEnabled,
-      searchTerm,
-      loading,
-      error,
-      resetView,
-      togglePhysics
-    };
   }
-};
+
+  return [...map.values()]
+}
+
+const allNodes =
+  uniqueNodes([
+    ...baseNodes,
+    ...buildNodes
+  ])
+
+const nodeIds =
+  new Set(
+    allNodes.map((node) => node.id)
+  )
+
+const allLinks =
+  [...baseLinks, ...buildLinks]
+    .filter(
+      (link) =>
+        nodeIds.has(link.source) &&
+        nodeIds.has(link.target)
+    )
+
+const nodeCount = computed(
+  () => allNodes.length
+)
+
+const linkCount = computed(
+  () => allLinks.length
+)
+
+const groupColors = new Map([
+  ['language', '#4f7cff'],
+  ['framework', '#7a68ff'],
+  ['library', '#5f82b8'],
+  ['domain', '#5d8cff'],
+  ['integration', '#8275ff'],
+  ['exchange', '#6f7fff'],
+  ['runtime', '#4f94cf'],
+  ['tooling', '#718096'],
+  ['acceleration', '#9a68c7'],
+  ['experience', '#6d78d8'],
+  ['stage', '#745fd1'],
+  ['folder', '#65758f'],
+  ['note', '#566780'],
+  ['method', '#548d8d'],
+  ['algorithm', '#668f63'],
+  ['model', '#6679a8'],
+  ['technique', '#806aa3'],
+  ['problem', '#a26969'],
+  ['theory', '#68816d'],
+  ['concept', '#557b9d'],
+  ['principle', '#8f7655'],
+  ['activity', '#68815c'],
+  ['subject', '#69768f'],
+  ['resource', '#8a7c55']
+])
+
+const colorScale =
+  scaleOrdinal(
+    [...groupColors.keys()],
+    [...groupColors.values()]
+  )
+
+function nodeRadius(node) {
+  if (node.id === 'build') return 23
+  if (node.level === 1) return 20
+  if (node.level === 2) return 15
+  if (node.level === 3) return 12
+  return 9
+}
+
+function nodeFontSize(node) {
+  if (node.id === 'build') return 15
+  if (node.level === 1) return 14
+  if (node.level === 2) return 12
+  return 10
+}
+
+function graphDimensions() {
+  const width =
+    Math.max(
+      graphContainer.value?.clientWidth || 0,
+      360
+    )
+
+  const height =
+    Math.max(
+      Math.min(
+        window.innerHeight * 0.74,
+        780
+      ),
+      540
+    )
+
+  return {
+    width,
+    height
+  }
+}
+
+function cloneGraphData() {
+  return {
+    nodes:
+      allNodes.map((node) => ({
+        ...node
+      })),
+    links:
+      allLinks.map((link) => ({
+        ...link
+      }))
+  }
+}
+
+function linkId(value) {
+  return typeof value === 'object'
+    ? value?.id
+    : value
+}
+
+function destroyGraph() {
+  simulation?.stop()
+  simulation = null
+
+  svgSelection?.on('.zoom', null)
+  svgSelection?.remove()
+
+  svgSelection = null
+  rootGroup = null
+  linkSelection = null
+  nodeSelection = null
+  labelSelection = null
+  zoomBehavior = null
+}
+
+function buildGraph() {
+  if (!graphContainer.value) return
+
+  destroyGraph()
+  loading.value = true
+  error.value = null
+
+  try {
+    const {
+      width,
+      height
+    } = graphDimensions()
+
+    const {
+      nodes,
+      links
+    } = cloneGraphData()
+
+    svgSelection =
+      select(graphContainer.value)
+        .append('svg')
+        .attr('class', 'graph-svg')
+        .attr('role', 'img')
+        .attr(
+          'aria-label',
+          'C++、Qt、AI、ONNX 与综合技术知识图谱'
+        )
+        .attr('width', '100%')
+        .attr('height', '100%')
+        .attr(
+          'viewBox',
+          `0 0 ${width} ${height}`
+        )
+        .attr(
+          'preserveAspectRatio',
+          'xMidYMid meet'
+        )
+
+    rootGroup =
+      svgSelection
+        .append('g')
+        .attr('class', 'graph-root')
+
+    zoomBehavior =
+      zoom()
+        .scaleExtent([0.3, 4.5])
+        .on('zoom', (event) => {
+          rootGroup?.attr(
+            'transform',
+            event.transform
+          )
+        })
+
+    svgSelection.call(zoomBehavior)
+
+    linkSelection =
+      rootGroup
+        .append('g')
+        .attr('class', 'graph-links')
+        .selectAll('line')
+        .data(links)
+        .join('line')
+        .attr(
+          'class',
+          (link) =>
+            `graph-link graph-link--${link.kind || 'concept'}`
+        )
+        .attr(
+          'stroke-width',
+          (link) =>
+            Math.max(
+              1,
+              Math.sqrt(link.value || 6) * 0.9
+            )
+        )
+
+    nodeSelection =
+      rootGroup
+        .append('g')
+        .attr('class', 'graph-nodes')
+        .selectAll('circle')
+        .data(nodes)
+        .join('circle')
+        .attr(
+          'class',
+          (node) =>
+            [
+              'graph-node',
+              node.link
+                ? 'graph-node--linked'
+                : ''
+            ].filter(Boolean).join(' ')
+        )
+        .attr(
+          'r',
+          (node) => nodeRadius(node)
+        )
+        .attr(
+          'fill',
+          (node) =>
+            colorScale(node.group)
+        )
+        .attr('tabindex', 0)
+        .attr('role', 'button')
+        .attr(
+          'aria-label',
+          (node) =>
+            node.link
+              ? `${node.name}，打开笔记`
+              : node.name
+        )
+
+    nodeSelection
+      .append('title')
+      .text(
+        (node) =>
+          node.link
+            ? `${node.name} · 点击打开`
+            : node.name
+      )
+
+    labelSelection =
+      rootGroup
+        .append('g')
+        .attr('class', 'graph-labels')
+        .selectAll('text')
+        .data(nodes)
+        .join('text')
+        .attr('class', 'graph-label')
+        .text((node) => node.name)
+        .attr(
+          'font-size',
+          (node) => nodeFontSize(node)
+        )
+        .attr(
+          'dx',
+          (node) => nodeRadius(node) + 6
+        )
+        .attr('dy', '0.35em')
+
+    nodeSelection
+      .call(
+        drag()
+          .on('start', dragStarted)
+          .on('drag', dragged)
+          .on('end', dragEnded)
+      )
+      .on(
+        'mouseenter',
+        (_, node) =>
+          highlightConnected(node)
+      )
+      .on(
+        'mouseleave',
+        () =>
+          applySearch(searchTerm.value)
+      )
+      .on(
+        'focus',
+        (_, node) =>
+          highlightConnected(node)
+      )
+      .on(
+        'blur',
+        () =>
+          applySearch(searchTerm.value)
+      )
+      .on(
+        'click',
+        (event, node) => {
+          if (
+            event.defaultPrevented ||
+            !node.link
+          ) {
+            return
+          }
+
+          window.location.href =
+            withBase(node.link)
+        }
+      )
+      .on(
+        'keydown',
+        (event, node) => {
+          if (
+            (event.key === 'Enter' ||
+             event.key === ' ') &&
+            node.link
+          ) {
+            event.preventDefault()
+            window.location.href =
+              withBase(node.link)
+          }
+        }
+      )
+
+    simulation =
+      forceSimulation(nodes)
+        .force(
+          'link',
+          forceLink(links)
+            .id((node) => node.id)
+            .distance(
+              (link) => {
+                if (link.kind === 'bridge') {
+                  return 128
+                }
+
+                if (link.kind === 'semantic') {
+                  return 105
+                }
+
+                return Math.max(
+                  68,
+                  118 - (link.value || 6) * 4
+                )
+              }
+            )
+        )
+        .force(
+          'charge',
+          forceManyBody()
+            .strength((node) =>
+              node.id === 'build'
+                ? -520
+                : -285
+            )
+        )
+        .force(
+          'center',
+          forceCenter(
+            width / 2,
+            height / 2
+          )
+        )
+        .force(
+          'collision',
+          forceCollide()
+            .radius(
+              (node) =>
+                nodeRadius(node) + 9
+            )
+        )
+        .on('tick', ticked)
+
+    applySearch(searchTerm.value)
+  } catch (cause) {
+    console.error(
+      '[KnowledgeGraph] init failed:',
+      cause
+    )
+
+    error.value =
+      cause instanceof Error
+        ? cause.message
+        : '图谱初始化失败'
+  } finally {
+    loading.value = false
+  }
+}
+
+function ticked() {
+  linkSelection
+    ?.attr(
+      'x1',
+      (link) => link.source.x
+    )
+    .attr(
+      'y1',
+      (link) => link.source.y
+    )
+    .attr(
+      'x2',
+      (link) => link.target.x
+    )
+    .attr(
+      'y2',
+      (link) => link.target.y
+    )
+
+  nodeSelection
+    ?.attr(
+      'cx',
+      (node) => node.x
+    )
+    .attr(
+      'cy',
+      (node) => node.y
+    )
+
+  labelSelection
+    ?.attr(
+      'x',
+      (node) => node.x
+    )
+    .attr(
+      'y',
+      (node) => node.y
+    )
+}
+
+function dragStarted(event, node) {
+  if (
+    !event.active &&
+    simulation &&
+    physicsEnabled.value
+  ) {
+    simulation
+      .alphaTarget(0.22)
+      .restart()
+  }
+
+  node.fx = node.x
+  node.fy = node.y
+}
+
+function dragged(event, node) {
+  node.fx = event.x
+  node.fy = event.y
+}
+
+function dragEnded(event, node) {
+  if (
+    !event.active &&
+    simulation
+  ) {
+    simulation.alphaTarget(0)
+  }
+
+  node.fx = null
+  node.fy = null
+}
+
+function connectedIdsFor(node) {
+  const ids =
+    new Set([node.id])
+
+  for (const link of allLinks) {
+    if (link.source === node.id) {
+      ids.add(link.target)
+    }
+
+    if (link.target === node.id) {
+      ids.add(link.source)
+    }
+  }
+
+  return ids
+}
+
+function highlightConnected(node) {
+  if (!nodeSelection) return
+
+  const connected =
+    connectedIdsFor(node)
+
+  nodeSelection.attr(
+    'opacity',
+    (candidate) =>
+      connected.has(candidate.id)
+        ? 1
+        : 0.12
+  )
+
+  labelSelection?.attr(
+    'opacity',
+    (candidate) =>
+      connected.has(candidate.id)
+        ? 1
+        : 0.12
+  )
+
+  linkSelection?.attr(
+    'opacity',
+    (link) => {
+      const source = linkId(link.source)
+      const target = linkId(link.target)
+
+      return (
+        source === node.id ||
+        target === node.id
+      )
+        ? 0.95
+        : 0.05
+    }
+  )
+}
+
+function applySearch(value) {
+  if (!nodeSelection) return
+
+  const term =
+    value
+      .trim()
+      .toLocaleLowerCase()
+
+  if (!term) {
+    nodeSelection.attr('opacity', 1)
+    labelSelection?.attr('opacity', 1)
+    linkSelection?.attr(
+      'opacity',
+      (link) =>
+        link.kind === 'semantic'
+          ? 0.22
+          : 0.44
+    )
+    return
+  }
+
+  const matches =
+    new Set(
+      allNodes
+        .filter((node) =>
+          `${node.name} ${node.source || ''}`
+            .toLocaleLowerCase()
+            .includes(term)
+        )
+        .map((node) => node.id)
+    )
+
+  nodeSelection.attr(
+    'opacity',
+    (node) =>
+      matches.has(node.id)
+        ? 1
+        : 0.10
+  )
+
+  labelSelection?.attr(
+    'opacity',
+    (node) =>
+      matches.has(node.id)
+        ? 1
+        : 0.10
+  )
+
+  linkSelection?.attr(
+    'opacity',
+    0.04
+  )
+}
+
+function resetView() {
+  if (
+    !svgSelection ||
+    !zoomBehavior
+  ) {
+    return
+  }
+
+  svgSelection.call(
+    zoomBehavior.transform,
+    zoomIdentity
+  )
+}
+
+function togglePhysics() {
+  if (!simulation) return
+
+  physicsEnabled.value =
+    !physicsEnabled.value
+
+  if (physicsEnabled.value) {
+    simulation
+      .alpha(0.28)
+      .restart()
+  } else {
+    simulation.stop()
+  }
+}
+
+function resizeGraph() {
+  if (
+    !svgSelection ||
+    !simulation
+  ) {
+    return
+  }
+
+  const {
+    width,
+    height
+  } = graphDimensions()
+
+  svgSelection.attr(
+    'viewBox',
+    `0 0 ${width} ${height}`
+  )
+
+  simulation.force(
+    'center',
+    forceCenter(
+      width / 2,
+      height / 2
+    )
+  )
+
+  if (physicsEnabled.value) {
+    simulation
+      .alpha(0.10)
+      .restart()
+  }
+}
+
+function scheduleResize() {
+  cancelAnimationFrame(resizeFrame)
+  resizeFrame =
+    requestAnimationFrame(resizeGraph)
+}
+
+watch(
+  searchTerm,
+  applySearch
+)
+
+onMounted(() => {
+  buildGraph()
+
+  if (
+    typeof ResizeObserver !== 'undefined' &&
+    graphContainer.value
+  ) {
+    resizeObserver =
+      new ResizeObserver(
+        scheduleResize
+      )
+
+    resizeObserver.observe(
+      graphContainer.value
+    )
+  }
+})
+
+onBeforeUnmount(() => {
+  cancelAnimationFrame(resizeFrame)
+  resizeObserver?.disconnect()
+  resizeObserver = null
+  destroyGraph()
+})
 </script>
 
 <style scoped>
 .knowledge-graph {
-  width: 100%;
-  height: 80vh;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
   position: relative;
+  width: 100%;
   overflow: hidden;
-  margin: 2rem 0;
+  margin: 1.5rem 0 2.5rem;
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--vp-c-divider) 86%,
+      transparent
+    );
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 72% 0%,
+      color-mix(
+        in srgb,
+        var(--vp-c-brand-1) 9%,
+        transparent
+      ),
+      transparent 36%
+    ),
+    color-mix(
+      in srgb,
+      var(--vp-c-bg-soft) 86%,
+      transparent
+    );
+}
+
+.graph-toolbar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.15rem 1.2rem 0.95rem;
+  border-bottom: 1px solid
+    color-mix(
+      in srgb,
+      var(--vp-c-divider) 72%,
+      transparent
+    );
+}
+
+.graph-intro {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.22rem;
+}
+
+.graph-kicker {
+  color: var(--vp-c-brand-1);
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.70rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+}
+
+.graph-intro strong {
+  color: var(--vp-c-text-1);
+  font-size: 1rem;
+}
+
+.graph-intro small {
+  color:
+    color-mix(
+      in srgb,
+      var(--vp-c-text-1) 62%,
+      var(--vp-c-text-2)
+    );
+  font-size: 0.80rem;
 }
 
 .graph-controls {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  z-index: 10;
   display: flex;
-  gap: 10px;
-  background: rgba(var(--vp-c-bg-rgb), 0.8);
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.graph-controls button,
+.search-box input {
+  height: 36px;
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--vp-c-divider) 86%,
+      transparent
+    );
+  border-radius: 9px;
+  color: var(--vp-c-text-1);
+  background:
+    color-mix(
+      in srgb,
+      var(--vp-c-bg) 92%,
+      transparent
+    );
+  font: inherit;
+  font-size: 0.78rem;
 }
 
 .graph-controls button {
-  padding: 6px 12px;
-  background: var(--vp-c-brand);
-  color: white;
-  border: none;
-  border-radius: 4px;
+  padding: 0 0.75rem;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.3s;
-}
-
-.graph-controls button:hover {
-  background: var(--vp-c-brand-light);
-}
-
-.search-box {
-  display: flex;
-  align-items: center;
 }
 
 .search-box input {
-  padding: 6px 12px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 4px;
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
+  width: min(220px, 26vw);
+  padding: 0 0.75rem;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: var(--vp-c-brand-1);
+}
+
+.graph-meta {
+  position: absolute;
+  top: 78px;
+  right: 20px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--vp-c-text-3);
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.61rem;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+}
+
+.graph-meta i {
+  width: 24px;
+  height: 1px;
+  background:
+    color-mix(
+      in srgb,
+      var(--vp-c-brand-1) 34%,
+      transparent
+    );
 }
 
 .graph-container {
   width: 100%;
-  height: 100%;
+  height: clamp(540px, 72vh, 780px);
 }
 
-.graph-loading,
-.graph-error {
+.graph-status {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  inset: 55% auto auto 50%;
+  z-index: 8;
   transform: translate(-50%, -50%);
-  padding: 12px 24px;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  z-index: 10;
-  text-align: center;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 9px;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg);
+  font-size: 0.84rem;
 }
 
 .graph-error {
-  background: rgba(220, 53, 69, 0.8);
-  max-width: 80%;
+  border-color:
+    color-mix(
+      in srgb,
+      #dc3545 55%,
+      var(--vp-c-divider)
+    );
 }
 
-/* 响应式调整 */
-@media (max-width: 768px) {
-  .knowledge-graph {
-    height: 60vh;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.graph-container :deep(.graph-link) {
+  stroke: var(--vp-c-text-3);
+}
+
+.graph-container :deep(.graph-link--semantic) {
+  stroke-dasharray: 4 5;
+}
+
+.graph-container :deep(.graph-link--bridge) {
+  stroke:
+    color-mix(
+      in srgb,
+      var(--vp-c-brand-1) 60%,
+      var(--vp-c-text-3)
+    );
+}
+
+.graph-container :deep(.graph-node) {
+  stroke: var(--vp-c-bg);
+  stroke-width: 2px;
+  cursor: grab;
+  transition:
+    opacity 120ms ease,
+    stroke-width 120ms ease;
+}
+
+.graph-container :deep(.graph-node--linked) {
+  cursor: pointer;
+}
+
+.graph-container :deep(.graph-node:hover),
+.graph-container :deep(.graph-node:focus) {
+  stroke: var(--vp-c-text-1);
+  stroke-width: 3px;
+  outline: none;
+}
+
+.graph-container :deep(.graph-label) {
+  fill: var(--vp-c-text-1);
+  stroke: var(--vp-c-bg);
+  stroke-width: 3px;
+  paint-order: stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+  font-weight: 650;
+  transition: opacity 120ms ease;
+}
+
+@media (max-width: 760px) {
+  .graph-toolbar {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .graph-controls {
-    flex-direction: column;
-    align-items: flex-end;
+    width: 100%;
+    flex-wrap: wrap;
   }
 
-  .graph-error {
-    font-size: 1rem;
-    padding: 8px 16px;
+  .search-box {
+    flex: 1 1 180px;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+
+  .graph-meta {
+    display: none;
+  }
+
+  .graph-container {
+    height: 66vh;
+    min-height: 520px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .graph-container :deep(.graph-node),
+  .graph-container :deep(.graph-label) {
+    transition: none;
   }
 }
 </style>

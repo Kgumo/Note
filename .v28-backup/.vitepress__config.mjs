@@ -43,13 +43,6 @@ const aiSidebar = set_sidebar('AI', configPath)
 const PostgraduateSidebar = set_sidebar('Postgraduate', configPath)
 const InternshipSidebar = set_sidebar('Internship', configPath)
 
-
-// 综合技术目录：顶层阶段默认展开，子目录仍可折叠。
-const buildSidebar = set_sidebar('build', configPath).map((item) =>
-  item.items
-    ? { ...item, collapsed: false }
-    : item
-)
 export default defineConfig({
   title: '额滴笔记',
   description: '个人技术知识库 - C++ | Qt | AI',
@@ -116,7 +109,6 @@ export default defineConfig({
     sidebar: {
       '/C++/': cppSidebar,
       '/AI/': aiSidebar,
-      '/build/': buildSidebar,
       '/Postgraduate/': PostgraduateSidebar,
       '/Internship/': InternshipSidebar
     },

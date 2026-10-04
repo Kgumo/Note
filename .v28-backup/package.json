@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "docs:dev": "npm run knowledge:prepare && npm run media:prepare && vitepress dev",
-    "docs:build": "npm run knowledge:prepare && npm run media:prepare && vitepress build && npm run media:verify:dist",
+    "docs:dev": "npm run media:prepare && vitepress dev",
+    "docs:build": "npm run media:prepare && vitepress build && npm run media:verify:dist",
     "docs:preview": "vitepress preview",
     "fix:knowledge-graph": "node tools/fix-knowledge-graph.mjs",
     "site:audit": "npm run media:audit",
@@ -12,8 +12,7 @@
     "media:clean": "node tools/media-pipeline.mjs clean",
     "media:mirror": "node tools/media-pipeline.mjs mirror",
     "media:mirror:apply": "node tools/media-pipeline.mjs mirror --apply",
-    "media:verify:dist": "node tools/verify-media-dist.mjs",
-    "knowledge:prepare": "node tools/generate-build-graph.mjs"
+    "media:verify:dist": "node tools/verify-media-dist.mjs"
   },
   "dependencies": {
     "@vueuse/core": "^13.6.0",

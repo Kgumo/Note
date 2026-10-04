@@ -12,4 +12,3 @@ docs/public/_media/
 .obsidian/plugins/obsidian-git/data.json
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
-.vitepress/cache/build-graph.generated.mjs
