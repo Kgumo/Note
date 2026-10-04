@@ -56,17 +56,15 @@ export default defineConfig({
   description: '个人技术知识库 - C++ | Qt | AI',
   base: siteBase,
 
-  head: [
-    ['link', { rel: 'icon', href: `${siteBase}head.svg` }],
-    // V25_HERO_PRELOAD
-    ['link', { rel: 'preload', as: 'image', href: `${siteBase}logo.svg`, type: 'image/svg+xml' }],
-    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
-    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
-    ['link', {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap'
-    }]
-  ],
+    head: [
+      ['link', { rel: 'icon', href: `${siteBase}head.svg` }],
+      ['link', {
+        rel: 'preload',
+        as: 'image',
+        href: `${siteBase}logo.svg`,
+        type: 'image/svg+xml'
+      }]
+    ],
 
   cleanUrls: true,
   lastUpdated: true,
